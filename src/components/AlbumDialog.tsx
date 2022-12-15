@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import AlbumBox from './AlbumBox';
+import SearchAlbumForm from './SearchAlbumForm';
 
 const AlbumDialog: React.FC = () => {
-
+  const [albumData, setAlbumData] = useState([] as Object[]);
   return (
     <DialogBackground>
       <AlbumDialogContainer>
+        <SearchAlbumForm setAlbumData={setAlbumData}></SearchAlbumForm>
         <SelectedAlbum></SelectedAlbum>
         <AlbumViewer>
-          <AlbumBox></AlbumBox>
+          {
+            albumData.map(
+              albumData => <AlbumBox album={albumData}></AlbumBox>
+            )
+          }
         </AlbumViewer>
       </AlbumDialogContainer>
     </DialogBackground>
@@ -37,6 +43,7 @@ border-radius: 25px;
 background-color: white;
 box-shadow: 0 8px 8px 0 gray;
 `;
+
 const AlbumViewer = styled.div`
 display: flex;
 overflow-y: scroll;

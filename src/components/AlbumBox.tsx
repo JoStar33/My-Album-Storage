@@ -1,7 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const AlbumBox: React.FC = () => {
+type propsType = {
+  album: Object,
+};
+
+const AlbumBox: React.FC<propsType> = ({album}) => {
   return (
     <AlbumBoxContainer>
       
