@@ -48,8 +48,8 @@ box-shadow: 0 8px 8px 0 gray;
 
 const AlbumViewer = styled.div`
 display: flex;
-overflow-y: scroll;
-width: 98%;
+flex-wrap: wrap;
+width: 90%;
 height: 60%;
 `;
 

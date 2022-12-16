@@ -6,16 +6,6 @@ import { asyncGetAlbumFetch } from '../store/album';
 
 
 const SearchAlbumForm: React.FC = () => {
-  const typeData = [
-    {
-      name: '아티스트',
-      value: 'artist'
-    },
-    { 
-      name: '앨범', 
-      value: 'album'
-    }
-  ];
   const dispatch = useDispatch<AppDispatch>();
   const [searchParam, setSearchParam] = useState({
     query: '',
@@ -32,12 +22,6 @@ const SearchAlbumForm: React.FC = () => {
   };
   return (
     <SearchFormContainer>
-      <SearchSelect onChange={onChangeSearch} name='type'>
-        {
-          typeData.map(type => 
-            <option value={type.value}>{type.name}</option>)
-        }
-      </SearchSelect>
       <SearchInput type="text" name='query' onChange={onChangeSearch} />
       <SearchBtn onClick={search}>검색</SearchBtn>
     </SearchFormContainer>
@@ -70,9 +54,6 @@ cursor: pointer;
 user-select: none;
 `;
 
-const SearchSelect = styled.select`
-width: 10%;
-`;
 const SearchInput = styled.input`
 border-radius: 20px;
 width: 70%;

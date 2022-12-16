@@ -4,7 +4,7 @@ import { getAlbum } from '../apis/albumApi';
 type getAlbumParamType = {
   query: string,
   type: string
-}
+};
 
 type artist = {
   external_urls : Object,
@@ -13,13 +13,13 @@ type artist = {
   name : string,
   type : string,
   uri : string
-}
+};
 
 type image = {
   height : number,
   url : string,
   width : number
-}
+};
 
 type item = {
   album_type : string,
@@ -35,7 +35,14 @@ type item = {
   total_tracks : number,
   type: string,
   uri: string
-}
+};
+
+export type searchAlbumType = {
+  id: string,
+  artistName: string,
+  albumname: string,
+  albumImg: string,
+};
 
 const asyncGetAlbumFetch = createAsyncThunk(
   'counterSlice/asyncGetAlbumFetch',
@@ -46,13 +53,7 @@ const asyncGetAlbumFetch = createAsyncThunk(
     });
     return data;
   }
-)
-type searchAlbumType = {
-  id: string,
-  artistName: string,
-  albumname: string,
-  albumImg: string,
-}
+);
 
 export const albumSlice = createSlice({
   name: 'album',
