@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import AlbumBox from './AlbumBox';
+import { RootState } from '../store';
+import { useSelector } from 'react-redux';
 import SearchAlbumForm from './SearchAlbumForm';
 
 const AlbumDialog: React.FC = () => {
-  const [albumData, setAlbumData] = useState([] as Object[]);
+  const { searchAlbum } = useSelector((state: RootState) => state.albumStore);
   return (
     <DialogBackground>
       <AlbumDialogContainer>
-        <SearchAlbumForm setAlbumData={setAlbumData}></SearchAlbumForm>
+        <SearchAlbumForm></SearchAlbumForm>
         <SelectedAlbum></SelectedAlbum>
         <AlbumViewer>
           {
-            albumData.map(
-              albumData => <AlbumBox album={albumData}></AlbumBox>
+            searchAlbum.map(
+              albumData => <AlbumBox key={albumData.id} album={albumData}></AlbumBox>
             )
           }
         </AlbumViewer>
