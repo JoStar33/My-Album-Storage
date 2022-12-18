@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import { searchAlbumType } from '../store/album'
 
@@ -8,9 +8,9 @@ type propsType = {
 
 const AlbumBox: React.FC<propsType> = ({album}) => {
   const [isLineOver, setIsLineOver] = useState(false);
+  const albumText = useRef<any>(null);
   useEffect(() => {
-    const albumSpan = document.getElementsByClassName(album.id)[0] as Element
-    let height = albumSpan.clientHeight;
+    const height = albumText.current.clientHeight;
     if(height > 23) {
       setIsLineOver(true);
     }
@@ -18,7 +18,7 @@ const AlbumBox: React.FC<propsType> = ({album}) => {
   return (
     <AlbumBoxContainer>
       <AlbumImg src={ album.albumImg } isLineOver={isLineOver}/>
-      <AlbumName className={ album.id } isLineOver={isLineOver}>{ album.albumname }</AlbumName>
+      <AlbumName ref={albumText} isLineOver={isLineOver}>{ album.albumname }</AlbumName>
     </AlbumBoxContainer>
   );
 }
