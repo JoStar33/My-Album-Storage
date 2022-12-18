@@ -1,21 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import AlbumBox from './AlbumBox';
-import { RootState } from '../store';
-import { useSelector } from 'react-redux';
 import SearchAlbumForm from './SearchAlbumForm';
+import SelectedAlbumBox from './SelectedAlbumBox';
+import { albumType } from '../../store/album';
+import { RootState } from '../../store';
+import { useSelector } from 'react-redux';
 
 const AlbumDialog: React.FC = () => {
-  const { searchAlbum } = useSelector((state: RootState) => state.albumStore);
+  //선택된 앨범 정보
+  const [selectedAlbums, setSelectedAlbums] = useState([] as albumType[]);
+  //검색된 앨범 정보
+  const { searchAlbums } = useSelector((state: RootState) => state.albumStore);
   return (
     <DialogBackground>
       <AlbumDialogContainer>
         <SearchAlbumForm></SearchAlbumForm>
-        <SelectedAlbum></SelectedAlbum>
+        <SelectedAlbumContainer>
+          {
+            selectedAlbums.map(album => <SelectedAlbumBox
+              album = {album}
+            ></SelectedAlbumBox>)
+          }
+        </SelectedAlbumContainer>
         <AlbumViewer>
           {
-            searchAlbum.map(
-              albumData => <AlbumBox key={albumData.id} album={albumData}></AlbumBox>
+            searchAlbums.map(
+              album => <AlbumBox 
+                selectedAlbums={selectedAlbums} 
+                setSelectedAlbums={setSelectedAlbums} 
+                key={album.id} 
+                album={album}
+              ></AlbumBox>
             )
           }
         </AlbumViewer>
@@ -29,12 +45,15 @@ justify-content: center;
 align-items: center;
 `;
 
-const SelectedAlbum = styled.div`
+const SelectedAlbumContainer = styled.div`
 width: 90%;
 height: 20%;
 background-color: #a9e6d7;
 border-radius: 20px;
 box-shadow: 0 8px 8px 0 gray;
+display: flex;
+flex-direction: row;
+align-items: center;
 `;
 
 const AlbumDialogContainer = styled(Centering)`

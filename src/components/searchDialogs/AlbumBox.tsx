@@ -1,24 +1,42 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
-import { searchAlbumType } from '../store/album'
+import { albumType, setIsSelected } from '../../store/album';
+import { AppDispatch } from '../../store/index';
+import { useDispatch } from 'react-redux';
+import CheckComponent from './CheckComponent';
 
 type propsType = {
-  album: searchAlbumType,
+  album: albumType,
+  selectedAlbums: albumType[],
+  setSelectedAlbums: React.Dispatch<React.SetStateAction<albumType[]>>
 };
 
-const AlbumBox: React.FC<propsType> = ({album}) => {
+const AlbumBox: React.FC<propsType> = ({album, selectedAlbums, setSelectedAlbums}) => {
   const [isLineOver, setIsLineOver] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
   const albumText = useRef<any>(null);
   useEffect(() => {
     const height = albumText.current.clientHeight;
     if(height > 23) {
       setIsLineOver(true);
     }
-  }, [album.id])
+  }, [album.id]);
+  const handleClickSelectAlbum = () => {
+    dispatch(setIsSelected(album));
+    if(selectedAlbums.find(albumData => albumData.id === album.id)) {
+      setSelectedAlbums(selectedAlbums.filter(albumData => albumData.id !== album.id));
+      return;
+    } 
+    selectedAlbums.push(album);
+    setSelectedAlbums(selectedAlbums);
+  };
   return (
-    <AlbumBoxContainer>
+    <AlbumBoxContainer onClick={handleClickSelectAlbum}>
       <AlbumImg src={ album.albumImg } isLineOver={isLineOver}/>
-      <AlbumName ref={albumText} isLineOver={isLineOver}>{ album.albumname }</AlbumName>
+      <AlbumName ref={albumText} isLineOver={isLineOver}>{ album.albumName }</AlbumName>
+      {
+        album.isSelected && <CheckComponent></CheckComponent>
+      }
     </AlbumBoxContainer>
   );
 }
@@ -35,6 +53,8 @@ display: flex;
 justify-content: center;
 align-items: center;
 flex-direction: column;
+overflow: hidden;
+position: relative;
 `;
 
 interface AlbumImgType {

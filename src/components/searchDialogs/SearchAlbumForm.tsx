@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { AppDispatch } from '../store/index';
+import { AppDispatch } from '../../store/index';
 import { useDispatch } from 'react-redux';
-import { asyncGetAlbumFetch } from '../store/album';
+import { asyncGetAlbumFetch } from '../../store/album';
 
 
 const SearchAlbumForm: React.FC = () => {
