@@ -47,8 +47,12 @@ box-shadow: 0 8px 8px 0 gray;
 `;
 
 const AlbumViewer = styled.div`
+border: 3px solid black;
+border-radius: 20px;
+margin-top: 8px;
 display: flex;
 flex-wrap: wrap;
+overflow-y: scroll;
 width: 90%;
 height: 60%;
 `;
