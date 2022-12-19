@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
-import { albumType, setIsSelected } from '../../store/album';
+import { setIsSelected, albumType } from '../../store/album';
 import { AppDispatch } from '../../store/index';
 import { useDispatch } from 'react-redux';
 import CheckComponent from './CheckComponent';
@@ -8,12 +8,14 @@ import CheckComponent from './CheckComponent';
 type propsType = {
   album: albumType,
   selectedAlbums: albumType[],
+  setScoreAlbum: React.Dispatch<React.SetStateAction<albumType>>,
+  setScoreDialog: React.Dispatch<React.SetStateAction<boolean>>,
   setSelectedAlbums: React.Dispatch<React.SetStateAction<albumType[]>>
 };
 
-const AlbumBox: React.FC<propsType> = ({album, selectedAlbums, setSelectedAlbums}) => {
-  const [isLineOver, setIsLineOver] = useState(false);
+const AlbumBox: React.FC<propsType> = ({album, selectedAlbums, setScoreAlbum, setScoreDialog, setSelectedAlbums}) => {
   const dispatch = useDispatch<AppDispatch>();
+  const [isLineOver, setIsLineOver] = useState(false);
   const albumText = useRef<any>(null);
   useEffect(() => {
     const height = albumText.current.clientHeight;
@@ -21,21 +23,20 @@ const AlbumBox: React.FC<propsType> = ({album, selectedAlbums, setSelectedAlbums
       setIsLineOver(true);
     }
   }, [album.id]);
-  const handleClickSelectAlbum = () => {
+  const handleClickAlbum = () => {
     //id가 존재한다면 선택이 됐다는 것이므로 앨범을 제거하는 로직을 실행.
     if(selectedAlbums.find(selectedAlbumData => selectedAlbumData.id === album.id)) {
-      dispatch(setIsSelected({album: album, isSelected: false}));
+      dispatch(setIsSelected({id: album.id, isSelected: false}));
       setSelectedAlbums(selectedAlbums.filter(selectedAlbumData => selectedAlbumData.id !== album.id));
       return;
-    } 
-    //id가 존재하지 않는다면 앨범을 넣는 로직을 실행.
-    dispatch(setIsSelected({album: album, isSelected: true}));
-    selectedAlbums.push(album);
+    }
+    setScoreAlbum(album);
+    setScoreDialog(true);
   };
   return (
-    <AlbumBoxContainer onClick={handleClickSelectAlbum}>
-      <AlbumImg src={ album.albumImg } isLineOver={isLineOver}/>
-      <AlbumName ref={albumText} isLineOver={isLineOver}>{ album.albumName }</AlbumName>
+    <AlbumBoxContainer onClick={handleClickAlbum}>
+      <AlbumImg src={ album.albumImg } isLineOver={ isLineOver }/>
+      <AlbumName ref={ albumText } isLineOver={ isLineOver }>{ album.albumName }</AlbumName>
       {
         album.isSelected && <CheckComponent></CheckComponent>
       }

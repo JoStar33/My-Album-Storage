@@ -12,11 +12,18 @@ export type albumType = {
   albumName: string,
   albumImg: string,
   isSelected: boolean,
+  score: number,
+  description: string
 };
 
-type selectedAlbumSetType = {
-  album: albumType,
+type selectedSetType = {
+  id: string,
   isSelected: boolean,
+};
+
+type scoreSetType = {
+  id: string,
+  score: number,
 };
 
 const asyncGetAlbumFetch = createAsyncThunk(
@@ -45,8 +52,11 @@ export const albumSlice = createSlice({
   name: 'album',
   initialState,
   reducers: {
-    setIsSelected: (state, action: PayloadAction<selectedAlbumSetType>) => {
-      state.searchAlbums.filter(album => album.id === action.payload.album.id)[0].isSelected = action.payload.isSelected;
+    setIsSelected: (state, action: PayloadAction<selectedSetType>) => {
+      state.searchAlbums.filter(album => album.id === action.payload.id)[0].isSelected = action.payload.isSelected;
+    },
+    setScore: (state, action: PayloadAction<scoreSetType>) => {
+      state.searchAlbums.filter(album => album.id === action.payload.id)[0].score = action.payload.score;
     }
   },
   extraReducers: (builder) => {
@@ -62,7 +72,9 @@ export const albumSlice = createSlice({
             artistName: element.artists[0].name,
             albumName: element.name,
             albumImg: element.images[0].url,
-            isSelected: false
+            isSelected: false,
+            score: 0,
+            description: ''
           }
         )
       });
@@ -76,6 +88,6 @@ export const albumSlice = createSlice({
 
 export { asyncGetAlbumFetch }
 
-export const { setIsSelected } = albumSlice.actions;
+export const { setIsSelected, setScore } = albumSlice.actions;
 
 export default albumSlice.reducer;

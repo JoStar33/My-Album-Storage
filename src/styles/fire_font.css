@@ -1,0 +1,45 @@
+@import url(https://fonts.googleapis.com/css?family=Akronim);
+.fire {
+    width: 40%;
+    max-width: 1000px;
+    height: 100px;
+    background-position: center center;
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+    vertical-align: middle;
+}
+.fire:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+.blazing {
+    display: inline-block;
+    margin: 0;
+    color: rgb(255, 115, 0);
+    font-size: 40px;
+    line-height: 20px;
+    outline: none;
+    vertical-align: middle;
+    text-shadow: 0 3px 10px red, 0 0 10px red, 0 0 10px orange, 4px -5px 6px yellow, -4px -10px 10px yellow, 0 -10px 20px yellow;
+    animation: 2s Blazing infinite alternate linear;
+}
+@keyframes Blazing {
+    0% {
+        text-shadow: 0 3px 10px red, 0 0 10px red, 0 0 10px orange, 0 0 0 yellow, 0 0 5px yellow, -2px -5px 5px yellow, 4px -10px 10px yellow;
+    }
+    25% {
+        text-shadow: 0 3px 10px red, 0 0 20px red, 0 0 10px orange, 0 0 5px yellow, -2px -5px 5px yellow, 3px -10px 10px yellow, -4px -15px 10px yellow;
+    }
+    50% {
+        text-shadow: 0 3px 10px red, 0 0 10px red, 0 -5px 10px orange, -2px -5px 5px yellow, 3px -10px 10px yellow, -4px -15px 10px yellow, 2px -10px 20px rgba(255,255,0,0.5);
+    }
+    75% {
+        text-shadow: 0 3px 10px red, 0 0 10px red, 0 -5px 10px orange, 3px -5px 5px yellow, -4px -10px 10px yellow, 2px -10px 20px rgba(255,255,0,0.5), 0px -15px 30px rgba(255,255,0,0)
+    }
+    100% {
+        text-shadow: 0 3px 10px red, 0 0 10px red, 0 0 10px orange, 0 0 0 yellow, 0 0 5px yellow, -2px -5px 5px yellow, 4px -10px 10px yellow;
+    }
+}

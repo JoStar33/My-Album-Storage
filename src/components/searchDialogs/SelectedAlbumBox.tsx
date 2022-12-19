@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import '../../styles/fire_font.css';
 import { albumType, setIsSelected } from '../../store/album';
 import { AppDispatch } from '../../store/index';
 import { useDispatch } from 'react-redux';
@@ -14,12 +15,15 @@ type propsType = {
 const SelectedAlbumBox: React.FC<propsType> = ({album, selectedAlbums, setSelectedAlbums}) => {
   const dispatch = useDispatch<AppDispatch>();
   const handleDeleteEvent = () => {
-    dispatch(setIsSelected({album: album, isSelected: false}));
+    dispatch(setIsSelected({id: album.id, isSelected: false}));
     setSelectedAlbums(selectedAlbums.filter(seletedAlbum => seletedAlbum.id !== album.id));
   };
   return (
     <SelectedAlbumContainer>
       <SelectedAlbumImg src={album.albumImg}></SelectedAlbumImg>
+      <div className="fire">
+        <h3 className="blazing">{album.score}</h3>
+      </div>
       <SelectedAlbumInfoContainer>
         <SelectedAlbumInfo>{album.artistName}</SelectedAlbumInfo>
         <SelectedAlbumInfo>{album.albumName}</SelectedAlbumInfo>
@@ -48,9 +52,9 @@ user-select: none;
 `;
 
 const SelectedAlbumImg = styled.img`
-margin-left: 4px;
-width: 5vw;
-height: 5vw;
+margin-left: 8px;
+width: 4vw;
+height: 4vw;
 `;
 
 const SelectedAlbumInfoContainer = styled.div`
@@ -64,6 +68,12 @@ const SelectedAlbumInfo = styled.div`
 display: flex;
 justify-content: flex-start;
 font-weight: 800;
+`;
+
+const SelectedAlbumScore = styled.div`
+margin-left: 20px;
+font-size: large;
+font-weight: 900;
 `;
 
 const DeleteBtn = styled.div`

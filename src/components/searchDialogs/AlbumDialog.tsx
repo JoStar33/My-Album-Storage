@@ -4,6 +4,8 @@ import AlbumBox from './AlbumBox';
 import SearchAlbumForm from './SearchAlbumForm';
 import SelectedAlbumBox from './SelectedAlbumBox';
 import AlbumDialogController from './AlbumDialogController';
+import LoadingForm from '../loadingForm/LoadingForm';
+import ScoreDialog from '../scoreDialogs/ScoreDialog';
 import { albumType } from '../../store/album';
 import { RootState } from '../../store';
 import { useSelector } from 'react-redux';
@@ -11,8 +13,12 @@ import { useSelector } from 'react-redux';
 const AlbumDialog: React.FC = () => {
   //선택된 앨범 정보
   const [selectedAlbums, setSelectedAlbums] = useState([] as albumType[]);
+  //스코어 설정 다이얼로그
+  const [scoreDialog, setScoreDialog] = useState(false);
+  //스코어 설정을 하고자하는 앨범
+  const [scoreAlbum, setScoreAlbum] = useState({} as albumType);
   //검색된 앨범 정보
-  const { searchAlbums } = useSelector((state: RootState) => state.albumStore);
+  const { searchAlbums, loading } = useSelector((state: RootState) => state.albumStore);
   return (
     <DialogBackground>
       <AlbumDialogContainer>
@@ -21,6 +27,7 @@ const AlbumDialog: React.FC = () => {
           {
             selectedAlbums.map(album => <SelectedAlbumBox
               album={album}
+              key={album.id}
               selectedAlbums={selectedAlbums} 
               setSelectedAlbums={setSelectedAlbums} 
             ></SelectedAlbumBox>)
@@ -31,15 +38,28 @@ const AlbumDialog: React.FC = () => {
             searchAlbums.map(
               album => <AlbumBox 
                 selectedAlbums={selectedAlbums} 
-                setSelectedAlbums={setSelectedAlbums} 
+                setSelectedAlbums={setSelectedAlbums}
+                setScoreDialog={setScoreDialog} 
+                setScoreAlbum={setScoreAlbum}
                 key={album.id} 
                 album={album}
               ></AlbumBox>
             )
           }
+          {
+            loading && <LoadingForm></LoadingForm>
+          }
         </AlbumViewer>
         <AlbumDialogController></AlbumDialogController>
       </AlbumDialogContainer>
+      {
+        scoreDialog 
+          &&  <ScoreDialog 
+                selectedAlbums={selectedAlbums} 
+                setScoreDialog={setScoreDialog} 
+                album={scoreAlbum}
+              ></ScoreDialog>
+      }
     </DialogBackground>
   );
 };
@@ -83,6 +103,7 @@ const AlbumViewer = styled.div`
 border: 3px solid black;
 border-radius: 20px;
 margin-top: 8px;
+position: relative;
 display: flex;
 flex-wrap: wrap;
 overflow-y: scroll;

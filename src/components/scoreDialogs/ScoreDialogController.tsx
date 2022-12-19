@@ -1,13 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const AlbumDialogController: React.FC = () => {
+type propsType = {
+apply: () => void,
+close: () => void,
+}
+
+const ScoreDialogController: React.FC<propsType> = ({apply, close}) => {
   return (
     <BtnContainer>
-      <ApplyBtn>
-        추가
+      <ApplyBtn onClick={apply}>
+        적용
       </ApplyBtn>
-      <CloseBtn>
+      <CloseBtn onClick={close}>
         닫기
       </CloseBtn>
     </BtnContainer>
@@ -26,7 +31,7 @@ align-items: center;
 `;
 
 const BtnForm = styled(Centering)`
-width: 10vw;
+width: 5vw;
 height: 3vh;
 border-radius: 20px;
 color: white;
@@ -38,11 +43,11 @@ cursor: pointer;
 `;
 
 const ApplyBtn = styled(BtnForm)`
-background-color: green;
+background-color: skyblue;
 `;
 
 const CloseBtn = styled(BtnForm)`
 background-color: red;
 `;
 
-export default AlbumDialogController;
+export default ScoreDialogController;
