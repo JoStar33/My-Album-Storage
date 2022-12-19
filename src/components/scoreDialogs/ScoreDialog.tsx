@@ -4,6 +4,8 @@ import '../../styles/fire_font.css';
 import { AppDispatch } from '../../store/index';
 import { useDispatch } from 'react-redux';
 import { albumType, setScore, setIsSelected } from '../../store/album';
+import { GrScorecard } from 'react-icons/gr';
+import { BiCommentDetail } from 'react-icons/bi';
 import ScoreDialogController from './ScoreDialogController';
 
 type propsType = {
@@ -19,16 +21,20 @@ const ScoreDialog: React.FC<propsType> = ({album, selectedAlbums, setScoreDialog
     setUserScore(e.target.value);
   }
   const applyScore = () => {
-    if(!Number.isNaN(parseInt(userScore)) && parseInt(userScore) > 0){
-      dispatch(setScore({id: album.id, score: parseInt(userScore)}));
-      dispatch(setIsSelected({id: album.id, isSelected: true}));
-      selectedAlbums.push(album);
-      const albumIndex = selectedAlbums.findIndex(selectedAlbum => selectedAlbum.id === album.id);
-      selectedAlbums[albumIndex] = {...selectedAlbums[albumIndex], score: parseInt(userScore)};
-      setScoreDialog(false);
-    } else {
-
+    if(Number.isNaN(parseInt(userScore))){
+      return
     }
+    if(parseInt(userScore) <= 0 && parseInt(userScore) > 100) {
+      return
+    }
+    dispatch(setScore({id: album.id, score: parseInt(userScore)}));
+    dispatch(setIsSelected({id: album.id, isSelected: true}));
+    if(!selectedAlbums.find(selectedAlbum => selectedAlbum.id === album.id)) {
+      selectedAlbums.push(album);
+    }
+    const albumIndex = selectedAlbums.findIndex(selectedAlbum => selectedAlbum.id === album.id);
+    selectedAlbums[albumIndex] = {...selectedAlbums[albumIndex], score: parseInt(userScore)};
+    setScoreDialog(false);
   }
   const closeDialog = () => {
     setScoreDialog(false);
@@ -44,10 +50,18 @@ const ScoreDialog: React.FC<propsType> = ({album, selectedAlbums, setScoreDialog
           {album.artistName}
         </ArtistName>
         <div className="fire">
-          <h1 className="blazing">{userScore}</h1>
+          <h1 className="blazing">{album.score ? album.score : userScore}</h1>
         </div>
-        <Score type="number" name='score' onChange={handleChangeScore}></Score>
-        <Description></Description>
+        <ScoreBox>
+          <GrScorecard size={24}></GrScorecard>
+          <ScoreText>나의 점수는?</ScoreText>
+          <Score placeholder='점수를 입력해 주세요.' type="number" name='score' onChange={handleChangeScore}></Score>
+        </ScoreBox>
+        <DescriptionText>
+          <BiCommentDetail></BiCommentDetail>
+          코멘트
+        </DescriptionText>
+        <Description placeholder="내용을 입력해 주세요."></Description>
         <ScoreDialogController apply={applyScore} close={closeDialog}></ScoreDialogController>
       </ScoreDialogContainer>
     </DialogBackground>
@@ -70,8 +84,7 @@ top: 0;
 left: 0;
 `;
 
-const AlbumTitle = styled.div`
-font-size: larger;
+const AlbumTitle = styled.h1`
 font-weight: 800;
 `;
 
@@ -84,13 +97,37 @@ const ArtistName = styled.div`
 font-weight: 800;
 `;
 
-const Score = styled.input`
-
+const ScoreBox = styled.div`
+display: flex;
+align-items: center;
+flex-direction: row;
 `;
+
+const ScoreText = styled.div`
+margin-right: 20px;
+font-weight: 800;
+`;
+
+const Score = styled.input`
+padding:10px;
+border-radius:10px;
+outline: none;
+`;
+
+const DescriptionText = styled.div`
+margin-top: 20px;
+width: 90%;
+font-weight: 800;
+text-align: left;
+display: flex;
+align-items: center;
+`
 
 const Description = styled.textarea`
 width: 90%;
 height: 30%;
+border: none;
+resize: none;
 `;
 
 const ScoreDialogContainer = styled(Centering)`

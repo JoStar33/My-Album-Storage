@@ -38,7 +38,7 @@ cursor: pointer;
 `;
 
 const ApplyBtn = styled(BtnForm)`
-background-color: green;
+background-color: skyblue;
 `;
 
 const CloseBtn = styled(BtnForm)`

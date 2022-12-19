@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { setTokenByPost } from '../apis/tokenApi';
 import AlbumDialog from '../components/searchDialogs/AlbumDialog';
 
 const AlbumPage: React.FC = () => {
-  setTokenByPost();
+  useEffect(() => {setTokenByPost();})
   return (
     <AlbumDialog></AlbumDialog>
   );

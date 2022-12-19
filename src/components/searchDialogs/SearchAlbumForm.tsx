@@ -20,9 +20,14 @@ const SearchAlbumForm: React.FC = () => {
       [e.target.name]: e.target.value,
     });
   };
+  const handleOnKeyPress = (e: React.KeyboardEvent<HTMLInputElement> ) => {
+    if (e.key === 'Enter') {
+      search(); // Enter 입력이 되면 클릭 이벤트 실행
+    }
+  };
   return (
     <SearchFormContainer>
-      <SearchInput type="text" name='query' onChange={handleChangeSearch} />
+      <SearchInput type="text" name='query' onKeyPress={handleOnKeyPress} onChange={handleChangeSearch} />
       <SearchBtn onClick={search}>검색</SearchBtn>
     </SearchFormContainer>
   );

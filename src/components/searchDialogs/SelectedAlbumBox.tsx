@@ -9,22 +9,29 @@ import { MdCancel } from 'react-icons/md';
 type propsType = {
   album: albumType,
   selectedAlbums: albumType[],
-  setSelectedAlbums: React.Dispatch<React.SetStateAction<albumType[]>>
+  setSelectedAlbums: React.Dispatch<React.SetStateAction<albumType[]>>,
+  setScoreDialog: React.Dispatch<React.SetStateAction<boolean>>,
+  setScoreAlbum: React.Dispatch<React.SetStateAction<albumType>>
 };
 
-const SelectedAlbumBox: React.FC<propsType> = ({album, selectedAlbums, setSelectedAlbums}) => {
+const SelectedAlbumBox: React.FC<propsType> = ({album, selectedAlbums, setSelectedAlbums, setScoreDialog, setScoreAlbum}) => {
   const dispatch = useDispatch<AppDispatch>();
+  const handleModifyScore = (e: React.MouseEvent<HTMLElement> ) => {
+    setScoreDialog(true);
+    setScoreAlbum(album);
+    e.stopPropagation();
+  };
   const handleDeleteEvent = () => {
     dispatch(setIsSelected({id: album.id, isSelected: false}));
     setSelectedAlbums(selectedAlbums.filter(seletedAlbum => seletedAlbum.id !== album.id));
   };
   return (
     <SelectedAlbumContainer>
-      <SelectedAlbumImg src={album.albumImg}></SelectedAlbumImg>
-      <div className="fire">
+      <SelectedAlbumImg onClick={handleModifyScore} src={album.albumImg}></SelectedAlbumImg>
+      <div className="fire" style={{cursor: 'pointer'}} onClick={handleModifyScore}>
         <h3 className="blazing">{album.score}</h3>
       </div>
-      <SelectedAlbumInfoContainer>
+      <SelectedAlbumInfoContainer onClick={handleModifyScore}>
         <SelectedAlbumInfo>{album.artistName}</SelectedAlbumInfo>
         <SelectedAlbumInfo>{album.albumName}</SelectedAlbumInfo>
       </SelectedAlbumInfoContainer>
@@ -55,6 +62,7 @@ const SelectedAlbumImg = styled.img`
 margin-left: 8px;
 width: 4vw;
 height: 4vw;
+cursor: pointer;
 `;
 
 const SelectedAlbumInfoContainer = styled.div`
@@ -62,18 +70,13 @@ display: flex;
 flex-direction: column;
 justify-content: flex-start;
 margin-left: 10px;
+cursor: pointer;
 `;
 
 const SelectedAlbumInfo = styled.div`
 display: flex;
 justify-content: flex-start;
 font-weight: 800;
-`;
-
-const SelectedAlbumScore = styled.div`
-margin-left: 20px;
-font-size: large;
-font-weight: 900;
 `;
 
 const DeleteBtn = styled.div`

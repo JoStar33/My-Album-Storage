@@ -29,6 +29,8 @@ const AlbumDialog: React.FC = () => {
               album={album}
               key={album.id}
               selectedAlbums={selectedAlbums} 
+              setScoreDialog={setScoreDialog}
+              setScoreAlbum={setScoreAlbum}
               setSelectedAlbums={setSelectedAlbums} 
             ></SelectedAlbumBox>)
           }
@@ -53,12 +55,11 @@ const AlbumDialog: React.FC = () => {
         <AlbumDialogController></AlbumDialogController>
       </AlbumDialogContainer>
       {
-        scoreDialog 
-          &&  <ScoreDialog 
-                selectedAlbums={selectedAlbums} 
-                setScoreDialog={setScoreDialog} 
-                album={scoreAlbum}
-              ></ScoreDialog>
+        scoreDialog &&  <ScoreDialog 
+          selectedAlbums={selectedAlbums} 
+          setScoreDialog={setScoreDialog} 
+          album={scoreAlbum}
+        ></ScoreDialog>
       }
     </DialogBackground>
   );
