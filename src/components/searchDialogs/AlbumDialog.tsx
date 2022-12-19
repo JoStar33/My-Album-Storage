@@ -26,12 +26,12 @@ const AlbumDialog: React.FC = () => {
         <SelectedAlbumContainer>
           {
             selectedAlbums.map(album => <SelectedAlbumBox
-              album={album}
               key={album.id}
+              album={album}
               selectedAlbums={selectedAlbums} 
+              setSelectedAlbums={setSelectedAlbums} 
               setScoreDialog={setScoreDialog}
               setScoreAlbum={setScoreAlbum}
-              setSelectedAlbums={setSelectedAlbums} 
             ></SelectedAlbumBox>)
           }
         </SelectedAlbumContainer>
@@ -39,12 +39,12 @@ const AlbumDialog: React.FC = () => {
           {
             searchAlbums.map(
               album => <AlbumBox 
+                key={album.id}
+                album={album}
                 selectedAlbums={selectedAlbums} 
                 setSelectedAlbums={setSelectedAlbums}
                 setScoreDialog={setScoreDialog} 
                 setScoreAlbum={setScoreAlbum}
-                key={album.id} 
-                album={album}
               ></AlbumBox>
             )
           }
@@ -55,7 +55,7 @@ const AlbumDialog: React.FC = () => {
         <AlbumDialogController></AlbumDialogController>
       </AlbumDialogContainer>
       {
-        scoreDialog &&  <ScoreDialog 
+        scoreDialog && <ScoreDialog 
           selectedAlbums={selectedAlbums} 
           setScoreDialog={setScoreDialog} 
           album={scoreAlbum}
@@ -79,8 +79,8 @@ box-shadow: 0 8px 8px 0 gray;
 display: flex;
 flex-direction: row;
 align-items: center;
-flex-wrap: nowrap;
-overflow-x: scroll;
+flex-wrap: wrap;
+overflow-y: scroll;
 ::-webkit-scrollbar {
     width: 10px;  /* 스크롤바의 너비 */
 }

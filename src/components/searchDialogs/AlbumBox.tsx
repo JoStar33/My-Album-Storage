@@ -8,12 +8,12 @@ import CheckComponent from './CheckComponent';
 type propsType = {
   album: albumType,
   selectedAlbums: albumType[],
+  setSelectedAlbums: React.Dispatch<React.SetStateAction<albumType[]>>
   setScoreAlbum: React.Dispatch<React.SetStateAction<albumType>>,
   setScoreDialog: React.Dispatch<React.SetStateAction<boolean>>,
-  setSelectedAlbums: React.Dispatch<React.SetStateAction<albumType[]>>
 };
 
-const AlbumBox: React.FC<propsType> = ({album, selectedAlbums, setScoreAlbum, setScoreDialog, setSelectedAlbums}) => {
+const AlbumBox: React.FC<propsType> = ({album, selectedAlbums, setSelectedAlbums, setScoreAlbum, setScoreDialog}) => {
   const dispatch = useDispatch<AppDispatch>();
   const [isLineOver, setIsLineOver] = useState(false);
   const albumText = useRef<any>(null);

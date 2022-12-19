@@ -65,6 +65,7 @@ border-radius: 20px;
 width: 70%;
 margin-left: 3%;
 margin-right: 3%;
+outline: none;
 `;
 
 export default SearchAlbumForm;

@@ -5,6 +5,7 @@ import { AppDispatch } from '../../store/index';
 import { useDispatch } from 'react-redux';
 import { albumType, setScore, setIsSelected } from '../../store/album';
 import { GrScorecard } from 'react-icons/gr';
+import { MdCancel } from 'react-icons/md';
 import { BiCommentDetail } from 'react-icons/bi';
 import ScoreDialogController from './ScoreDialogController';
 
@@ -17,14 +18,18 @@ type propsType = {
 const ScoreDialog: React.FC<propsType> = ({album, selectedAlbums, setScoreDialog}) => {
   const dispatch = useDispatch<AppDispatch>();
   const [userScore, setUserScore] = useState(``);
+  const [scoreVaildateText, setScoreVaildateText] = useState(``);
   const handleChangeScore = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setScoreVaildateText(``);
     setUserScore(e.target.value);
   }
   const applyScore = () => {
     if(Number.isNaN(parseInt(userScore))){
+      setScoreVaildateText(`점수를 입력해주세요!`);
       return
     }
-    if(parseInt(userScore) <= 0 && parseInt(userScore) > 100) {
+    if(parseInt(userScore) <= 0 || parseInt(userScore) > 100) {
+      setScoreVaildateText(`점수는 0부터 100까지만 입력이 가능합니다.`);
       return
     }
     dispatch(setScore({id: album.id, score: parseInt(userScore)}));
@@ -35,9 +40,11 @@ const ScoreDialog: React.FC<propsType> = ({album, selectedAlbums, setScoreDialog
     const albumIndex = selectedAlbums.findIndex(selectedAlbum => selectedAlbum.id === album.id);
     selectedAlbums[albumIndex] = {...selectedAlbums[albumIndex], score: parseInt(userScore)};
     setScoreDialog(false);
+    setUserScore('');
   }
   const closeDialog = () => {
     setScoreDialog(false);
+    setUserScore('');
   }
   return (
     <DialogBackground>
@@ -55,7 +62,10 @@ const ScoreDialog: React.FC<propsType> = ({album, selectedAlbums, setScoreDialog
         <ScoreBox>
           <GrScorecard size={24}></GrScorecard>
           <ScoreText>나의 점수는?</ScoreText>
-          <Score placeholder='점수를 입력해 주세요.' type="number" name='score' onChange={handleChangeScore}></Score>
+          <ScoreInputBox>
+            <Score placeholder='점수를 입력해 주세요.' type="number" name='score' onChange={handleChangeScore}></Score>
+            <ScoreValidateText>{scoreVaildateText}</ScoreValidateText>
+          </ScoreInputBox>
         </ScoreBox>
         <DescriptionText>
           <BiCommentDetail></BiCommentDetail>
@@ -63,6 +73,9 @@ const ScoreDialog: React.FC<propsType> = ({album, selectedAlbums, setScoreDialog
         </DescriptionText>
         <Description placeholder="내용을 입력해 주세요."></Description>
         <ScoreDialogController apply={applyScore} close={closeDialog}></ScoreDialogController>
+        <CloseBtn onClick={closeDialog}>
+          <MdCancel size={24}></MdCancel>
+        </CloseBtn>
       </ScoreDialogContainer>
     </DialogBackground>
   );
@@ -89,8 +102,8 @@ font-weight: 800;
 `;
 
 const AlbumImg = styled.img`
-width: 9vw;
-height: 9vw;
+width: 13vw;
+height: 13vw;
 `;
 
 const ArtistName = styled.div`
@@ -114,6 +127,16 @@ border-radius:10px;
 outline: none;
 `;
 
+const ScoreInputBox = styled.div`
+display: flex;
+flex-direction: column;
+`;
+
+const ScoreValidateText = styled.div`
+font-size: x-small;
+color: red;
+`;
+
 const DescriptionText = styled.div`
 margin-top: 20px;
 width: 90%;
@@ -130,10 +153,18 @@ border: none;
 resize: none;
 `;
 
+const CloseBtn = styled.div`
+position: absolute;
+top: 1%;
+left: 94%;
+cursor: pointer;
+`;
+
 const ScoreDialogContainer = styled(Centering)`
 flex-direction: column;
+position: relative;
 width: 30vw;
-height: 60vh;
+height: 80vh;
 border-radius: 25px;
 background-color: white;
 box-shadow: 0 8px 8px 0 gray;

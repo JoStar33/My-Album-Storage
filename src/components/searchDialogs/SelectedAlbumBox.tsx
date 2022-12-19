@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import '../../styles/fire_font.css';
-import { albumType, setIsSelected } from '../../store/album';
+import { albumType, setIsSelected, setScore } from '../../store/album';
 import { AppDispatch } from '../../store/index';
 import { useDispatch } from 'react-redux';
 import { MdCancel } from 'react-icons/md';
@@ -23,6 +23,7 @@ const SelectedAlbumBox: React.FC<propsType> = ({album, selectedAlbums, setSelect
   };
   const handleDeleteEvent = () => {
     dispatch(setIsSelected({id: album.id, isSelected: false}));
+    dispatch(setScore({id: album.id, score: 0}));
     setSelectedAlbums(selectedAlbums.filter(seletedAlbum => seletedAlbum.id !== album.id));
   };
   return (
@@ -49,10 +50,11 @@ display: flex;
 align-items: center;
 flex-direction: row;
 position: relative;
-min-width: 20%;
 min-height: 80%;
-margin-left: 2.5%;
-margin-right: 2.5%;
+margin-left: 1%;
+margin-right: 1%;
+margin-bottom: 1%;
+margin-top: 1%;
 border-radius: 10px;
 background-color: white;
 user-select: none;
@@ -70,6 +72,7 @@ display: flex;
 flex-direction: column;
 justify-content: flex-start;
 margin-left: 10px;
+margin-right: 10px;
 cursor: pointer;
 `;
 
@@ -82,6 +85,6 @@ font-weight: 800;
 const DeleteBtn = styled.div`
 position: absolute;
 top: -2%;
-left: 94%;
+left: 91%;
 cursor: pointer;
 `;
