@@ -14,6 +14,11 @@ export type albumType = {
   isSelected: boolean,
 };
 
+type selectedAlbumSetType = {
+  album: albumType,
+  isSelected: boolean,
+};
+
 const asyncGetAlbumFetch = createAsyncThunk(
   'counterSlice/asyncGetAlbumFetch',
   async (param: getAlbumParamType) => {
@@ -40,8 +45,8 @@ export const albumSlice = createSlice({
   name: 'album',
   initialState,
   reducers: {
-    setIsSelected: (state, action: PayloadAction<albumType>) => {
-      state.searchAlbums.filter(album => album.id === action.payload.id)[0].isSelected = !action.payload.isSelected;
+    setIsSelected: (state, action: PayloadAction<selectedAlbumSetType>) => {
+      state.searchAlbums.filter(album => album.id === action.payload.album.id)[0].isSelected = action.payload.isSelected;
     }
   },
   extraReducers: (builder) => {

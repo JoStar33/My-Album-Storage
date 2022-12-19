@@ -14,7 +14,7 @@ const SearchAlbumForm: React.FC = () => {
   const search = async () => {
     await dispatch(asyncGetAlbumFetch(searchParam))
   }
-  const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
+  const handleChangeSearch = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
     setSearchParam({
       ...searchParam,
       [e.target.name]: e.target.value,
@@ -22,7 +22,7 @@ const SearchAlbumForm: React.FC = () => {
   };
   return (
     <SearchFormContainer>
-      <SearchInput type="text" name='query' onChange={onChangeSearch} />
+      <SearchInput type="text" name='query' onChange={handleChangeSearch} />
       <SearchBtn onClick={search}>검색</SearchBtn>
     </SearchFormContainer>
   );
@@ -39,6 +39,7 @@ height: 10%;
 width: 90%;
 background-color: #a9e6d7;
 margin-bottom: 2%;
+margin-top: 2%;
 border-radius: 20px;
 box-shadow: 0 8px 8px 0 gray;
 `

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { AiOutlineCheck } from "react-icons/ai";
 
-const CheckComponent = () => {
+const CheckComponent: React.FC = () => {
   return (
     <CheckContainer>
       <AiOutlineCheck size="24" />

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import AlbumBox from './AlbumBox';
 import SearchAlbumForm from './SearchAlbumForm';
 import SelectedAlbumBox from './SelectedAlbumBox';
+import AlbumDialogController from './AlbumDialogController';
 import { albumType } from '../../store/album';
 import { RootState } from '../../store';
 import { useSelector } from 'react-redux';
@@ -19,7 +20,9 @@ const AlbumDialog: React.FC = () => {
         <SelectedAlbumContainer>
           {
             selectedAlbums.map(album => <SelectedAlbumBox
-              album = {album}
+              album={album}
+              selectedAlbums={selectedAlbums} 
+              setSelectedAlbums={setSelectedAlbums} 
             ></SelectedAlbumBox>)
           }
         </SelectedAlbumContainer>
@@ -35,6 +38,7 @@ const AlbumDialog: React.FC = () => {
             )
           }
         </AlbumViewer>
+        <AlbumDialogController></AlbumDialogController>
       </AlbumDialogContainer>
     </DialogBackground>
   );
@@ -54,6 +58,16 @@ box-shadow: 0 8px 8px 0 gray;
 display: flex;
 flex-direction: row;
 align-items: center;
+flex-wrap: nowrap;
+overflow-x: scroll;
+::-webkit-scrollbar {
+    width: 10px;  /* 스크롤바의 너비 */
+}
+::-webkit-scrollbar-thumb {
+    height: 30%; /* 스크롤바의 길이 */
+    background: #217af4; /* 스크롤바의 색상 */
+    border-radius: 10px;
+}
 `;
 
 const AlbumDialogContainer = styled(Centering)`
@@ -74,6 +88,9 @@ flex-wrap: wrap;
 overflow-y: scroll;
 width: 90%;
 height: 60%;
+::-webkit-scrollbar {
+    display: none;
+}
 `;
 
 const DialogBackground = styled(Centering)`

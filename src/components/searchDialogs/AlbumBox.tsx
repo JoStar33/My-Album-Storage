@@ -22,13 +22,15 @@ const AlbumBox: React.FC<propsType> = ({album, selectedAlbums, setSelectedAlbums
     }
   }, [album.id]);
   const handleClickSelectAlbum = () => {
-    dispatch(setIsSelected(album));
-    if(selectedAlbums.find(albumData => albumData.id === album.id)) {
-      setSelectedAlbums(selectedAlbums.filter(albumData => albumData.id !== album.id));
+    //id가 존재한다면 선택이 됐다는 것이므로 앨범을 제거하는 로직을 실행.
+    if(selectedAlbums.find(selectedAlbumData => selectedAlbumData.id === album.id)) {
+      dispatch(setIsSelected({album: album, isSelected: false}));
+      setSelectedAlbums(selectedAlbums.filter(selectedAlbumData => selectedAlbumData.id !== album.id));
       return;
     } 
+    //id가 존재하지 않는다면 앨범을 넣는 로직을 실행.
+    dispatch(setIsSelected({album: album, isSelected: true}));
     selectedAlbums.push(album);
-    setSelectedAlbums(selectedAlbums);
   };
   return (
     <AlbumBoxContainer onClick={handleClickSelectAlbum}>
@@ -55,6 +57,8 @@ align-items: center;
 flex-direction: column;
 overflow: hidden;
 position: relative;
+user-select: none;
+cursor: pointer;
 `;
 
 interface AlbumImgType {
