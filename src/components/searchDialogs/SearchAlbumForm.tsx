@@ -27,7 +27,7 @@ const SearchAlbumForm: React.FC = () => {
   };
   return (
     <SearchFormContainer>
-      <SearchInput type="text" name='query' onKeyPress={handleOnKeyPress} onChange={handleChangeSearch} />
+      <SearchInput placeholder='검색어를 입력해주세요.' type="text" name='query' onKeyPress={handleOnKeyPress} onChange={handleChangeSearch} />
       <SearchBtn onClick={search}>검색</SearchBtn>
     </SearchFormContainer>
   );
