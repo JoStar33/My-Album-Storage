@@ -31,18 +31,18 @@ const ScoreDialog: React.FC<propsType> = ({scoreAlbum, selectedAlbums, setScoreD
       return;
     }
     //선택이 되었음을 알리는 함수 호출
-    dispatch(setIsSelected({id: scoreAlbum.id, isSelected: true}));
+    dispatch(setIsSelected({albumKey: scoreAlbum.albumKey, isSelected: true}));
     //스코어를 지정하고자하는 앨범의 값을 update
     setScoreAlbum(scoreAlbum);
     //선택이 됐었던 앨범이 아니라면? push진행
-    if(!selectedAlbums.find(selectedAlbum => selectedAlbum.id === scoreAlbum.id)) {
+    if(!selectedAlbums.find(selectedAlbum => selectedAlbum.albumKey === scoreAlbum.albumKey)) {
       setSelectedAlbums([...selectedAlbums, scoreAlbum]);
       setScoreDialog(false);
       return;
     }
     //선택이 됐었던 앨범이라면? update진행
     const updateSelectedAlbums = selectedAlbums.map(selectedAlbum => {
-      if(selectedAlbum.id === scoreAlbum.id) {
+      if(selectedAlbum.albumKey === scoreAlbum.albumKey) {
         return scoreAlbum;
       }
       return selectedAlbum;

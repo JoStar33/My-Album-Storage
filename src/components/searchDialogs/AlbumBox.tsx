@@ -22,12 +22,12 @@ const AlbumBox: React.FC<propsType> = ({album, selectedAlbums, setSelectedAlbums
     if(height > 23) {
       setIsLineOver(true);
     }
-  }, [album.id]);
+  }, [album.albumKey]);
   const handleClickAlbum = () => {
     //id가 존재한다면 선택이 됐다는 것이므로 앨범을 제거하는 로직을 실행.
-    if(selectedAlbums.find(selectedAlbumData => selectedAlbumData.id === album.id)) {
-      dispatch(setIsSelected({id: album.id, isSelected: false}));
-      setSelectedAlbums(selectedAlbums.filter(selectedAlbumData => selectedAlbumData.id !== album.id));
+    if(selectedAlbums.find(selectedAlbumData => selectedAlbumData.albumKey === album.albumKey)) {
+      dispatch(setIsSelected({albumKey: album.albumKey, isSelected: false}));
+      setSelectedAlbums(selectedAlbums.filter(selectedAlbumData => selectedAlbumData.albumKey !== album.albumKey));
       return;
     }
     setScoreAlbum(album);

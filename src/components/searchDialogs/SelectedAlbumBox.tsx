@@ -22,8 +22,8 @@ const SelectedAlbumBox: React.FC<propsType> = ({album, selectedAlbums, setSelect
     setScoreAlbum(album);
   };
   const handleDeleteEvent = () => {
-    dispatch(setIsSelected({id: album.id, isSelected: false}));
-    setSelectedAlbums(selectedAlbums.filter(seletedAlbum => seletedAlbum.id !== album.id));
+    dispatch(setIsSelected({albumKey: album.albumKey, isSelected: false}));
+    setSelectedAlbums(selectedAlbums.filter(seletedAlbum => seletedAlbum.albumKey !== album.albumKey));
   };
   return (
     <SelectedAlbumContainer>

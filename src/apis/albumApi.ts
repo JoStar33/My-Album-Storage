@@ -9,7 +9,7 @@ const getSpotifyAlbum = (query: string, type:string) => {
 };
 
 const postAlbum = (userId: number, selectedAlbum: albumType[]) => {
-  return customAxios.post(`/${userId}/album`, {
+  return customAxios.post(`/album/${userId}`, {
     selectedAlbum
   })
 }
@@ -24,7 +24,7 @@ type artist = {
 };
 
 type albumType = {
-  id: string,
+  albumKey: string,
   artistName: string,
   albumName: string,
   albumImg: string,

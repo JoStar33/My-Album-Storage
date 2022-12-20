@@ -12,7 +12,7 @@ type postAlbumParamType = {
 }
 
 export type albumType = {
-  id: string,
+  albumKey: string,
   artistName: string,
   albumName: string,
   albumImg: string,
@@ -22,7 +22,7 @@ export type albumType = {
 };
 
 type selectedSetType = {
-  id: string,
+  albumKey: string,
   isSelected: boolean,
 };
 
@@ -61,7 +61,7 @@ export const albumSlice = createSlice({
   initialState,
   reducers: {
     setIsSelected: (state, action: PayloadAction<selectedSetType>) => {
-      state.searchAlbums.filter(album => album.id === action.payload.id)[0].isSelected = action.payload.isSelected;
+      state.searchAlbums.filter(album => album.albumKey === action.payload.albumKey)[0].isSelected = action.payload.isSelected;
     }
   },
   extraReducers: (builder) => {
@@ -73,7 +73,7 @@ export const albumSlice = createSlice({
       payload.forEach(element => {
         state.searchAlbums.push(
           {
-            id: element.id,
+            albumKey: element.id,
             artistName: element.artists[0].name,
             albumName: element.name,
             albumImg: element.images[0].url,
@@ -89,14 +89,11 @@ export const albumSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(asyncPostAlbumFetch.pending, (state, { payload }) => {
-      state.loading = true;
     });
     builder.addCase(asyncPostAlbumFetch.fulfilled, (state, { payload })=>{
       state.searchAlbums.splice(0, state.searchAlbums.length);
-      state.loading = false;
     });
     builder.addCase(asyncPostAlbumFetch.rejected, (state, { payload })=>{
-      state.loading = false;
     });
   }
 })

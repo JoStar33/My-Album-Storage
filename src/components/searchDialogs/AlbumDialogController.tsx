@@ -12,7 +12,7 @@ type propsType = {
 const AlbumDialogController: React.FC<propsType> = ({selectedAlbums}) => {
   const dispatch = useDispatch<AppDispatch>();
   const apply = async () => {
-    await dispatch(asyncPostAlbumFetch({selectedAlbums: selectedAlbums, userId: 2}))
+    await dispatch(asyncPostAlbumFetch({selectedAlbums: selectedAlbums, userId: 30}))
   }
   return (
     <BtnContainer>

@@ -30,7 +30,7 @@ const AlbumDialog: React.FC = () => {
         <SelectedAlbumContainer>
           {
             selectedAlbums.map(album => <SelectedAlbumBox
-              key={album.id}
+              key={album.albumKey}
               album={album}
               selectedAlbums={selectedAlbums} 
               setSelectedAlbums={setSelectedAlbums} 
@@ -45,7 +45,7 @@ const AlbumDialog: React.FC = () => {
               searchAlbums.length !== 0 ?
               searchAlbums.map(
                 album => <AlbumBox 
-                  key={album.id}
+                  key={album.albumKey}
                   album={album}
                   selectedAlbums={selectedAlbums} 
                   setSelectedAlbums={setSelectedAlbums}
