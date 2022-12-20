@@ -8,11 +8,16 @@ import ScoreDialog from '../scoreDialogs/ScoreDialog';
 import AlbumSkeleton from '../loadingForm/AlbumSkeleton';
 import SearchGuideForm from '../initForm/SearchGuideForm';
 import NotFoundAnyAlbum from '../errorForm/NotFoundAnyAlbum';
+import LoadingForm from '../loadingForm/LoadingForm';
 import { albumType } from '../../store/album';
 import { RootState } from '../../store';
 import { useSelector } from 'react-redux';
 
-const AlbumDialog: React.FC = () => {
+type propsType = {
+  setAlbumDialog: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const AlbumDialog: React.FC<propsType> = ({setAlbumDialog}) => {
   //선택된 앨범 정보
   const [selectedAlbums, setSelectedAlbums] = useState([] as albumType[]);
   //스코어 설정 다이얼로그
@@ -22,7 +27,7 @@ const AlbumDialog: React.FC = () => {
   //스코어 설정을 하고자하는 앨범
   const [scoreAlbum, setScoreAlbum] = useState({} as albumType);
   //검색된 앨범 정보
-  const { searchAlbums, loading } = useSelector((state: RootState) => state.albumStore);
+  const { searchAlbums, getSpotifyAlbumLoading, postAlbumLoading } = useSelector((state: RootState) => state.albumStore);
   return (
     <DialogBackground>
       <AlbumDialogContainer>
@@ -41,7 +46,7 @@ const AlbumDialog: React.FC = () => {
         </SelectedAlbumContainer>
         <AlbumViewer>
           {
-            !loading && (
+            !getSpotifyAlbumLoading && (
               searchAlbums.length !== 0 ?
               searchAlbums.map(
                 album => <AlbumBox 
@@ -56,14 +61,18 @@ const AlbumDialog: React.FC = () => {
             )
           }
           {
-            loading && new Array(12).fill(1).map((_, i) => {
+            getSpotifyAlbumLoading && new Array(12).fill(1).map((_, i) => {
               return <AlbumSkeleton key={i}></AlbumSkeleton>;
             })
           }
         </AlbumViewer>
         <AlbumDialogController
+          setAlbumDialog={setAlbumDialog}
           selectedAlbums={selectedAlbums}
         ></AlbumDialogController>
+        {
+          postAlbumLoading && <LoadingForm></LoadingForm>
+        }
       </AlbumDialogContainer>
       {
         scoreDialog && <ScoreDialog 

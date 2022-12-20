@@ -53,7 +53,8 @@ const initialState  = {
   */
   albums: [],
   searchAlbums: [] as albumType[],
-  loading: false
+  getSpotifyAlbumLoading: false,
+  postAlbumLoading: false,
 }
 
 export const albumSlice = createSlice({
@@ -62,11 +63,14 @@ export const albumSlice = createSlice({
   reducers: {
     setIsSelected: (state, action: PayloadAction<selectedSetType>) => {
       state.searchAlbums.filter(album => album.albumKey === action.payload.albumKey)[0].isSelected = action.payload.isSelected;
+    },
+    resetSearchAlbums: (state) => {
+      state.searchAlbums.splice(0, state.searchAlbums.length);
     }
   },
   extraReducers: (builder) => {
     builder.addCase(asyncGetSpotifyAlbumFetch.pending, (state, { payload }) => {
-      state.loading = true;
+      state.getSpotifyAlbumLoading = true;
     });
     builder.addCase(asyncGetSpotifyAlbumFetch.fulfilled, (state, { payload })=>{
       state.searchAlbums.splice(0, state.searchAlbums.length);
@@ -83,23 +87,26 @@ export const albumSlice = createSlice({
           }
         )
       });
-      state.loading = false;
+      state.getSpotifyAlbumLoading = false;
     });
     builder.addCase(asyncGetSpotifyAlbumFetch.rejected, (state, { payload })=>{
-      state.loading = false;
+      state.getSpotifyAlbumLoading = false;
     });
     builder.addCase(asyncPostAlbumFetch.pending, (state, { payload }) => {
+      state.postAlbumLoading = true;
     });
     builder.addCase(asyncPostAlbumFetch.fulfilled, (state, { payload })=>{
       state.searchAlbums.splice(0, state.searchAlbums.length);
+      state.postAlbumLoading = false;
     });
     builder.addCase(asyncPostAlbumFetch.rejected, (state, { payload })=>{
+      state.postAlbumLoading = false;
     });
   }
 })
 
 export { asyncGetSpotifyAlbumFetch, asyncPostAlbumFetch }
 
-export const { setIsSelected } = albumSlice.actions;
+export const { setIsSelected, resetSearchAlbums } = albumSlice.actions;
 
 export default albumSlice.reducer;
