@@ -1,11 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
+import { AppDispatch } from '../../store/index';
+import { useDispatch } from 'react-redux';
+import { albumType } from '../../store/album';
+import { asyncPostAlbumFetch } from '../../store/album';
 
-const AlbumDialogController: React.FC = () => {
-  
+type propsType = {
+  selectedAlbums: albumType[]
+}
+
+const AlbumDialogController: React.FC<propsType> = ({selectedAlbums}) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const apply = async () => {
+    await dispatch(asyncPostAlbumFetch({selectedAlbums: selectedAlbums, userId: 2}))
+  }
   return (
     <BtnContainer>
-      <ApplyBtn>
+      <ApplyBtn onClick={apply}>
         추가
       </ApplyBtn>
       <CloseBtn>

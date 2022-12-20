@@ -61,7 +61,9 @@ const AlbumDialog: React.FC = () => {
             })
           }
         </AlbumViewer>
-        <AlbumDialogController></AlbumDialogController>
+        <AlbumDialogController
+          selectedAlbums={selectedAlbums}
+        ></AlbumDialogController>
       </AlbumDialogContainer>
       {
         scoreDialog && <ScoreDialog 

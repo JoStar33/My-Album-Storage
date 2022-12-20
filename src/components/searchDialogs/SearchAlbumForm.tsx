@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { AppDispatch } from '../../store/index';
 import { useDispatch } from 'react-redux';
-import { asyncGetAlbumFetch } from '../../store/album';
+import { asyncGetSpotifyAlbumFetch } from '../../store/album';
 
 type propsType = {
   setIsSearchStarted: React.Dispatch<React.SetStateAction<boolean>>
@@ -16,7 +16,7 @@ const SearchAlbumForm: React.FC<propsType> = ({setIsSearchStarted}) => {
   });
   const search = async () => {
     setIsSearchStarted(true);
-    await dispatch(asyncGetAlbumFetch(searchParam))
+    await dispatch(asyncGetSpotifyAlbumFetch(searchParam))
   }
   const handleChangeSearch = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
     setSearchParam({

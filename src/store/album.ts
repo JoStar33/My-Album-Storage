@@ -1,10 +1,15 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getAlbum, item } from '../apis/albumApi';
+import { getSpotifyAlbum, item, postAlbum } from '../apis/albumApi';
 
-type getAlbumParamType = {
+type getSpotifyAlbumParamType = {
   query: string,
   type: string
 };
+
+type postAlbumParamType = {
+  userId: number,
+  selectedAlbums: albumType[]
+}
 
 export type albumType = {
   id: string,
@@ -21,16 +26,24 @@ type selectedSetType = {
   isSelected: boolean,
 };
 
-const asyncGetAlbumFetch = createAsyncThunk(
-  'counterSlice/asyncGetAlbumFetch',
-  async (param: getAlbumParamType) => {
+const asyncGetSpotifyAlbumFetch = createAsyncThunk(
+  'counterSlice/asyncGetSpotifyAlbumFetch',
+  async (param: getSpotifyAlbumParamType) => {
     let data: item[] = [];
-    await getAlbum(param.query, param.type).then((res) => {
+    await getSpotifyAlbum(param.query, param.type).then((res) => {
       data = res.data.albums.items
     });
     return data;
   }
 );
+
+const asyncPostAlbumFetch = createAsyncThunk(
+  'counterSlice/asyncPostAlbumFetch',
+  async (param: postAlbumParamType) => {
+    await postAlbum(param.userId, param.selectedAlbums)
+  }
+);
+
 const initialState  = {
   /*
     <사실상 앨범을 위한 배열이 총 3개인셈.>
@@ -52,10 +65,10 @@ export const albumSlice = createSlice({
     }
   },
   extraReducers: (builder) => {
-    builder.addCase(asyncGetAlbumFetch.pending, (state, { payload }) => {
+    builder.addCase(asyncGetSpotifyAlbumFetch.pending, (state, { payload }) => {
       state.loading = true;
     });
-    builder.addCase(asyncGetAlbumFetch.fulfilled, (state, { payload })=>{
+    builder.addCase(asyncGetSpotifyAlbumFetch.fulfilled, (state, { payload })=>{
       state.searchAlbums.splice(0, state.searchAlbums.length);
       payload.forEach(element => {
         state.searchAlbums.push(
@@ -72,13 +85,23 @@ export const albumSlice = createSlice({
       });
       state.loading = false;
     });
-    builder.addCase(asyncGetAlbumFetch.rejected, (state, { payload })=>{
+    builder.addCase(asyncGetSpotifyAlbumFetch.rejected, (state, { payload })=>{
+      state.loading = false;
+    });
+    builder.addCase(asyncPostAlbumFetch.pending, (state, { payload }) => {
+      state.loading = true;
+    });
+    builder.addCase(asyncPostAlbumFetch.fulfilled, (state, { payload })=>{
+      state.searchAlbums.splice(0, state.searchAlbums.length);
+      state.loading = false;
+    });
+    builder.addCase(asyncPostAlbumFetch.rejected, (state, { payload })=>{
       state.loading = false;
     });
   }
 })
 
-export { asyncGetAlbumFetch }
+export { asyncGetSpotifyAlbumFetch, asyncPostAlbumFetch }
 
 export const { setIsSelected } = albumSlice.actions;
 
