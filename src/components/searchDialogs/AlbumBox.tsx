@@ -67,6 +67,7 @@ interface AlbumImgType {
 };
 
 const AlbumImg = styled.img<AlbumImgType>`
+margin-top: 1vw;
 width: ${(props) => (props.isLineOver ? '8vw' : '9vw')};
 height: ${(props) => (props.isLineOver ? '8vw' : '9vw')};
 `;

@@ -4,14 +4,18 @@ import { AppDispatch } from '../../store/index';
 import { useDispatch } from 'react-redux';
 import { asyncGetAlbumFetch } from '../../store/album';
 
+type propsType = {
+  setIsSearchStarted: React.Dispatch<React.SetStateAction<boolean>>
+}
 
-const SearchAlbumForm: React.FC = () => {
+const SearchAlbumForm: React.FC<propsType> = ({setIsSearchStarted}) => {
   const dispatch = useDispatch<AppDispatch>();
   const [searchParam, setSearchParam] = useState({
     query: '',
     type: 'album'
   });
   const search = async () => {
+    setIsSearchStarted(true);
     await dispatch(asyncGetAlbumFetch(searchParam))
   }
   const handleChangeSearch = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {

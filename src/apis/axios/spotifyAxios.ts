@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getToken } from './spotifyCookie';
+import { getToken } from '../cookies/spotifyCookie';
 
 
 const spotifyAxios = axios.create({

@@ -17,7 +17,7 @@ align-items: center;
 `;
 
 const CheckContainer = styled(Centering)`
-background-color: rgba(1, 207, 238, 0.4);
+background-color: rgba(201, 240, 213, 0.4);
 position: absolute;
 width: 100%;
 height: 100%;

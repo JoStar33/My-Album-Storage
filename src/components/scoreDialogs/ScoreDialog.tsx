@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
-import '../../styles/fire_font.css';
 import { AppDispatch } from '../../store/index';
 import { useDispatch } from 'react-redux';
 import { albumType, setIsSelected } from '../../store/album';
@@ -8,6 +7,7 @@ import { GrScorecard } from 'react-icons/gr';
 import { MdCancel } from 'react-icons/md';
 import { BiCommentDetail } from 'react-icons/bi';
 import ScoreDialogController from './ScoreDialogController';
+import ScoreForm from './ScoreForm';
 
 type propsType = {
   scoreAlbum: albumType,
@@ -63,9 +63,8 @@ const ScoreDialog: React.FC<propsType> = ({scoreAlbum, selectedAlbums, setScoreD
         <ArtistName>
           {scoreAlbum.artistName}
         </ArtistName>
-        <div className="fire">
-          <h1 className="blazing">{scoreAlbum.score}</h1>
-        </div>
+
+        <ScoreForm score={scoreAlbum.score}></ScoreForm>
         <ScoreBox>
           <GrScorecard size={24}></GrScorecard>
           <ScoreText>나의 점수는?</ScoreText>
@@ -171,6 +170,7 @@ const ScoreDialogContainer = styled(Centering)`
 flex-direction: column;
 position: relative;
 width: 30vw;
+min-width: 450px;
 height: 80vh;
 border-radius: 25px;
 background-color: white;

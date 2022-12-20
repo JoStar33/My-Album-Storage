@@ -1,4 +1,4 @@
-import { spotifyAxios } from './spotifyAxios';
+import { spotifyAxios } from './axios/spotifyAxios';
 
 const getAlbum = (query: string, type:string) => {
   return spotifyAxios.get(`/v1/search`, {params: {
@@ -6,6 +6,10 @@ const getAlbum = (query: string, type:string) => {
     type: type,
   }});
 };
+
+const postAlbum = () => {
+  return 
+}
 
 type artist = {
   external_urls : Object,

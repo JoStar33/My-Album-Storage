@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const AlbumDialogController: React.FC = () => {
+  
   return (
     <BtnContainer>
       <ApplyBtn>
@@ -42,7 +43,7 @@ background-color: skyblue;
 `;
 
 const CloseBtn = styled(BtnForm)`
-background-color: red;
+background-color: #f2c2c3;
 `;
 
 export default AlbumDialogController;

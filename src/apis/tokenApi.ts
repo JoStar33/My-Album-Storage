@@ -1,5 +1,5 @@
-import { tokenAxios } from "./tokenAxios"
-import { setToken } from './spotifyCookie';
+import { tokenAxios } from "./axios/tokenAxios"
+import { setToken } from './cookies/spotifyCookie';
 
 const setTokenByPost = () => {
   return tokenAxios.post(`api/token`, 'grant_type=client_credentials')

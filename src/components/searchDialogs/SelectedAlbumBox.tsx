@@ -5,6 +5,7 @@ import { albumType, setIsSelected } from '../../store/album';
 import { AppDispatch } from '../../store/index';
 import { useDispatch } from 'react-redux';
 import { MdCancel } from 'react-icons/md';
+import ScoreForm from '../scoreDialogs/ScoreForm';
 
 type propsType = {
   album: albumType,
@@ -27,12 +28,10 @@ const SelectedAlbumBox: React.FC<propsType> = ({album, selectedAlbums, setSelect
   return (
     <SelectedAlbumContainer>
       <SelectedAlbumImg onClick={handleModifyScore} src={album.albumImg}></SelectedAlbumImg>
-      <div className="fire" style={{cursor: 'pointer'}} onClick={handleModifyScore}>
-        <h3 className="blazing">{album.score}</h3>
-      </div>
+      <ScoreForm score={album.score}></ScoreForm>
       <SelectedAlbumInfoContainer onClick={handleModifyScore}>
-        <SelectedAlbumInfo>{album.artistName}</SelectedAlbumInfo>
         <SelectedAlbumInfo>{album.albumName}</SelectedAlbumInfo>
+        <SelectedAlbumInfo>{album.artistName}</SelectedAlbumInfo>
       </SelectedAlbumInfoContainer>
       <DeleteBtn onClick={handleDeleteEvent}>
         <MdCancel size={24}></MdCancel>
@@ -52,7 +51,7 @@ min-height: 80%;
 margin-left: 1%;
 margin-right: 1%;
 margin-bottom: 1%;
-margin-top: 1%;
+margin-top: 0.6%;
 border-radius: 10px;
 background-color: white;
 user-select: none;
@@ -69,14 +68,17 @@ const SelectedAlbumInfoContainer = styled.div`
 display: flex;
 flex-direction: column;
 justify-content: flex-start;
+width: 7vw;
 margin-left: 10px;
 margin-right: 10px;
 cursor: pointer;
 `;
 
 const SelectedAlbumInfo = styled.div`
-display: flex;
-justify-content: flex-start;
+text-align: left;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis; 
 font-weight: 800;
 `;
 

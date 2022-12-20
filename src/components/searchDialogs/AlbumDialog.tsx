@@ -4,8 +4,10 @@ import AlbumBox from './AlbumBox';
 import SearchAlbumForm from './SearchAlbumForm';
 import SelectedAlbumBox from './SelectedAlbumBox';
 import AlbumDialogController from './AlbumDialogController';
-import LoadingForm from '../loadingForm/LoadingForm';
 import ScoreDialog from '../scoreDialogs/ScoreDialog';
+import AlbumSkeleton from '../loadingForm/AlbumSkeleton';
+import SearchGuideForm from '../initForm/SearchGuideForm';
+import NotFoundAnyAlbum from '../errorForm/NotFoundAnyAlbum';
 import { albumType } from '../../store/album';
 import { RootState } from '../../store';
 import { useSelector } from 'react-redux';
@@ -15,6 +17,8 @@ const AlbumDialog: React.FC = () => {
   const [selectedAlbums, setSelectedAlbums] = useState([] as albumType[]);
   //스코어 설정 다이얼로그
   const [scoreDialog, setScoreDialog] = useState(false);
+  //스코어 설정 다이얼로그
+  const [isSearchStarted, setIsSearchStarted] = useState(false);
   //스코어 설정을 하고자하는 앨범
   const [scoreAlbum, setScoreAlbum] = useState({} as albumType);
   //검색된 앨범 정보
@@ -22,7 +26,7 @@ const AlbumDialog: React.FC = () => {
   return (
     <DialogBackground>
       <AlbumDialogContainer>
-        <SearchAlbumForm></SearchAlbumForm>
+        <SearchAlbumForm setIsSearchStarted={setIsSearchStarted}></SearchAlbumForm>
         <SelectedAlbumContainer>
           {
             selectedAlbums.map(album => <SelectedAlbumBox
@@ -37,19 +41,24 @@ const AlbumDialog: React.FC = () => {
         </SelectedAlbumContainer>
         <AlbumViewer>
           {
-            searchAlbums.map(
-              album => <AlbumBox 
-                key={album.id}
-                album={album}
-                selectedAlbums={selectedAlbums} 
-                setSelectedAlbums={setSelectedAlbums}
-                setScoreDialog={setScoreDialog} 
-                setScoreAlbum={setScoreAlbum}
-              ></AlbumBox>
+            !loading && (
+              searchAlbums.length !== 0 ?
+              searchAlbums.map(
+                album => <AlbumBox 
+                  key={album.id}
+                  album={album}
+                  selectedAlbums={selectedAlbums} 
+                  setSelectedAlbums={setSelectedAlbums}
+                  setScoreDialog={setScoreDialog} 
+                  setScoreAlbum={setScoreAlbum}
+                ></AlbumBox>
+              ) : (isSearchStarted ? <NotFoundAnyAlbum></NotFoundAnyAlbum>: <SearchGuideForm></SearchGuideForm>)
             )
           }
           {
-            loading && <LoadingForm></LoadingForm>
+            loading && new Array(12).fill(1).map((_, i) => {
+              return <AlbumSkeleton key={i}></AlbumSkeleton>;
+            })
           }
         </AlbumViewer>
         <AlbumDialogController></AlbumDialogController>
@@ -75,7 +84,7 @@ align-items: center;
 const SelectedAlbumContainer = styled.div`
 width: 90%;
 height: 20%;
-background-color: #a9e6d7;
+background-color: #b8f2f0;
 border-radius: 20px;
 box-shadow: 0 8px 8px 0 gray;
 display: flex;
