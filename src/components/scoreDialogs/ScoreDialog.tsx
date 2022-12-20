@@ -3,61 +3,68 @@ import styled from 'styled-components';
 import '../../styles/fire_font.css';
 import { AppDispatch } from '../../store/index';
 import { useDispatch } from 'react-redux';
-import { albumType, setScore, setIsSelected } from '../../store/album';
+import { albumType, setIsSelected } from '../../store/album';
 import { GrScorecard } from 'react-icons/gr';
 import { MdCancel } from 'react-icons/md';
 import { BiCommentDetail } from 'react-icons/bi';
 import ScoreDialogController from './ScoreDialogController';
 
 type propsType = {
-  album: albumType,
+  scoreAlbum: albumType,
   selectedAlbums: albumType[],
-  setScoreDialog: React.Dispatch<React.SetStateAction<boolean>>
+  setSelectedAlbums: React.Dispatch<React.SetStateAction<albumType[]>>,
+  setScoreDialog: React.Dispatch<React.SetStateAction<boolean>>,
+  setScoreAlbum: React.Dispatch<React.SetStateAction<albumType>>
 };
 
-const ScoreDialog: React.FC<propsType> = ({album, selectedAlbums, setScoreDialog}) => {
+const ScoreDialog: React.FC<propsType> = ({scoreAlbum, selectedAlbums, setScoreDialog, setSelectedAlbums, setScoreAlbum}) => {
   const dispatch = useDispatch<AppDispatch>();
-  const [userScore, setUserScore] = useState(``);
   const [scoreVaildateText, setScoreVaildateText] = useState(``);
   const handleChangeScore = (e: React.ChangeEvent<HTMLInputElement>) => {
     setScoreVaildateText(``);
-    setUserScore(e.target.value);
+    setScoreAlbum({...scoreAlbum, score: parseInt(e.target.value)});
   }
   const applyScore = () => {
-    if(Number.isNaN(parseInt(userScore))){
-      setScoreVaildateText(`점수를 입력해주세요!`);
-      return
-    }
-    if(parseInt(userScore) <= 0 || parseInt(userScore) > 100) {
+    //스코어의 값이 1~100사이의 값이 아니라면
+    if(scoreAlbum.score <= 0 || scoreAlbum.score > 100) {
       setScoreVaildateText(`점수는 0부터 100까지만 입력이 가능합니다.`);
-      return
+      return;
     }
-    dispatch(setScore({id: album.id, score: parseInt(userScore)}));
-    dispatch(setIsSelected({id: album.id, isSelected: true}));
-    if(!selectedAlbums.find(selectedAlbum => selectedAlbum.id === album.id)) {
-      selectedAlbums.push(album);
+    //선택이 되었음을 알리는 함수 호출
+    dispatch(setIsSelected({id: scoreAlbum.id, isSelected: true}));
+    //스코어를 지정하고자하는 앨범의 값을 update
+    setScoreAlbum(scoreAlbum);
+    //선택이 됐었던 앨범이 아니라면? push진행
+    if(!selectedAlbums.find(selectedAlbum => selectedAlbum.id === scoreAlbum.id)) {
+      setSelectedAlbums([...selectedAlbums, scoreAlbum]);
+      setScoreDialog(false);
+      return;
     }
-    const albumIndex = selectedAlbums.findIndex(selectedAlbum => selectedAlbum.id === album.id);
-    selectedAlbums[albumIndex] = {...selectedAlbums[albumIndex], score: parseInt(userScore)};
+    //선택이 됐었던 앨범이라면? update진행
+    const updateSelectedAlbums = selectedAlbums.map(selectedAlbum => {
+      if(selectedAlbum.id === scoreAlbum.id) {
+        return scoreAlbum;
+      }
+      return selectedAlbum;
+    })
+    setSelectedAlbums(updateSelectedAlbums);
     setScoreDialog(false);
-    setUserScore('');
   }
   const closeDialog = () => {
     setScoreDialog(false);
-    setUserScore('');
   }
   return (
     <DialogBackground>
       <ScoreDialogContainer>
         <AlbumTitle>
-          {album.albumName}
+          {scoreAlbum.albumName}
         </AlbumTitle>
-        <AlbumImg src={album.albumImg}></AlbumImg>
+        <AlbumImg src={scoreAlbum.albumImg}></AlbumImg>
         <ArtistName>
-          {album.artistName}
+          {scoreAlbum.artistName}
         </ArtistName>
         <div className="fire">
-          <h1 className="blazing">{album.score ? album.score : userScore}</h1>
+          <h1 className="blazing">{scoreAlbum.score}</h1>
         </div>
         <ScoreBox>
           <GrScorecard size={24}></GrScorecard>

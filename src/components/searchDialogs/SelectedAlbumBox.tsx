@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import '../../styles/fire_font.css';
-import { albumType, setIsSelected, setScore } from '../../store/album';
+import { albumType, setIsSelected } from '../../store/album';
 import { AppDispatch } from '../../store/index';
 import { useDispatch } from 'react-redux';
 import { MdCancel } from 'react-icons/md';
@@ -19,11 +19,9 @@ const SelectedAlbumBox: React.FC<propsType> = ({album, selectedAlbums, setSelect
   const handleModifyScore = (e: React.MouseEvent<HTMLElement> ) => {
     setScoreDialog(true);
     setScoreAlbum(album);
-    e.stopPropagation();
   };
   const handleDeleteEvent = () => {
     dispatch(setIsSelected({id: album.id, isSelected: false}));
-    dispatch(setScore({id: album.id, score: 0}));
     setSelectedAlbums(selectedAlbums.filter(seletedAlbum => seletedAlbum.id !== album.id));
   };
   return (

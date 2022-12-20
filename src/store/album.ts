@@ -21,11 +21,6 @@ type selectedSetType = {
   isSelected: boolean,
 };
 
-type scoreSetType = {
-  id: string,
-  score: number,
-};
-
 const asyncGetAlbumFetch = createAsyncThunk(
   'counterSlice/asyncGetAlbumFetch',
   async (param: getAlbumParamType) => {
@@ -54,9 +49,6 @@ export const albumSlice = createSlice({
   reducers: {
     setIsSelected: (state, action: PayloadAction<selectedSetType>) => {
       state.searchAlbums.filter(album => album.id === action.payload.id)[0].isSelected = action.payload.isSelected;
-    },
-    setScore: (state, action: PayloadAction<scoreSetType>) => {
-      state.searchAlbums.filter(album => album.id === action.payload.id)[0].score = action.payload.score;
     }
   },
   extraReducers: (builder) => {
@@ -88,6 +80,6 @@ export const albumSlice = createSlice({
 
 export { asyncGetAlbumFetch }
 
-export const { setIsSelected, setScore } = albumSlice.actions;
+export const { setIsSelected } = albumSlice.actions;
 
 export default albumSlice.reducer;

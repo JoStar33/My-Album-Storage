@@ -57,8 +57,10 @@ const AlbumDialog: React.FC = () => {
       {
         scoreDialog && <ScoreDialog 
           selectedAlbums={selectedAlbums} 
+          setSelectedAlbums={setSelectedAlbums} 
           setScoreDialog={setScoreDialog} 
-          album={scoreAlbum}
+          scoreAlbum={scoreAlbum}
+          setScoreAlbum={setScoreAlbum}
         ></ScoreDialog>
       }
     </DialogBackground>
