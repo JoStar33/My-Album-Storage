@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getSpotifyAlbum, item, postAlbum, getAlbum } from '../apis/albumApi';
+import { getSpotifyAlbum, item, postAlbum, getAlbum, deleteAlbum } from '../apis/albumApi';
 
 type getSpotifyAlbumParamType = {
   query: string,
@@ -41,7 +41,7 @@ const asyncGetSpotifyAlbumFetch = createAsyncThunk(
   async (param: getSpotifyAlbumParamType) => {
     let data: item[] = [];
     await getSpotifyAlbum(param.query, param.type).then((res) => {
-      data = res.data.albums.items
+      data = res.data.albums.items;
     });
     return data;
   }
@@ -61,7 +61,14 @@ const asyncGetAlbumFetch = createAsyncThunk(
 const asyncPostAlbumFetch = createAsyncThunk(
   'counterSlice/asyncPostAlbumFetch',
   async (param: postAlbumParamType) => {
-    await postAlbum(param.userId, param.selectedAlbums)
+    await postAlbum(param.userId, param.selectedAlbums);
+  }
+);
+
+const asyncDeleteAlbumFetch = createAsyncThunk(
+  'counterSlice/asyncDeleteAlbumFetch',
+  async (param: number) => {
+    await deleteAlbum(param);
   }
 );
 
@@ -144,10 +151,18 @@ export const albumSlice = createSlice({
       state.getAlbumLoading = false;});
     builder.addCase(asyncGetAlbumFetch.rejected, (state, { payload })=>{
       state.getAlbumLoading = false;});
+
+
+    builder.addCase(asyncDeleteAlbumFetch.pending, (state, { payload }) => {
+      });
+    builder.addCase(asyncDeleteAlbumFetch.fulfilled, (state, { payload })=>{
+      });
+    builder.addCase(asyncDeleteAlbumFetch.rejected, (state, { payload })=>{
+      });
   }
 })
 
-export { asyncGetSpotifyAlbumFetch, asyncPostAlbumFetch, asyncGetAlbumFetch }
+export { asyncGetSpotifyAlbumFetch, asyncPostAlbumFetch, asyncGetAlbumFetch, asyncDeleteAlbumFetch };
 
 export const { setIsSelected, resetSearchAlbums } = albumSlice.actions;
 

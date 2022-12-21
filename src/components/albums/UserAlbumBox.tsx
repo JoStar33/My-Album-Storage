@@ -1,5 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { userAlbumType } from '../../store/album';
+import { userAlbumType, asyncGetAlbumFetch } from '../../store/album';
+import { MdCancel } from 'react-icons/md';
+import { AppDispatch } from '../../store';
+import { asyncDeleteAlbumFetch } from '../../store/album';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import ScoreForm from '../scoreDialogs/ScoreForm';
 
@@ -10,18 +14,28 @@ type propsType = {
 const UserAlbumBox: React.FC<propsType> = ({album}) => {
   const [isLineOver, setIsLineOver] = useState(false);
   const albumText = useRef<any>(null);
+  const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     const height = albumText.current.clientHeight;
     if(height > 23) {
       setIsLineOver(true);
     }
   }, [album.id]);
+  const handleDeleteEvent = async () => {
+    await dispatch(asyncDeleteAlbumFetch(album.id))
+    .then(() => { 
+      dispatch(asyncGetAlbumFetch(30));
+    });
+  };
   return (
     <UserAlbumContainer>
       <UserAlbumName ref={ albumText } isLineOver={ isLineOver }>{ album.name }</UserAlbumName>
       <UserAlbumImg src={ album.image } isLineOver={ isLineOver }/>
       <ScoreForm score={ album.score }></ScoreForm>
       <UserAlbumDescription>{ album.description }</UserAlbumDescription>
+      <DeleteButton onClick={handleDeleteEvent}>
+        <MdCancel size={30}></MdCancel>
+      </DeleteButton>
     </UserAlbumContainer>
   );
 };
@@ -41,7 +55,6 @@ user-select: none;
 cursor: pointer;
 `;
 
-
 interface AlbumImgType {
   isLineOver: boolean;
 };
@@ -60,6 +73,13 @@ font-size: ${(props) => (props.isLineOver ? '6px' : '14px')};
 
 const UserAlbumDescription = styled.div`
 margin-bottom: 1vw;
+`;
+
+const DeleteButton = styled.div`
+position: absolute;
+top: -2%;
+left: 91%;
+cursor: pointer;
 `;
 
 export default UserAlbumBox;

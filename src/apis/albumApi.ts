@@ -18,6 +18,10 @@ const getAlbum = (userId: number) => {
   return customAxios.get(`/album/${userId}`);
 }
 
+const deleteAlbum = (albumId: number) => {
+  return customAxios.delete(`/album/${albumId}`);
+}
+
 type artist = {
   external_urls: Object,
   href: string,
@@ -64,4 +68,4 @@ export type getAlbumParamType = {
   type: string
 };
 
-export { getSpotifyAlbum, postAlbum, getAlbum };
+export { getSpotifyAlbum, postAlbum, getAlbum, deleteAlbum };

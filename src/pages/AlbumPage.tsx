@@ -4,8 +4,7 @@ import AlbumDialog from '../components/searchDialogs/AlbumDialog';
 import { setTokenByPost } from '../apis/tokenApi';
 import { RootState, AppDispatch } from '../store';
 import { asyncGetAlbumFetch } from '../store/album';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import UserAlbumBox from '../components/albums/UserAlbumBox';
 import UserAlbumSkeleton from '../components/loadingForm/UserAlbumSkeleton';
 
