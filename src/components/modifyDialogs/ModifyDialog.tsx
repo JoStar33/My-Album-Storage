@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { userAlbumType } from '../../store/album';
+import { userAlbumType, asyncPatchAlbumFetch, asyncGetAlbumFetch } from '../../store/album';
+import { AppDispatch } from '../../store/index';
+import { useDispatch } from 'react-redux';
 import { MdCancel } from 'react-icons/md';
 import { BiCommentDetail } from 'react-icons/bi';
 import ScoreForm from '../scoreDialogs/ScoreForm';
@@ -12,7 +14,8 @@ type propsType = {
   setModifyDialog: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
-const ModifyDialogs: React.FC<propsType> = ({album, setModifyDialog}) => {
+const ModifyDialog: React.FC<propsType> = ({album, setModifyDialog}) => {
+  const dispatch = useDispatch<AppDispatch>();
   const [scoreVaildateText, setScoreVaildateText] = useState(``);
   const [modifyAlbum, setModifyAlbum] = useState(album);
   const handleChangeScore = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,7 +25,9 @@ const ModifyDialogs: React.FC<propsType> = ({album, setModifyDialog}) => {
   const handleChangeDescription = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setModifyAlbum({...modifyAlbum, description: e.target.value});
   };
-  const applyScore = () => {
+  const applyScore = async () => {
+    await dispatch(asyncPatchAlbumFetch(modifyAlbum));
+    dispatch(asyncGetAlbumFetch(30));
     setModifyDialog(false);
   };
   const closeDialog = () => {
@@ -117,4 +122,4 @@ left: 94%;
 cursor: pointer;
 `;
 
-export default ModifyDialogs;
+export default ModifyDialog;

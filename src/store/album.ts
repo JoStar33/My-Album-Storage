@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getSpotifyAlbum, item, postAlbum, getAlbum, deleteAlbum } from '../apis/albumApi';
+import { getSpotifyAlbum, item, postAlbum, getAlbum, deleteAlbum, patchAlbum } from '../apis/albumApi';
 
 type getSpotifyAlbumParamType = {
   query: string,
@@ -69,6 +69,13 @@ const asyncDeleteAlbumFetch = createAsyncThunk(
   'counterSlice/asyncDeleteAlbumFetch',
   async (param: number) => {
     await deleteAlbum(param);
+  }
+);
+
+const asyncPatchAlbumFetch = createAsyncThunk(
+  'counterSlice/asyncPatchAlbumFetch',
+  async (param: userAlbumType) => {
+    await patchAlbum(param);
   }
 );
 
@@ -159,10 +166,19 @@ export const albumSlice = createSlice({
       });
     builder.addCase(asyncDeleteAlbumFetch.rejected, (state, { payload })=>{
       });
+
+
+
+    builder.addCase(asyncPatchAlbumFetch.pending, (state, { payload }) => {
+      });
+    builder.addCase(asyncPatchAlbumFetch.fulfilled, (state, { payload })=>{
+      });
+    builder.addCase(asyncPatchAlbumFetch.rejected, (state, { payload })=>{
+      });
   }
 })
 
-export { asyncGetSpotifyAlbumFetch, asyncPostAlbumFetch, asyncGetAlbumFetch, asyncDeleteAlbumFetch };
+export { asyncGetSpotifyAlbumFetch, asyncPostAlbumFetch, asyncPatchAlbumFetch, asyncGetAlbumFetch, asyncDeleteAlbumFetch };
 
 export const { setIsSelected, resetSearchAlbums } = albumSlice.actions;
 

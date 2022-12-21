@@ -22,6 +22,12 @@ const deleteAlbum = (albumId: number) => {
   return customAxios.delete(`/album/${albumId}`);
 }
 
+const patchAlbum = (album: userAlbumType) => {
+  return customAxios.patch(`/album/${album.id}`, {
+    album
+  });
+}
+
 type artist = {
   external_urls: Object,
   href: string,
@@ -39,6 +45,16 @@ type albumType = {
   isSelected: boolean,
   score: number,
   description: string
+};
+
+type userAlbumType = {
+  id: number,
+  artist: string,
+  name: string,
+  image: string,
+  score: number,
+  description: string,
+  owner: number
 };
 
 type image = {
@@ -68,4 +84,4 @@ export type getAlbumParamType = {
   type: string
 };
 
-export { getSpotifyAlbum, postAlbum, getAlbum, deleteAlbum };
+export { getSpotifyAlbum, postAlbum, getAlbum, deleteAlbum, patchAlbum };
