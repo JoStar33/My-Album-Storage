@@ -35,19 +35,16 @@ const ScoreDialog: React.FC<propsType> = ({scoreAlbum, selectedAlbums, setScoreD
     //스코어를 지정하고자하는 앨범의 값을 update
     setScoreAlbum(scoreAlbum);
     //선택이 됐었던 앨범이 아니라면? push진행
-    !selectedAlbums.find(selectedAlbum => selectedAlbum.key === scoreAlbum.key) ? pushScoreAlbum() : updateSeletedAlbum()
+    !selectedAlbums
+    .find(selectedAlbum => selectedAlbum.key === scoreAlbum.key) ? pushScoreAlbum() : updateSeletedAlbum()
   }
   const pushScoreAlbum = () => {
     setSelectedAlbums([...selectedAlbums, scoreAlbum]);
     setScoreDialog(false);
   }
   const updateSeletedAlbum = () => {
-    const updatedSelectedAlbums = selectedAlbums.map(selectedAlbum => {
-      if(selectedAlbum.key === scoreAlbum.key) {
-        return scoreAlbum;
-      }
-      return selectedAlbum;
-    })
+    const updatedSelectedAlbums = selectedAlbums
+    .map(selectedAlbum => selectedAlbum.key === scoreAlbum.key ? scoreAlbum : selectedAlbum);
     setSelectedAlbums(updatedSelectedAlbums);
     setScoreDialog(false);
   }

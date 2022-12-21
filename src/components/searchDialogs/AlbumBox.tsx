@@ -23,16 +23,18 @@ const AlbumBox: React.FC<propsType> = ({album, selectedAlbums, setSelectedAlbums
       setIsLineOver(true);
     }
   }, [album.key]);
+  
   const handleClickAlbum = () => {
-    //id가 존재한다면 선택이 됐다는 것이므로 앨범을 제거하는 로직을 실행.
-    if(selectedAlbums.find(selectedAlbumData => selectedAlbumData.key === album.key)) {
-      dispatch(setIsSelected({key: album.key, isSelected: false}));
-      setSelectedAlbums(selectedAlbums.filter(selectedAlbumData => selectedAlbumData.key !== album.key));
-      return;
-    }
+    selectedAlbums.find(selectedAlbumData => selectedAlbumData.key === album.key)? cancelSelect() : openScoreDialog();
+  };
+  const cancelSelect = () => {
+    dispatch(setIsSelected({key: album.key, isSelected: false}));
+    setSelectedAlbums(selectedAlbums.filter(selectedAlbumData => selectedAlbumData.key !== album.key));
+  }
+  const openScoreDialog = () => {
     setScoreAlbum(album);
     setScoreDialog(true);
-  };
+  }
   return (
     <AlbumBoxContainer onClick={handleClickAlbum}>
       <AlbumImg src={ album.image } isLineOver={ isLineOver }/>

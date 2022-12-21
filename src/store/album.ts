@@ -55,6 +55,26 @@ const initialState  = {
   searchAlbums: [] as albumType[],
   getSpotifyAlbumLoading: false,
   postAlbumLoading: false,
+};
+
+const makeSearchAlbum = (payload: item[], searchAlbums: albumType[]) => {
+  payload.forEach(element => {
+    searchAlbums.push(
+      {
+        key: element.id,
+        artist: element.artists[0].name,
+        name: element.name,
+        image: element.images[0].url,
+        isSelected: false,
+        score: 0,
+        description: ''
+      }
+    )
+  });
+};
+
+const resetAlbum = (albums: albumType[]) => {
+  albums.splice(0, albums.length);
 }
 
 export const albumSlice = createSlice({
@@ -65,43 +85,25 @@ export const albumSlice = createSlice({
       state.searchAlbums.filter(album => album.key === action.payload.key)[0].isSelected = action.payload.isSelected;
     },
     resetSearchAlbums: (state) => {
-      state.searchAlbums.splice(0, state.searchAlbums.length);
+      resetAlbum(state.searchAlbums);
     }
   },
   extraReducers: (builder) => {
     builder.addCase(asyncGetSpotifyAlbumFetch.pending, (state, { payload }) => {
-      state.getSpotifyAlbumLoading = true;
-    });
+        state.getSpotifyAlbumLoading = true;});
     builder.addCase(asyncGetSpotifyAlbumFetch.fulfilled, (state, { payload })=>{
-      state.searchAlbums.splice(0, state.searchAlbums.length);
-      payload.forEach(element => {
-        state.searchAlbums.push(
-          {
-            key: element.id,
-            artist: element.artists[0].name,
-            name: element.name,
-            image: element.images[0].url,
-            isSelected: false,
-            score: 0,
-            description: ''
-          }
-        )
-      });
-      state.getSpotifyAlbumLoading = false;
-    });
+        resetAlbum(state.searchAlbums);
+        makeSearchAlbum(payload, state.searchAlbums);
+        state.getSpotifyAlbumLoading = false;});
     builder.addCase(asyncGetSpotifyAlbumFetch.rejected, (state, { payload })=>{
-      state.getSpotifyAlbumLoading = false;
-    });
+        state.getSpotifyAlbumLoading = false;});
     builder.addCase(asyncPostAlbumFetch.pending, (state, { payload }) => {
-      state.postAlbumLoading = true;
-    });
+        state.postAlbumLoading = true;});
     builder.addCase(asyncPostAlbumFetch.fulfilled, (state, { payload })=>{
-      state.searchAlbums.splice(0, state.searchAlbums.length);
-      state.postAlbumLoading = false;
-    });
+        resetAlbum(state.searchAlbums);
+        state.postAlbumLoading = false;});
     builder.addCase(asyncPostAlbumFetch.rejected, (state, { payload })=>{
-      state.postAlbumLoading = false;
-    });
+        state.postAlbumLoading = false;});
   }
 })
 

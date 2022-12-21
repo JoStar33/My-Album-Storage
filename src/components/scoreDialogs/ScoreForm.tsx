@@ -7,7 +7,7 @@ type propsType = {
 };
 
 const ScoreForm: React.FC<propsType> = ({score}) => {
-  const scoreType = ():number => {
+  const scoreType = (): number => {
     if(score < 20) {
       return 1;
     }
@@ -24,12 +24,14 @@ const ScoreForm: React.FC<propsType> = ({score}) => {
   };
   return (
     <div>
-      { scoreType() === 4 &&  
+      { 
+        scoreType() === 4 &&  
           <h1 className="blazing">
             {score}
           </h1>
       }
-      { scoreType() === 1 &&  
+      { 
+        scoreType() === 1 &&  
           <h1 className="frozen">
             {score}
           </h1>
@@ -48,9 +50,9 @@ const ScoreForm: React.FC<propsType> = ({score}) => {
       }
       {
         scoreType() === 0 &&
-        <ScoreStyle color='black'>
-          점수는?
-        </ScoreStyle>
+          <ScoreStyle color='black'>
+            점수는?
+          </ScoreStyle>
       }
     </div>
   );
