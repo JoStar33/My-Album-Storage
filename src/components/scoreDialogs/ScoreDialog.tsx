@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import { AppDispatch } from '../../store/index';
 import { useDispatch } from 'react-redux';
 import { albumType, setIsSelected } from '../../store/album';
-import { GrScorecard } from 'react-icons/gr';
 import { MdCancel } from 'react-icons/md';
 import { BiCommentDetail } from 'react-icons/bi';
 import ScoreDialogController from './ScoreDialogController';
 import ScoreForm from './ScoreForm';
+import ScoreInputForm from './ScoreInputForm';
 
 type propsType = {
   scoreAlbum: albumType,
@@ -30,7 +30,7 @@ const ScoreDialog: React.FC<propsType> = ({scoreAlbum, selectedAlbums, setScoreD
   const applyScore = () => {
     //스코어의 값이 1~100사이의 값이 아니라면
     if(scoreAlbum.score <= 0 || scoreAlbum.score > 100) {
-      setScoreVaildateText(`점수는 0부터 100까지만 입력이 가능합니다.`);
+      setScoreVaildateText(`점수는 1부터 100까지만 입력이 가능합니다.`);
       return;
     }
     //선택이 되었음을 알리는 함수 호출
@@ -66,14 +66,7 @@ const ScoreDialog: React.FC<propsType> = ({scoreAlbum, selectedAlbums, setScoreD
         </ArtistName>
 
         <ScoreForm score={scoreAlbum.score}></ScoreForm>
-        <ScoreBox>
-          <GrScorecard size={24}></GrScorecard>
-          <ScoreText>나의 점수는?</ScoreText>
-          <ScoreInputBox>
-            <Score placeholder='점수를 입력해 주세요.' type="number" name='score' onChange={handleChangeScore}></Score>
-            <ScoreValidateText>{scoreVaildateText}</ScoreValidateText>
-          </ScoreInputBox>
-        </ScoreBox>
+        <ScoreInputForm scoreVaildateText={scoreVaildateText} handleChangeScore={handleChangeScore}></ScoreInputForm>
         <DescriptionText>
           <BiCommentDetail></BiCommentDetail>
           코멘트
@@ -126,33 +119,6 @@ height: 13vw;
 
 const ArtistName = styled.div`
 font-weight: 800;
-`;
-
-const ScoreBox = styled.div`
-display: flex;
-align-items: center;
-flex-direction: row;
-`;
-
-const ScoreText = styled.div`
-margin-right: 20px;
-font-weight: 800;
-`;
-
-const Score = styled.input`
-padding:10px;
-border-radius:10px;
-outline: none;
-`;
-
-const ScoreInputBox = styled.div`
-display: flex;
-flex-direction: column;
-`;
-
-const ScoreValidateText = styled.div`
-font-size: x-small;
-color: red;
 `;
 
 const DescriptionText = styled.div`

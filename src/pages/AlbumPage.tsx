@@ -30,8 +30,8 @@ const AlbumPage: React.FC = () => {
             <UserAlbumBox key={album.id} album={album}></UserAlbumBox>)
         }
         {
-          getAlbumLoading && new Array(9).fill(1).map((_, i) => {
-            return  <UserAlbumSkeleton></UserAlbumSkeleton>
+          getAlbumLoading && new Array(9).fill(1).map((_, index) => {
+            return <UserAlbumSkeleton key={index}></UserAlbumSkeleton>
           })
         }
       </UserAlbumViewer>
@@ -77,6 +77,7 @@ background-color: skyblue;
 width: 200px;
 height: 50px;
 border-radius: 20px;
+font-weight: 800;
 box-shadow: 0 6px 6px 0 gray;
 user-select: none;
 cursor: pointer;
