@@ -24,10 +24,10 @@ type artist = {
 };
 
 type albumType = {
-  albumKey: string,
-  artistName: string,
-  albumName: string,
-  albumImg: string,
+  key: string,
+  artist: string,
+  name: string,
+  image: string,
   isSelected: boolean,
   score: number,
   description: string

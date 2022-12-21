@@ -22,12 +22,12 @@ const AlbumBox: React.FC<propsType> = ({album, selectedAlbums, setSelectedAlbums
     if(height > 23) {
       setIsLineOver(true);
     }
-  }, [album.albumKey]);
+  }, [album.key]);
   const handleClickAlbum = () => {
     //id가 존재한다면 선택이 됐다는 것이므로 앨범을 제거하는 로직을 실행.
-    if(selectedAlbums.find(selectedAlbumData => selectedAlbumData.albumKey === album.albumKey)) {
-      dispatch(setIsSelected({albumKey: album.albumKey, isSelected: false}));
-      setSelectedAlbums(selectedAlbums.filter(selectedAlbumData => selectedAlbumData.albumKey !== album.albumKey));
+    if(selectedAlbums.find(selectedAlbumData => selectedAlbumData.key === album.key)) {
+      dispatch(setIsSelected({key: album.key, isSelected: false}));
+      setSelectedAlbums(selectedAlbums.filter(selectedAlbumData => selectedAlbumData.key !== album.key));
       return;
     }
     setScoreAlbum(album);
@@ -35,8 +35,8 @@ const AlbumBox: React.FC<propsType> = ({album, selectedAlbums, setSelectedAlbums
   };
   return (
     <AlbumBoxContainer onClick={handleClickAlbum}>
-      <AlbumImg src={ album.albumImg } isLineOver={ isLineOver }/>
-      <AlbumName ref={ albumText } isLineOver={ isLineOver }>{ album.albumName }</AlbumName>
+      <AlbumImg src={ album.image } isLineOver={ isLineOver }/>
+      <AlbumName ref={ albumText } isLineOver={ isLineOver }>{ album.name }</AlbumName>
       {
         album.isSelected && <CheckComponent></CheckComponent>
       }

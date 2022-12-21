@@ -8,17 +8,17 @@ close: () => void,
 
 const ScoreDialogController: React.FC<propsType> = ({apply, close}) => {
   return (
-    <BtnContainer>
-      <ApplyBtn onClick={apply}>
+    <ButtonContainer>
+      <ApplyButton onClick={apply}>
         적용
-      </ApplyBtn>
-      <CloseBtn onClick={close}>
+      </ApplyButton>
+      <CloseButton onClick={close}>
         닫기
-      </CloseBtn>
-    </BtnContainer>
+      </CloseButton>
+    </ButtonContainer>
   );
 };
-const BtnContainer = styled.div`
+const ButtonContainer = styled.div`
 display: flex;
 flex-direction: row;
 margin: 20px;
@@ -30,7 +30,7 @@ justify-content: center;
 align-items: center;
 `;
 
-const BtnForm = styled(Centering)`
+const ButtonForm = styled(Centering)`
 width: 5vw;
 height: 3vh;
 border-radius: 20px;
@@ -42,11 +42,11 @@ user-select: none;
 cursor: pointer;
 `;
 
-const ApplyBtn = styled(BtnForm)`
+const ApplyButton = styled(ButtonForm)`
 background-color: skyblue;
 `;
 
-const CloseBtn = styled(BtnForm)`
+const CloseButton = styled(ButtonForm)`
 background-color: red;
 `;
 

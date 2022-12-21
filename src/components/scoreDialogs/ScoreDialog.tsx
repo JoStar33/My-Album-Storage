@@ -31,23 +31,24 @@ const ScoreDialog: React.FC<propsType> = ({scoreAlbum, selectedAlbums, setScoreD
       return;
     }
     //선택이 되었음을 알리는 함수 호출
-    dispatch(setIsSelected({albumKey: scoreAlbum.albumKey, isSelected: true}));
+    dispatch(setIsSelected({key: scoreAlbum.key, isSelected: true}));
     //스코어를 지정하고자하는 앨범의 값을 update
     setScoreAlbum(scoreAlbum);
     //선택이 됐었던 앨범이 아니라면? push진행
-    if(!selectedAlbums.find(selectedAlbum => selectedAlbum.albumKey === scoreAlbum.albumKey)) {
-      setSelectedAlbums([...selectedAlbums, scoreAlbum]);
-      setScoreDialog(false);
-      return;
-    }
-    //선택이 됐었던 앨범이라면? update진행
-    const updateSelectedAlbums = selectedAlbums.map(selectedAlbum => {
-      if(selectedAlbum.albumKey === scoreAlbum.albumKey) {
+    !selectedAlbums.find(selectedAlbum => selectedAlbum.key === scoreAlbum.key) ? pushScoreAlbum() : updateSeletedAlbum()
+  }
+  const pushScoreAlbum = () => {
+    setSelectedAlbums([...selectedAlbums, scoreAlbum]);
+    setScoreDialog(false);
+  }
+  const updateSeletedAlbum = () => {
+    const updatedSelectedAlbums = selectedAlbums.map(selectedAlbum => {
+      if(selectedAlbum.key === scoreAlbum.key) {
         return scoreAlbum;
       }
       return selectedAlbum;
     })
-    setSelectedAlbums(updateSelectedAlbums);
+    setSelectedAlbums(updatedSelectedAlbums);
     setScoreDialog(false);
   }
   const closeDialog = () => {
@@ -57,11 +58,11 @@ const ScoreDialog: React.FC<propsType> = ({scoreAlbum, selectedAlbums, setScoreD
     <DialogBackground>
       <ScoreDialogContainer>
         <AlbumTitle>
-          {scoreAlbum.albumName}
+          {scoreAlbum.name}
         </AlbumTitle>
-        <AlbumImg src={scoreAlbum.albumImg}></AlbumImg>
+        <AlbumImg src={scoreAlbum.image}></AlbumImg>
         <ArtistName>
-          {scoreAlbum.artistName}
+          {scoreAlbum.artist}
         </ArtistName>
 
         <ScoreForm score={scoreAlbum.score}></ScoreForm>
@@ -79,9 +80,9 @@ const ScoreDialog: React.FC<propsType> = ({scoreAlbum, selectedAlbums, setScoreD
         </DescriptionText>
         <Description placeholder="내용을 입력해 주세요."></Description>
         <ScoreDialogController apply={applyScore} close={closeDialog}></ScoreDialogController>
-        <CloseBtn onClick={closeDialog}>
+        <CloseButton onClick={closeDialog}>
           <MdCancel size={24}></MdCancel>
-        </CloseBtn>
+        </CloseButton>
       </ScoreDialogContainer>
     </DialogBackground>
   );
@@ -159,7 +160,7 @@ border: none;
 resize: none;
 `;
 
-const CloseBtn = styled.div`
+const CloseButton = styled.div`
 position: absolute;
 top: 1%;
 left: 94%;

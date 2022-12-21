@@ -22,20 +22,20 @@ const SelectedAlbumBox: React.FC<propsType> = ({album, selectedAlbums, setSelect
     setScoreAlbum(album);
   };
   const handleDeleteEvent = () => {
-    dispatch(setIsSelected({albumKey: album.albumKey, isSelected: false}));
-    setSelectedAlbums(selectedAlbums.filter(seletedAlbum => seletedAlbum.albumKey !== album.albumKey));
+    dispatch(setIsSelected({key: album.key, isSelected: false}));
+    setSelectedAlbums(selectedAlbums.filter(seletedAlbum => seletedAlbum.key !== album.key));
   };
   return (
     <SelectedAlbumContainer>
-      <SelectedAlbumImg onClick={handleModifyScore} src={album.albumImg}></SelectedAlbumImg>
+      <SelectedAlbumImg onClick={handleModifyScore} src={album.image}></SelectedAlbumImg>
       <ScoreForm score={album.score}></ScoreForm>
       <SelectedAlbumInfoContainer onClick={handleModifyScore}>
-        <SelectedAlbumInfo>{album.albumName}</SelectedAlbumInfo>
-        <SelectedAlbumInfo>{album.artistName}</SelectedAlbumInfo>
+        <SelectedAlbumInfo>{album.name}</SelectedAlbumInfo>
+        <SelectedAlbumInfo>{album.artist}</SelectedAlbumInfo>
       </SelectedAlbumInfoContainer>
-      <DeleteBtn onClick={handleDeleteEvent}>
+      <DeleteButton onClick={handleDeleteEvent}>
         <MdCancel size={24}></MdCancel>
-      </DeleteBtn>
+      </DeleteButton>
     </SelectedAlbumContainer>
   );
 };
@@ -82,7 +82,7 @@ text-overflow: ellipsis;
 font-weight: 800;
 `;
 
-const DeleteBtn = styled.div`
+const DeleteButton = styled.div`
 position: absolute;
 top: -2%;
 left: 91%;

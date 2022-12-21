@@ -35,7 +35,7 @@ const AlbumDialog: React.FC<propsType> = ({setAlbumDialog}) => {
         <SelectedAlbumContainer>
           {
             selectedAlbums.map(album => <SelectedAlbumBox
-              key={album.albumKey}
+              key={album.key}
               album={album}
               selectedAlbums={selectedAlbums} 
               setSelectedAlbums={setSelectedAlbums} 
@@ -50,7 +50,7 @@ const AlbumDialog: React.FC<propsType> = ({setAlbumDialog}) => {
               searchAlbums.length !== 0 ?
               searchAlbums.map(
                 album => <AlbumBox 
-                  key={album.albumKey}
+                  key={album.key}
                   album={album}
                   selectedAlbums={selectedAlbums} 
                   setSelectedAlbums={setSelectedAlbums}

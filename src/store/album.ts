@@ -12,17 +12,17 @@ type postAlbumParamType = {
 }
 
 export type albumType = {
-  albumKey: string,
-  artistName: string,
-  albumName: string,
-  albumImg: string,
+  key: string,
+  artist: string,
+  name: string,
+  image: string,
   isSelected: boolean,
   score: number,
   description: string
 };
 
 type selectedSetType = {
-  albumKey: string,
+  key: string,
   isSelected: boolean,
 };
 
@@ -62,7 +62,7 @@ export const albumSlice = createSlice({
   initialState,
   reducers: {
     setIsSelected: (state, action: PayloadAction<selectedSetType>) => {
-      state.searchAlbums.filter(album => album.albumKey === action.payload.albumKey)[0].isSelected = action.payload.isSelected;
+      state.searchAlbums.filter(album => album.key === action.payload.key)[0].isSelected = action.payload.isSelected;
     },
     resetSearchAlbums: (state) => {
       state.searchAlbums.splice(0, state.searchAlbums.length);
@@ -77,10 +77,10 @@ export const albumSlice = createSlice({
       payload.forEach(element => {
         state.searchAlbums.push(
           {
-            albumKey: element.id,
-            artistName: element.artists[0].name,
-            albumName: element.name,
-            albumImg: element.images[0].url,
+            key: element.id,
+            artist: element.artists[0].name,
+            name: element.name,
+            image: element.images[0].url,
             isSelected: false,
             score: 0,
             description: ''

@@ -32,7 +32,7 @@ const SearchAlbumForm: React.FC<propsType> = ({setIsSearchStarted}) => {
   return (
     <SearchFormContainer>
       <SearchInput placeholder='검색어를 입력해주세요.' type="text" name='query' onKeyPress={handleOnKeyPress} onChange={handleChangeSearch} />
-      <SearchBtn onClick={search}>검색</SearchBtn>
+      <SearchButton onClick={search}>검색</SearchButton>
     </SearchFormContainer>
   );
 };
@@ -53,7 +53,7 @@ border-radius: 20px;
 box-shadow: 0 8px 8px 0 gray;
 `
 
-const SearchBtn = styled(Centering)`
+const SearchButton = styled(Centering)`
 font-size: larger;
 font-weight: 800;
 width: 8%;
