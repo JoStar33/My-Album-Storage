@@ -14,6 +14,10 @@ const postAlbum = (userId: number, selectedAlbum: albumType[]) => {
   })
 }
 
+const getAlbum = (userId: number) => {
+  return customAxios.get(`/album/${userId}`);
+}
+
 type artist = {
   external_urls: Object,
   href: string,
@@ -60,4 +64,4 @@ export type getAlbumParamType = {
   type: string
 };
 
-export { getSpotifyAlbum, postAlbum };
+export { getSpotifyAlbum, postAlbum, getAlbum };

@@ -16,7 +16,7 @@ const SearchAlbumForm: React.FC<propsType> = ({setIsSearchStarted}) => {
   });
   const search = async () => {
     setIsSearchStarted(true);
-    await dispatch(asyncGetSpotifyAlbumFetch(searchParam))
+    await dispatch(asyncGetSpotifyAlbumFetch(searchParam));
   }
   const handleChangeSearch = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
     setSearchParam({

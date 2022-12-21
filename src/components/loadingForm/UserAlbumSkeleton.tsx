@@ -1,16 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const AlbumSkeleton: React.FC = () => {
+const UserAlbumSkeleton: React.FC = () => {
   return (
-    <AlbumBoxContainer>
-      <AlbumImg></AlbumImg>
-      <AlbumName></AlbumName>
-    </AlbumBoxContainer>
+    <UserAlbumContainer>
+      <UserAlbumImg></UserAlbumImg>
+      <UserAlbumName></UserAlbumName>
+    </UserAlbumContainer>
   );
 };
-
-export default AlbumSkeleton;
 
 const SceletonDefault = styled.div`
 position: relative;
@@ -37,14 +35,12 @@ background: #f2f2f2;
 }
 `;
 
-const AlbumBoxContainer = styled.div`
-width: 14%;
-background-color: white;
-box-shadow: 0 6px 6px 0 gray;
+const UserAlbumContainer = styled.div`
+width: 30%;
+height: 50vh;
 border-radius: 20px;
-margin-left: 1.3%;
-margin-right: 1.3%;
-margin-top: 2%;
+margin: 1.5%;
+box-shadow: 0 6px 6px 0 gray;
 display: flex;
 justify-content: center;
 align-items: center;
@@ -52,14 +48,19 @@ flex-direction: column;
 overflow: hidden;
 position: relative;
 user-select: none;
+cursor: pointer;
 `;
 
-const AlbumImg = styled(SceletonDefault)`
+const UserAlbumImg = styled(SceletonDefault)`
 margin-top: 1vw;
-width: 9vw;
-height: 9vw;
+width: 17vw;
+height: 17vw;
 `;
 
-const AlbumName = styled.span`
-height: 20px;
-`
+const UserAlbumName = styled.h2`
+width: 90%;
+font-weight: 800;
+height: 40px;
+`;
+
+export default UserAlbumSkeleton;

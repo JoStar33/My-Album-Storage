@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { AppDispatch } from '../../store/index';
 import { useDispatch } from 'react-redux';
 import { albumType, resetSearchAlbums } from '../../store/album';
-import { asyncPostAlbumFetch } from '../../store/album';
+import { asyncPostAlbumFetch, asyncGetAlbumFetch } from '../../store/album';
 
 type propsType = {
   selectedAlbums: albumType[],
@@ -14,6 +14,7 @@ const AlbumDialogController: React.FC<propsType> = ({selectedAlbums, setAlbumDia
   const dispatch = useDispatch<AppDispatch>();
   const apply = async () => {
     await dispatch(asyncPostAlbumFetch({selectedAlbums: selectedAlbums, userId: 30}));
+    await dispatch(asyncGetAlbumFetch(30));
     setAlbumDialog(false);
   }
   const close = () => {

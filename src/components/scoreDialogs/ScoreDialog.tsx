@@ -23,7 +23,10 @@ const ScoreDialog: React.FC<propsType> = ({scoreAlbum, selectedAlbums, setScoreD
   const handleChangeScore = (e: React.ChangeEvent<HTMLInputElement>) => {
     setScoreVaildateText(``);
     setScoreAlbum({...scoreAlbum, score: parseInt(e.target.value)});
-  }
+  };
+  const handleChangeDescription = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setScoreAlbum({...scoreAlbum, description: e.target.value});
+  };
   const applyScore = () => {
     //스코어의 값이 1~100사이의 값이 아니라면
     if(scoreAlbum.score <= 0 || scoreAlbum.score > 100) {
@@ -37,20 +40,20 @@ const ScoreDialog: React.FC<propsType> = ({scoreAlbum, selectedAlbums, setScoreD
     //선택이 됐었던 앨범이 아니라면? push진행
     !selectedAlbums
     .find(selectedAlbum => selectedAlbum.key === scoreAlbum.key) ? pushScoreAlbum() : updateSeletedAlbum()
-  }
+  };
   const pushScoreAlbum = () => {
     setSelectedAlbums([...selectedAlbums, scoreAlbum]);
     setScoreDialog(false);
-  }
+  };
   const updateSeletedAlbum = () => {
     const updatedSelectedAlbums = selectedAlbums
     .map(selectedAlbum => selectedAlbum.key === scoreAlbum.key ? scoreAlbum : selectedAlbum);
     setSelectedAlbums(updatedSelectedAlbums);
     setScoreDialog(false);
-  }
+  };
   const closeDialog = () => {
     setScoreDialog(false);
-  }
+  };
   return (
     <DialogBackground>
       <ScoreDialogContainer>
@@ -75,7 +78,7 @@ const ScoreDialog: React.FC<propsType> = ({scoreAlbum, selectedAlbums, setScoreD
           <BiCommentDetail></BiCommentDetail>
           코멘트
         </DescriptionText>
-        <Description placeholder="내용을 입력해 주세요."></Description>
+        <Description placeholder="내용을 입력해 주세요." onChange={handleChangeDescription}></Description>
         <ScoreDialogController apply={applyScore} close={closeDialog}></ScoreDialogController>
         <CloseButton onClick={closeDialog}>
           <MdCancel size={24}></MdCancel>
@@ -99,6 +102,17 @@ width: 100vw;
 height: 100vh;
 top: 0;
 left: 0;
+`;
+
+const ScoreDialogContainer = styled(Centering)`
+flex-direction: column;
+position: relative;
+width: 30vw;
+min-width: 450px;
+height: 80vh;
+border-radius: 25px;
+background-color: white;
+box-shadow: 0 8px 8px 0 gray;
 `;
 
 const AlbumTitle = styled.h1`
@@ -162,17 +176,6 @@ position: absolute;
 top: 1%;
 left: 94%;
 cursor: pointer;
-`;
-
-const ScoreDialogContainer = styled(Centering)`
-flex-direction: column;
-position: relative;
-width: 30vw;
-min-width: 450px;
-height: 80vh;
-border-radius: 25px;
-background-color: white;
-box-shadow: 0 8px 8px 0 gray;
 `;
 
 export default ScoreDialog;

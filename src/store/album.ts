@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getSpotifyAlbum, item, postAlbum } from '../apis/albumApi';
+import { getSpotifyAlbum, item, postAlbum, getAlbum } from '../apis/albumApi';
 
 type getSpotifyAlbumParamType = {
   query: string,
@@ -21,6 +21,16 @@ export type albumType = {
   description: string
 };
 
+export type userAlbumType = {
+  id: number,
+  artist: string,
+  name: string,
+  image: string,
+  score: number,
+  description: string,
+  owner: number
+};
+
 type selectedSetType = {
   key: string,
   isSelected: boolean,
@@ -32,6 +42,17 @@ const asyncGetSpotifyAlbumFetch = createAsyncThunk(
     let data: item[] = [];
     await getSpotifyAlbum(param.query, param.type).then((res) => {
       data = res.data.albums.items
+    });
+    return data;
+  }
+);
+
+const asyncGetAlbumFetch = createAsyncThunk(
+  'counterSlice/asyncGetAlbumFetch',
+  async (param: number) => {
+    let data: userAlbumType[] = [];
+    await getAlbum(param).then((res) => {
+      data = res.data;
     });
     return data;
   }
@@ -51,10 +72,11 @@ const initialState  = {
       -검색해서 나온 앨범 결과를 보여줄 배열 1개
       -유저가 추가하고자 하는 앨범들을 보여줄 배열 1개
   */
-  albums: [],
+  userAlbums: [] as userAlbumType[],
   searchAlbums: [] as albumType[],
   getSpotifyAlbumLoading: false,
   postAlbumLoading: false,
+  getAlbumLoading: false,
 };
 
 const makeSearchAlbum = (payload: item[], searchAlbums: albumType[]) => {
@@ -69,11 +91,15 @@ const makeSearchAlbum = (payload: item[], searchAlbums: albumType[]) => {
         score: 0,
         description: ''
       }
-    )
+    );
   });
 };
 
 const resetAlbum = (albums: albumType[]) => {
+  albums.splice(0, albums.length);
+}
+
+const resetUserAlbum = (albums: userAlbumType[]) => {
   albums.splice(0, albums.length);
 }
 
@@ -90,24 +116,38 @@ export const albumSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(asyncGetSpotifyAlbumFetch.pending, (state, { payload }) => {
-        state.getSpotifyAlbumLoading = true;});
+      state.getSpotifyAlbumLoading = true;});
     builder.addCase(asyncGetSpotifyAlbumFetch.fulfilled, (state, { payload })=>{
-        resetAlbum(state.searchAlbums);
-        makeSearchAlbum(payload, state.searchAlbums);
-        state.getSpotifyAlbumLoading = false;});
+      resetAlbum(state.searchAlbums);
+      makeSearchAlbum(payload, state.searchAlbums);
+      state.getSpotifyAlbumLoading = false;});
     builder.addCase(asyncGetSpotifyAlbumFetch.rejected, (state, { payload })=>{
-        state.getSpotifyAlbumLoading = false;});
+      state.getSpotifyAlbumLoading = false;});
+
+
     builder.addCase(asyncPostAlbumFetch.pending, (state, { payload }) => {
-        state.postAlbumLoading = true;});
+      state.postAlbumLoading = true;});
     builder.addCase(asyncPostAlbumFetch.fulfilled, (state, { payload })=>{
-        resetAlbum(state.searchAlbums);
-        state.postAlbumLoading = false;});
+      state.postAlbumLoading = false;
+      resetAlbum(state.searchAlbums);});
     builder.addCase(asyncPostAlbumFetch.rejected, (state, { payload })=>{
-        state.postAlbumLoading = false;});
+      state.postAlbumLoading = false;});
+
+
+    builder.addCase(asyncGetAlbumFetch.pending, (state, { payload }) => {
+      state.getAlbumLoading = true;});
+    builder.addCase(asyncGetAlbumFetch.fulfilled, (state, { payload })=>{
+      resetUserAlbum(state.userAlbums);
+      payload.forEach(album => {
+        state.userAlbums.push(album);
+      });
+      state.getAlbumLoading = false;});
+    builder.addCase(asyncGetAlbumFetch.rejected, (state, { payload })=>{
+      state.getAlbumLoading = false;});
   }
 })
 
-export { asyncGetSpotifyAlbumFetch, asyncPostAlbumFetch }
+export { asyncGetSpotifyAlbumFetch, asyncPostAlbumFetch, asyncGetAlbumFetch }
 
 export const { setIsSelected, resetSearchAlbums } = albumSlice.actions;
 
