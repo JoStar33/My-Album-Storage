@@ -77,7 +77,7 @@ margin-bottom: 1vw;
 
 const DeleteButton = styled.div`
 position: absolute;
-top: -2%;
+top: 1%;
 left: 91%;
 cursor: pointer;
 `;

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import TextDialog from '../components/dialogs/TextDialog';
-import JoinForm from '../components/forms/JoinForm';
+import TextDialog from '../components/commonDialogs/TextDialog';
+import JoinForm from '../components/commonForms/JoinForm';
 import { Navigate } from "react-router-dom";
-import { getCookie } from '../apis/cookie';
+import { getCookie } from '../apis/cookies/cookie';
 
 const JoinPage: React.FC = () => {
   const [dialog, setDialog] = useState(false);

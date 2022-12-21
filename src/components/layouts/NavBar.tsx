@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { removeCookie } from '../../apis/cookie';
+import { removeCookie } from '../../apis/cookies/cookie';
 import { AppDispatch } from '../../store/index'
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
