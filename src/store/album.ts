@@ -126,7 +126,7 @@ export const albumSlice = createSlice({
     },
     resetSearchAlbums: (state) => {
       resetAlbum(state.searchAlbums);
-    }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(asyncGetSpotifyAlbumFetch.pending, (state, { payload }) => {

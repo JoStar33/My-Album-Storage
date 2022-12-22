@@ -1,10 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
+import { RootState } from '../../../../store';
+import { useSelector } from 'react-redux';
+import TopsterUserAlbumBox from '../../../albums/TopsterUserAlbumBox';
 
 const TopsterUsersAlbum: React.FC = () => {
+  const { userAlbums } = useSelector((state: RootState) => state.albumStore);
   return (
     <TopsterUsersAlbumContainer>
-      
+      {
+        userAlbums.map(album => {
+          return <TopsterUserAlbumBox key={album.id} album={ album }/>
+        })
+      }
     </TopsterUsersAlbumContainer>
   );
 };
@@ -12,9 +20,9 @@ const TopsterUsersAlbum: React.FC = () => {
 const TopsterUsersAlbumContainer = styled.div`
 width: 95%;
 height: 80%;
-border-radius: 0px 0px 20px 20px;
 margin-bottom: 1%;
-box-shadow: 0 6px 6px 0 gray;
+display: flex;
+flex-wrap: wrap;
 `;
 
 export default TopsterUsersAlbum;

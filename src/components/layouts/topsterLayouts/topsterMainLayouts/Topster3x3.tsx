@@ -7,7 +7,7 @@ const Topster3x3: React.FC = () => {
     <Topster3x3Container>
       {
         new Array(9).fill(1).map((_, index) => {
-          return <TopsterAlbumBox key={index} width={'25vw'}></TopsterAlbumBox>
+          return <TopsterAlbumBox key={index} albumPosition={index + 1} width={'25vw'}></TopsterAlbumBox>
         })
       }
     </Topster3x3Container>
