@@ -5,15 +5,20 @@ import { AppDispatch } from '../../store/index';
 import { useDispatch } from 'react-redux';
 import CheckComponent from './CheckComponent';
 
+type scoreDialogType = {
+  scoreAlbum: albumType;
+  isOpened: boolean;
+};
+
 type propsType = {
   album: albumType,
   selectedAlbums: albumType[],
   setSelectedAlbums: React.Dispatch<React.SetStateAction<albumType[]>>
-  setScoreAlbum: React.Dispatch<React.SetStateAction<albumType>>,
-  setScoreDialog: React.Dispatch<React.SetStateAction<boolean>>,
+  scoreDialog: scoreDialogType;
+  setScoreDialog: React.Dispatch<React.SetStateAction<scoreDialogType>>
 };
 
-const AlbumBox: React.FC<propsType> = ({album, selectedAlbums, setSelectedAlbums, setScoreAlbum, setScoreDialog}) => {
+const AlbumBox: React.FC<propsType> = ({album, selectedAlbums, setSelectedAlbums, scoreDialog, setScoreDialog}) => {
   const dispatch = useDispatch<AppDispatch>();
   const [isLineOver, setIsLineOver] = useState(false);
   const albumText = useRef<any>(null);
@@ -32,8 +37,7 @@ const AlbumBox: React.FC<propsType> = ({album, selectedAlbums, setSelectedAlbums
     setSelectedAlbums(selectedAlbums.filter(selectedAlbumData => selectedAlbumData.key !== album.key));
   }
   const openScoreDialog = () => {
-    setScoreAlbum(album);
-    setScoreDialog(true);
+    setScoreDialog({...scoreDialog, scoreAlbum: album, isOpened: true});
   }
   return (
     <AlbumBoxContainer onClick={handleClickAlbum}>

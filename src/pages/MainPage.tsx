@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import MainBox from '../components/layouts/MainBox';
-import NavBar from '../components/layouts/NavBar';
-import FooterBar from '../components/layouts/FooterBar';
+import MainBox from '../components/layouts/defaultLayouts/MainBox';
+import NavBar from '../components/layouts/defaultLayouts/NavBar';
+import FooterBar from '../components/layouts/defaultLayouts/FooterBar';
 
 const MainPage: React.FC = () => {
   return (

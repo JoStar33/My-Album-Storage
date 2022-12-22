@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { removeCookie } from '../../apis/cookies/cookie';
-import { AppDispatch } from '../../store/index'
+import { removeCookie } from '../../../apis/cookies/cookie';
+import { AppDispatch } from '../../../store/index'
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { asyncLogoutFetch } from '../../store/user';
+import { asyncLogoutFetch } from '../../../store/user';
 import { useNavigate } from 'react-router-dom'
-import { RootState } from '../../store';
+import { RootState } from '../../../store';
 
 const NavBar: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();

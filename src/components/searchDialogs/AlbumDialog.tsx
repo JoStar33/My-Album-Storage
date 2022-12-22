@@ -21,11 +21,12 @@ const AlbumDialog: React.FC<propsType> = ({setAlbumDialog}) => {
   //선택된 앨범 정보
   const [selectedAlbums, setSelectedAlbums] = useState([] as albumType[]);
   //스코어 설정 다이얼로그
-  const [scoreDialog, setScoreDialog] = useState(false);
-  //스코어 설정 다이얼로그
+  const [scoreDialog, setScoreDialog] = useState({
+    scoreAlbum: {} as albumType,
+    isOpened: false
+  });
+  //검색이 시작됐는지 검사하는 state
   const [isSearchStarted, setIsSearchStarted] = useState(false);
-  //스코어 설정을 하고자하는 앨범
-  const [scoreAlbum, setScoreAlbum] = useState({} as albumType);
   //검색된 앨범 정보
   const { searchAlbums, getSpotifyAlbumLoading, postAlbumLoading } = useSelector((state: RootState) => state.albumStore);
   return (
@@ -38,9 +39,9 @@ const AlbumDialog: React.FC<propsType> = ({setAlbumDialog}) => {
               key={album.key}
               album={album}
               selectedAlbums={selectedAlbums} 
-              setSelectedAlbums={setSelectedAlbums} 
+              setSelectedAlbums={setSelectedAlbums}
+              scoreDialog={scoreDialog}
               setScoreDialog={setScoreDialog}
-              setScoreAlbum={setScoreAlbum}
             ></SelectedAlbumBox>)
           }
         </SelectedAlbumContainer>
@@ -54,8 +55,8 @@ const AlbumDialog: React.FC<propsType> = ({setAlbumDialog}) => {
                   album={album}
                   selectedAlbums={selectedAlbums} 
                   setSelectedAlbums={setSelectedAlbums}
+                  scoreDialog={scoreDialog}
                   setScoreDialog={setScoreDialog} 
-                  setScoreAlbum={setScoreAlbum}
                 ></AlbumBox>
               ) : (isSearchStarted ? <NotFoundAnyAlbum></NotFoundAnyAlbum>: <SearchGuideForm></SearchGuideForm>)
             )
@@ -75,12 +76,11 @@ const AlbumDialog: React.FC<propsType> = ({setAlbumDialog}) => {
         }
       </AlbumDialogContainer>
       {
-        scoreDialog && <ScoreDialog 
+        scoreDialog.isOpened && <ScoreDialog 
           selectedAlbums={selectedAlbums} 
           setSelectedAlbums={setSelectedAlbums} 
-          setScoreDialog={setScoreDialog} 
-          scoreAlbum={scoreAlbum}
-          setScoreAlbum={setScoreAlbum}
+          scoreDialog={scoreDialog}
+          setScoreDialog={setScoreDialog}
         ></ScoreDialog>
       }
     </DialogBackground>

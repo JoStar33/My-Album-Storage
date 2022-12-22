@@ -7,19 +7,23 @@ import { useDispatch } from 'react-redux';
 import { MdCancel } from 'react-icons/md';
 import ScoreForm from '../scoreDialogs/ScoreForm';
 
+type scoreDialogType = {
+  scoreAlbum: albumType;
+  isOpened: boolean;
+};
+
 type propsType = {
   album: albumType,
   selectedAlbums: albumType[],
   setSelectedAlbums: React.Dispatch<React.SetStateAction<albumType[]>>,
-  setScoreDialog: React.Dispatch<React.SetStateAction<boolean>>,
-  setScoreAlbum: React.Dispatch<React.SetStateAction<albumType>>
+  scoreDialog: scoreDialogType;
+  setScoreDialog: React.Dispatch<React.SetStateAction<scoreDialogType>>
 };
 
-const SelectedAlbumBox: React.FC<propsType> = ({album, selectedAlbums, setSelectedAlbums, setScoreDialog, setScoreAlbum}) => {
+const SelectedAlbumBox: React.FC<propsType> = ({album, selectedAlbums, setSelectedAlbums, setScoreDialog, scoreDialog}) => {
   const dispatch = useDispatch<AppDispatch>();
-  const handleModifyScore = (e: React.MouseEvent<HTMLElement> ) => {
-    setScoreDialog(true);
-    setScoreAlbum(album);
+  const handleModifyScore = () => {
+    setScoreDialog({...scoreDialog, scoreAlbum: album, isOpened: true});
   };
   const handleDeleteEvent = () => {
     dispatch(setIsSelected({key: album.key, isSelected: false}));
