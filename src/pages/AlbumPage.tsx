@@ -5,12 +5,14 @@ import { setTokenByPost } from '../apis/tokenApi';
 import { RootState, AppDispatch } from '../store';
 import { asyncGetAlbumFetch } from '../store/album';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from "react-router-dom";
 import UserAlbumBox from '../components/albums/UserAlbumBox';
 import UserAlbumSkeleton from '../components/loadingForm/UserAlbumSkeleton';
 //import ModifyDialog from '../components/modifyDialogs/ModifyDialog';
 
 const AlbumPage: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
   //아래와 같이 []이렇게 기술하지않으면 api를 무한 호출하는 버그가 있었음. 해당문제를 해결한 코드임.
   useEffect(() => {
     dispatch(asyncGetAlbumFetch(30));
@@ -21,10 +23,14 @@ const AlbumPage: React.FC = () => {
   const openDialog = () => {
     setAlbumDialog(true);
   }
+  const moveTopsterPage = () => {
+    navigate('/topster');
+  };
   return (
     <AlbumPageContainer>
       <ButtonContainer>
         <OpenDialogButton onClick={ openDialog }>다이얼로그 오픈</OpenDialogButton>
+        <MakeTopsterButton onClick={ moveTopsterPage }>탑스터 만들러가기</MakeTopsterButton>
       </ButtonContainer>
       <UserAlbumViewer>
         {
@@ -76,8 +82,7 @@ font-weight: 800;
 margin-bottom: 20px;
 `;
 
-const OpenDialogButton = styled(Centering)`
-background-color: skyblue;
+const DefaultButton = styled(Centering)`
 width: 200px;
 height: 50px;
 border-radius: 20px;
@@ -86,6 +91,17 @@ box-shadow: 0 6px 6px 0 gray;
 user-select: none;
 cursor: pointer;
 `;
+
+const OpenDialogButton = styled(DefaultButton)`
+background-color: skyblue;
+margin-left: 20px;
+`;
+
+const MakeTopsterButton = styled(DefaultButton)`
+background-color: orange;
+margin-left: 20px;
+`;
+
 
 const AlbumPageContainer = styled(Centering)`
 flex-direction: column;
