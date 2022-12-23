@@ -13,46 +13,51 @@ const TopsterAlbumBox: React.FC<propsType> = ({width, albumPosition}) => {
   const topsterAlbumRef = useRef<any>(null);
   useEffect(() => {
     topsterAlbumRef.current.classList.add(albumPosition);
-  }, [albumPosition])
+  }, [albumPosition]);
   const [topsterAlbum, setTopsterAlbum] = useState({} as userAlbumType | undefined);
   const { userAlbums } = useSelector((state: RootState) => state.albumStore);
 
-  const dropTheAlbum = (e: React.DragEvent<HTMLDivElement>) => {
+
+  const handleDragStartEvent = (e: React.DragEvent<HTMLDivElement>) => {
+    e.dataTransfer.setData('album_id', String(topsterAlbum?.id));
+  };
+  const handleDragOverEvent = (e: React.DragEvent<HTMLDivElement>) =>  {
     e.preventDefault();
+  };
+  const handleDragEndEvent = (e: React.DragEvent<HTMLDivElement>) => {
+    const droppedAlbum = document.getElementsByClassName('dropped')[0];
+    const draggedAlbumClassName = e.currentTarget.className;
+    if(!draggedAlbumClassName || !droppedAlbum) {
+      setTopsterAlbum({} as userAlbumType);
+      return;
+    }
+    if(droppedAlbum.className !== draggedAlbumClassName)
+      setTopsterAlbum({} as userAlbumType);
+    droppedAlbum.classList.remove('dropped');
+  };
+  const handleDropEvent = (e: React.DragEvent<HTMLDivElement>) => {
+    e.currentTarget.classList.add('dropped');
     const draggedData = e.dataTransfer.getData('album_id');
     setAlbum(parseInt(draggedData));
+    e.preventDefault();
+    e.stopPropagation();
   }
   const setAlbum = (albumId: number) => {
     setTopsterAlbum(userAlbums.find(album => album.id === albumId));
   };
-  const allowDrop = (e: React.DragEvent<HTMLDivElement>) =>  {
-    e.preventDefault();
-  };
-  const setDragAlbumData = (e: React.DragEvent<HTMLDivElement>) => {
-    topsterAlbumRef.current.classList.add("dragged");
-    e.dataTransfer.setData('album_id', String(topsterAlbum?.id));
-  };
-  const deleteDragAlbumData = (e: React.DragEvent<HTMLDivElement>) => {
-    console.log(String(albumPosition));
-    console.log(document.getElementsByClassName("dragged")[0].className);
-    console.log(e.currentTarget.className);
-    if(!document.getElementsByClassName("dragged")[0].className.includes(e.currentTarget.className)){
-      setTopsterAlbum({} as userAlbumType);
-    }
-  }
   return (
     <TopsterAlbumContainer 
-      onDragStart={setDragAlbumData} 
-      onDragOver={allowDrop} 
-      onDragEnd={deleteDragAlbumData}
-      onDrop={dropTheAlbum} 
-      width={width}
       ref={topsterAlbumRef}
+      onDragStart={handleDragStartEvent} 
+      onDragOver={handleDragOverEvent} 
+      onDragEnd={handleDragEndEvent}
+      onDrop={handleDropEvent} 
+      width={width}
       draggable
     >
       <TopsterBackground>
         {
-          topsterAlbum && <TopsterImage src={topsterAlbum?.image}></TopsterImage>
+          topsterAlbum?.id !== undefined && <TopsterImage src={topsterAlbum?.image}></TopsterImage>
         }
       </TopsterBackground>
     </TopsterAlbumContainer>

@@ -19,10 +19,14 @@ const TopsterUsersAlbum: React.FC = () => {
 
 const TopsterUsersAlbumContainer = styled.div`
 width: 95%;
-height: 80%;
 margin-bottom: 1%;
 display: flex;
+justify-content: center;
 flex-wrap: wrap;
+overflow-y: scroll;
+::-webkit-scrollbar {
+    display: none;
+}
 `;
 
 export default TopsterUsersAlbum;

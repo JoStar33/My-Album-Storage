@@ -1,11 +1,26 @@
 import React from 'react';
+import styled from 'styled-components';
+import TopsterAlbumBox from '../../../albums/TopsterAlbumBox';
 
-const Topster_6x6 = () => {
+const Topster6x6: React.FC = () => {
   return (
-    <div>
-      
-    </div>
+    <TopsterContainer>
+      {
+        new Array(36).fill(1).map((_, index) => {
+          return <TopsterAlbumBox key={index} albumPosition={index + 1} width={'12.2vw'}></TopsterAlbumBox>
+        })
+      }
+    </TopsterContainer>
   );
 };
 
-export default Topster_6x6;
+const TopsterContainer = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+flex-wrap: wrap;
+margin-top: 0.3vw;
+margin-bottom: 0.3vw;
+`;
+
+export default Topster6x6;

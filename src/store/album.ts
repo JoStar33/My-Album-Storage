@@ -138,6 +138,7 @@ export const albumSlice = createSlice({
     builder.addCase(asyncGetSpotifyAlbumFetch.rejected, (state, { payload })=>{
       state.getSpotifyAlbumLoading = false;});
 
+      
 
     builder.addCase(asyncPostAlbumFetch.pending, (state, { payload }) => {
       state.postAlbumLoading = true;});
@@ -146,6 +147,7 @@ export const albumSlice = createSlice({
       resetAlbum(state.searchAlbums);});
     builder.addCase(asyncPostAlbumFetch.rejected, (state, { payload })=>{
       state.postAlbumLoading = false;});
+
 
 
     builder.addCase(asyncGetAlbumFetch.pending, (state, { payload }) => {
@@ -158,6 +160,7 @@ export const albumSlice = createSlice({
       state.getAlbumLoading = false;});
     builder.addCase(asyncGetAlbumFetch.rejected, (state, { payload })=>{
       state.getAlbumLoading = false;});
+
 
 
     builder.addCase(asyncDeleteAlbumFetch.pending, (state, { payload }) => {

@@ -3,11 +3,16 @@ import styled from 'styled-components';
 import TopsterMain from './topsterMainLayouts/TopsterMain';
 import TopsterSideBar from './topsterSideBarLayouts/TopsterSideBar';
 
-const TopsterBody: React.FC = () => {
+type propsType = {
+  topsterLayout: string,
+  setAlbumDialog: React.Dispatch<React.SetStateAction<boolean>>,
+}
+
+const TopsterBody: React.FC<propsType> = ({topsterLayout, setAlbumDialog}) => {
   return (
     <TopsterBodyContainer>
-      <TopsterSideBar></TopsterSideBar>
-      <TopsterMain></TopsterMain>
+      <TopsterSideBar setAlbumDialog={setAlbumDialog}></TopsterSideBar>
+      <TopsterMain topsterLayout={topsterLayout}></TopsterMain>
     </TopsterBodyContainer>
   );
 };

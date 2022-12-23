@@ -9,41 +9,51 @@ import ScoreForm from '../scoreDialogs/ScoreForm';
 import ScoreDialogController from '../scoreDialogs/ScoreDialogController';
 import ScoreInputForm from '../scoreDialogs/ScoreInputForm';
 
-type propsType = {
-  album: userAlbumType,
-  setModifyDialog: React.Dispatch<React.SetStateAction<boolean>>,
+type dialogType = {
+  modifyAlbum: userAlbumType;
+  isOpened: boolean;
 }
 
-const ModifyDialog: React.FC<propsType> = ({album, setModifyDialog}) => {
+type propsType = {
+  modifyDialog: dialogType,
+  setModifyDialog: React.Dispatch<React.SetStateAction<dialogType>>,
+}
+
+const ModifyDialog: React.FC<propsType> = ({setModifyDialog, modifyDialog}) => {
   const dispatch = useDispatch<AppDispatch>();
   const [scoreVaildateText, setScoreVaildateText] = useState(``);
-  const [modifyAlbum, setModifyAlbum] = useState(album);
   const handleChangeScore = (e: React.ChangeEvent<HTMLInputElement>) => {
     setScoreVaildateText(``);
-    setModifyAlbum({...modifyAlbum, score: parseInt(e.target.value)});
+    setModifyDialog({...modifyDialog, modifyAlbum: {
+      ...modifyDialog.modifyAlbum,
+      score: parseInt(e.target.value)
+    }});
   };
   const handleChangeDescription = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setModifyAlbum({...modifyAlbum, description: e.target.value});
+    setModifyDialog({...modifyDialog, modifyAlbum: {
+      ...modifyDialog.modifyAlbum,
+      description: e.target.value
+    }});
   };
   const applyScore = async () => {
-    await dispatch(asyncPatchAlbumFetch(modifyAlbum));
+    await dispatch(asyncPatchAlbumFetch(modifyDialog.modifyAlbum));
     dispatch(asyncGetAlbumFetch(30));
-    setModifyDialog(false);
+    setModifyDialog({...modifyDialog, isOpened: false});
   };
   const closeDialog = () => {
-    setModifyDialog(false);
+    setModifyDialog({...modifyDialog, isOpened: false});
   };
   return (
     <DialogBackground>
       <ModifyDialogContainer>
         <AlbumTitle>
-          {album.name}
+          {modifyDialog.modifyAlbum.name}
         </AlbumTitle>
-        <AlbumImg src={album.image}></AlbumImg>
+        <AlbumImg src={modifyDialog.modifyAlbum.image}></AlbumImg>
         <ArtistName>
-          {album.artist}
+          {modifyDialog.modifyAlbum.artist}
         </ArtistName>
-        <ScoreForm score={album.score}></ScoreForm>
+        <ScoreForm score={modifyDialog.modifyAlbum.score}></ScoreForm>
         <ScoreInputForm scoreVaildateText={scoreVaildateText} handleChangeScore={handleChangeScore}></ScoreInputForm>
         <DescriptionText>
           <BiCommentDetail></BiCommentDetail>

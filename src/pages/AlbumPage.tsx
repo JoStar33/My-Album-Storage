@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
-import AlbumDialog from '../components/searchDialogs/AlbumDialog';
 import { setTokenByPost } from '../apis/tokenApi';
 import { RootState, AppDispatch } from '../store';
-import { asyncGetAlbumFetch } from '../store/album';
+import { asyncGetAlbumFetch, userAlbumType } from '../store/album';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import UserAlbumBox from '../components/albums/UserAlbumBox';
 import UserAlbumSkeleton from '../components/loadingForm/UserAlbumSkeleton';
-//import ModifyDialog from '../components/modifyDialogs/ModifyDialog';
+import AlbumDialog from '../components/searchDialogs/AlbumDialog';
+import ModifyDialog from '../components/modifyDialogs/ModifyDialog';
 
 const AlbumPage: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -20,6 +20,10 @@ const AlbumPage: React.FC = () => {
   }, []);
   const { userAlbums, getAlbumLoading } = useSelector((state: RootState) => state.albumStore);
   const [albumDialog, setAlbumDialog] = useState(false);
+  const [modifyDialog, setModifyDialog] = useState({
+    modifyAlbum: {} as userAlbumType,
+    isOpened: false
+  });
   const openDialog = () => {
     setAlbumDialog(true);
   }
@@ -36,7 +40,12 @@ const AlbumPage: React.FC = () => {
         {
           //앨범로딩이 종료시에 앨범들 정상적으로 보여주기.
           !getAlbumLoading && userAlbums.map(album => 
-            <UserAlbumBox key={album.id} album={album}></UserAlbumBox>)
+            <UserAlbumBox 
+              key={album.id} 
+              album={album}
+              modifyDialog={modifyDialog}
+              setModifyDialog={setModifyDialog}
+            ></UserAlbumBox>)
         }
         {
           //앨범로딩시에는 스켈레톤 앨범들이 보이도록.
@@ -47,6 +56,12 @@ const AlbumPage: React.FC = () => {
       </UserAlbumViewer>
       {
         albumDialog && <AlbumDialog setAlbumDialog={setAlbumDialog}></AlbumDialog>
+      }
+      {
+        modifyDialog.isOpened && <ModifyDialog 
+          modifyDialog={modifyDialog}
+          setModifyDialog={setModifyDialog}
+        ></ModifyDialog>
       }
     </AlbumPageContainer>
   );

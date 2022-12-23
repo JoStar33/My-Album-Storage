@@ -7,11 +7,18 @@ import { AppDispatch } from '../../store';
 import { asyncDeleteAlbumFetch } from '../../store/album';
 import { useDispatch } from 'react-redux';
 
+type dialogType = {
+  modifyAlbum: userAlbumType;
+  isOpened: boolean;
+}
+
 type propsType = {
-  album: userAlbumType
+  album: userAlbumType,
+  modifyDialog: dialogType,
+  setModifyDialog: React.Dispatch<React.SetStateAction<dialogType>>
 };
 
-const UserAlbumBox: React.FC<propsType> = ({album}) => {
+const UserAlbumBox: React.FC<propsType> = ({album, modifyDialog, setModifyDialog}) => {
   const [isLineOver, setIsLineOver] = useState(false);
   const albumText = useRef<any>(null);
   const dispatch = useDispatch<AppDispatch>();
@@ -27,10 +34,15 @@ const UserAlbumBox: React.FC<propsType> = ({album}) => {
       dispatch(asyncGetAlbumFetch(30));
     });
   };
+  const handleOpenModifyDialog = () => {
+    setModifyDialog({...modifyDialog, modifyAlbum: {
+      ...album
+    }, isOpened: true});
+  };
   return (
     <UserAlbumContainer>
-      <UserAlbumName ref={ albumText } isLineOver={ isLineOver }>{ album.name }</UserAlbumName>
-      <UserAlbumImg src={ album.image } isLineOver={ isLineOver }/>
+      <UserAlbumName onClick={handleOpenModifyDialog} ref={ albumText } isLineOver={ isLineOver }>{ album.name }</UserAlbumName>
+      <UserAlbumImg onClick={handleOpenModifyDialog} src={ album.image } isLineOver={ isLineOver }/>
       <ScoreForm score={ album.score }></ScoreForm>
       <UserAlbumDescription>{ album.description }</UserAlbumDescription>
       <DeleteButton onClick={handleDeleteEvent}>

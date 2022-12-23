@@ -1,16 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from "react-router-dom";
+import TopsterLayoutController from './TopsterLayoutController';
+
+type propsType = {
+  setTopsterLayout: React.Dispatch<React.SetStateAction<string>>
+}
 
 //탑스터 형태변환(10x10 or 5x5), 내가 담고있는 탑스터 리스트(최대 5개)를 불러와 변경이 가능하게 해주는 기능.
-const TopsterHeader: React.FC = () => {
+const TopsterHeader: React.FC<propsType> = ({setTopsterLayout}) => {
   const navigate = useNavigate();
   const moveMainPage = () => {
     navigate('/');
   };
   return (
     <TopsterHeaderContainer>
-      <TopsterContents></TopsterContents>
+      <TopsterContents>
+        <TopsterLayoutController setTopsterLayout={setTopsterLayout}></TopsterLayoutController>
+      </TopsterContents>
       <BackMainPageButton onClick={moveMainPage}>돌아가기</BackMainPageButton>
     </TopsterHeaderContainer>
   );
