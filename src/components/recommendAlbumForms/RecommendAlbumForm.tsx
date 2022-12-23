@@ -5,7 +5,7 @@ import '../../styles/slider.css';
 const RecommendAlbumForm: React.FC = () => {
   const [sliderIndex, setSliderIndex] = useState(0);
   const indexRef = useRef() as any;
-  const callback = (): any => {
+  const checkSliderIndex = (): any => {
     setSliderIndex(sliderIndex + 1);
     const sliderInputparts = document.getElementsByClassName("slider");
     if(sliderIndex === 0) {
@@ -20,7 +20,7 @@ const RecommendAlbumForm: React.FC = () => {
     }
   };
   useEffect(() => {
-    indexRef.current = callback;
+    indexRef.current = checkSliderIndex;
   });
   useEffect(() => {
     const sliderInputparts = document.getElementsByClassName("slider");
@@ -33,16 +33,16 @@ const RecommendAlbumForm: React.FC = () => {
   return (
     <RecommendAlbumFormContainer>
       <section id="slider">
-        <input type="radio" className='slider' name="slider" id="s1"/>
-        <input type="radio" className='slider' name="slider" id="s2"/>
-        <input type="radio" className='slider' name="slider" id="s3"/>
-        <input type="radio" className='slider' name="slider" id="s4"/>
-        <input type="radio" className='slider' name="slider" id="s5"/>
-        <label htmlFor="s1" id="slide1">1</label>
-        <label htmlFor="s2" id="slide2">2</label>
-        <label htmlFor="s3" id="slide3">3</label>
-        <label htmlFor="s4" id="slide4">4</label>
-        <label htmlFor="s5" id="slide5">5</label>
+        {
+          new Array(5).fill(1).map((_, index) => {
+            return <input key={index} type="radio" className='slider' name="slider" id={`s${index + 1}`} onChange={() => setSliderIndex(index)}/>
+          })
+        }
+        {
+          new Array(5).fill(1).map((_, index) => {
+            return <label key={index} htmlFor={`s${index + 1}`} id={`slide${index + 1}`} onClick={() => setSliderIndex(index)}></label>
+          })
+        }
       </section>
     </RecommendAlbumFormContainer>
   );

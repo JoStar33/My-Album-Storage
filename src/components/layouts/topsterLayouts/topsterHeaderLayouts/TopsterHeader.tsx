@@ -13,11 +13,15 @@ const TopsterHeader: React.FC<propsType> = ({setTopsterLayout}) => {
   const moveMainPage = () => {
     navigate('/');
   };
+  const moveSteamPage = () => {
+    navigate('/steam-topster');
+  };
   return (
     <TopsterHeaderContainer>
       <TopsterContents>
         <TopsterLayoutController setTopsterLayout={setTopsterLayout}></TopsterLayoutController>
       </TopsterContents>
+      <SteamTopsterButton onClick={moveSteamPage}>탑스터 찌기</SteamTopsterButton>
       <BackMainPageButton onClick={moveMainPage}>돌아가기</BackMainPageButton>
     </TopsterHeaderContainer>
   );
@@ -40,7 +44,8 @@ const TopsterContents = styled.div`
 width: 90vw;
 `;
 
-const BackMainPageButton = styled.div`
+const DefaultButton = styled.div`
+margin-right: 20px;
 border-radius: 20px;
 box-shadow: 0 6px 6px 0 gray;
 width: 6vw;
@@ -51,6 +56,12 @@ align-items: center;
 justify-content: center;
 user-select: none;
 cursor: pointer;
+`;
+
+const SteamTopsterButton = styled(DefaultButton)`
+`;
+
+const BackMainPageButton = styled(DefaultButton)`
 `;
 
 export default TopsterHeader;

@@ -52,6 +52,7 @@ height: 3vh;
 border-radius: 20px;
 color: white;
 font-weight: 800;
+padding-left: 20px;
 margin-left: 2px;
 margin-right: 2px;
 user-select: none;

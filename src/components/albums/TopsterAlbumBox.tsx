@@ -19,6 +19,11 @@ const TopsterAlbumBox: React.FC<propsType> = ({width, albumPosition}) => {
 
 
   const handleDragStartEvent = (e: React.DragEvent<HTMLDivElement>) => {
+    console.log("run");
+    if(!topsterAlbum?.id) {
+      e.preventDefault();
+      return;
+    }
     e.dataTransfer.setData('album_id', String(topsterAlbum?.id));
   };
   const handleDragOverEvent = (e: React.DragEvent<HTMLDivElement>) =>  {
@@ -53,7 +58,9 @@ const TopsterAlbumBox: React.FC<propsType> = ({width, albumPosition}) => {
       onDragEnd={handleDragEndEvent}
       onDrop={handleDropEvent} 
       width={width}
-      draggable
+      draggable={
+        topsterAlbum?.id !== undefined ? true : false
+      }
     >
       <TopsterBackground>
         {

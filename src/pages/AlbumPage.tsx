@@ -82,6 +82,7 @@ overflow-y: scroll;
 width: 90vw;
 height: 70vh;
 border-radius: 20px;
+margin-bottom: 30vh;
 box-shadow: 0 6px 6px 0 gray;
 ::-webkit-scrollbar {
     display: none;
