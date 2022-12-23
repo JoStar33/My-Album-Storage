@@ -114,12 +114,12 @@ cursor: pointer;
 
 const OpenDialogButton = styled(DefaultButton)`
 background-color: skyblue;
-margin-left: 20px;
 `;
 
 const MakeTopsterButton = styled(DefaultButton)`
 background-color: orange;
 margin-left: 20px;
+margin-right: 20px;
 `;
 
 
