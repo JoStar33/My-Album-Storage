@@ -11,6 +11,7 @@ const TopsterUserInfo: React.FC<propsType> = ({setAlbumDialog}) => {
   } 
   return (
     <TopsterUserInfoContainer>
+      <UserInfo></UserInfo>
       <OpenDialogButton onClick={uploadNewAlbum}>앨범추가하기</OpenDialogButton>
     </TopsterUserInfoContainer>
   );
@@ -30,13 +31,18 @@ display: flex;
 align-items: center;
 `;
 
+const UserInfo = styled.div`
+width: 11vw;
+height: 20px;
+`;
+
 const OpenDialogButton = styled.div`
 display: flex;
 align-items: center;
 justify-content: center;
 font-weight: 800;
 border-radius: 20px;
-width: 100px;
+width: 6vw;
 height: 30px;
 background-color: white;
 margin-top: 10px;

@@ -20,7 +20,7 @@ const AlbumDialogController: React.FC<propsType> = ({selectedAlbums, setAlbumDia
     setAlbumDialog(false);
   }
   const close = () => {
-    dispatch(resetSearchAlbums);
+    dispatch(resetSearchAlbums());
     setAlbumDialog(false);
   }
   return (

@@ -9,6 +9,7 @@ import UserAlbumBox from '../components/albums/UserAlbumBox';
 import UserAlbumSkeleton from '../components/loadingForm/UserAlbumSkeleton';
 import AlbumDialog from '../components/searchDialogs/AlbumDialog';
 import ModifyDialog from '../components/modifyDialogs/ModifyDialog';
+import RecommendAlbumForm from '../components/recommendAlbumForms/RecommendAlbumForm';
 
 const AlbumPage: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -32,6 +33,7 @@ const AlbumPage: React.FC = () => {
   };
   return (
     <AlbumPageContainer>
+      <RecommendAlbumForm></RecommendAlbumForm>
       <ButtonContainer>
         <OpenDialogButton onClick={ openDialog }>다이얼로그 오픈</OpenDialogButton>
         <MakeTopsterButton onClick={ moveTopsterPage }>탑스터 만들러가기</MakeTopsterButton>
@@ -95,6 +97,8 @@ border-radius: 20px;
 box-shadow: 0 6px 6px 0 gray;
 font-weight: 800;
 margin-bottom: 20px;
+padding-top: 20px;
+padding-bottom: 20px;
 `;
 
 const DefaultButton = styled(Centering)`

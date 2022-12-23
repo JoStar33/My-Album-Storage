@@ -21,7 +21,6 @@ const TopsterUsersAlbumContainer = styled.div`
 width: 95%;
 margin-bottom: 1%;
 display: flex;
-justify-content: center;
 flex-wrap: wrap;
 overflow-y: scroll;
 ::-webkit-scrollbar {
