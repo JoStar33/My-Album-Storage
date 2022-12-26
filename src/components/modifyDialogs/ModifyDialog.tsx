@@ -37,7 +37,7 @@ const ModifyDialog: React.FC<propsType> = ({setModifyDialog, modifyDialog}) => {
   };
   const applyScore = async () => {
     await dispatch(asyncPatchAlbumFetch(modifyDialog.modifyAlbum));
-    dispatch(asyncGetAlbumFetch(30));
+    dispatch(asyncGetAlbumFetch('63a921dfa7cdfa7871cdb166'));
     setModifyDialog({...modifyDialog, isOpened: false});
   };
   const closeDialog = () => {

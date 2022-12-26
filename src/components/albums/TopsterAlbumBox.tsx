@@ -19,12 +19,11 @@ const TopsterAlbumBox: React.FC<propsType> = ({width, albumPosition}) => {
 
 
   const handleDragStartEvent = (e: React.DragEvent<HTMLDivElement>) => {
-    console.log("run");
-    if(!topsterAlbum?.id) {
+    if(!topsterAlbum?._id) {
       e.preventDefault();
       return;
     }
-    e.dataTransfer.setData('album_id', String(topsterAlbum?.id));
+    e.dataTransfer.setData('album_id', String(topsterAlbum?._id));
   };
   const handleDragOverEvent = (e: React.DragEvent<HTMLDivElement>) =>  {
     e.preventDefault();
@@ -43,12 +42,12 @@ const TopsterAlbumBox: React.FC<propsType> = ({width, albumPosition}) => {
   const handleDropEvent = (e: React.DragEvent<HTMLDivElement>) => {
     e.currentTarget.classList.add('dropped');
     const draggedData = e.dataTransfer.getData('album_id');
-    setAlbum(parseInt(draggedData));
+    setAlbum(draggedData);
     e.preventDefault();
     e.stopPropagation();
   }
-  const setAlbum = (albumId: number) => {
-    setTopsterAlbum(userAlbums.find(album => album.id === albumId));
+  const setAlbum = (albumId: string) => {
+    setTopsterAlbum(userAlbums.find(album => album._id === albumId));
   };
   return (
     <TopsterAlbumContainer 
@@ -59,12 +58,12 @@ const TopsterAlbumBox: React.FC<propsType> = ({width, albumPosition}) => {
       onDrop={handleDropEvent} 
       width={width}
       draggable={
-        topsterAlbum?.id !== undefined ? true : false
+        topsterAlbum?._id !== undefined ? true : false
       }
     >
       <TopsterBackground>
         {
-          topsterAlbum?.id !== undefined && <TopsterImage src={topsterAlbum?.image}></TopsterImage>
+          topsterAlbum?._id !== undefined && <TopsterImage src={topsterAlbum?.image}></TopsterImage>
         }
       </TopsterBackground>
     </TopsterAlbumContainer>

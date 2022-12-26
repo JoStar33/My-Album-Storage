@@ -4,6 +4,7 @@ import AlbumDialog from '../components/searchDialogs/AlbumDialog';
 import { setTokenByPost } from '../apis/tokenApi';
 import { AppDispatch } from '../store';
 import { asyncGetAlbumFetch } from '../store/album';
+import { asyncGetTopsterFetch } from '../store/topster';
 import { useDispatch } from 'react-redux';
 import TopsterBody from '../components/layouts/topsterLayouts/TopsterBody';
 import TopsterHeader from '../components/layouts/topsterLayouts/topsterHeaderLayouts/TopsterHeader';
@@ -13,7 +14,8 @@ const MakeTopsterPage: React.FC = () => {
   const [albumDialog, setAlbumDialog] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
-    dispatch(asyncGetAlbumFetch(30));
+    dispatch(asyncGetAlbumFetch('63a921dfa7cdfa7871cdb166'));
+    dispatch(asyncGetTopsterFetch('63a921dfa7cdfa7871cdb166'));
     setTokenByPost();
   }, []);
   return (

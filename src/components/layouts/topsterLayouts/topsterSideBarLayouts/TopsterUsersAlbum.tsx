@@ -10,7 +10,7 @@ const TopsterUsersAlbum: React.FC = () => {
     <TopsterUsersAlbumContainer>
       {
         userAlbums.map(album => {
-          return <TopsterUserAlbumBox key={album.id} album={ album }/>
+          return <TopsterUserAlbumBox key={album._id} album={ album }/>
         })
       }
     </TopsterUsersAlbumContainer>

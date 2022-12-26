@@ -7,7 +7,7 @@ type getSpotifyAlbumParamType = {
 };
 
 type postAlbumParamType = {
-  userId: number,
+  userId: string,
   selectedAlbums: albumType[]
 }
 
@@ -22,13 +22,13 @@ export type albumType = {
 };
 
 export type userAlbumType = {
-  id: number,
+  _id: string,
   artist: string,
   name: string,
   image: string,
   score: number,
   description: string,
-  owner: number
+  owner: string
 };
 
 type selectedSetType = {
@@ -37,7 +37,7 @@ type selectedSetType = {
 };
 
 const asyncGetSpotifyAlbumFetch = createAsyncThunk(
-  'counterSlice/asyncGetSpotifyAlbumFetch',
+  'albumSlice/asyncGetSpotifyAlbumFetch',
   async (param: getSpotifyAlbumParamType) => {
     let data: item[] = [];
     await getSpotifyAlbum(param.query, param.type).then((res) => {
@@ -48,8 +48,8 @@ const asyncGetSpotifyAlbumFetch = createAsyncThunk(
 );
 
 const asyncGetAlbumFetch = createAsyncThunk(
-  'counterSlice/asyncGetAlbumFetch',
-  async (param: number) => {
+  'albumSlice/asyncGetAlbumFetch',
+  async (param: string) => {
     let data: userAlbumType[] = [];
     await getAlbum(param).then((res) => {
       data = res.data;
@@ -59,21 +59,21 @@ const asyncGetAlbumFetch = createAsyncThunk(
 );
 
 const asyncPostAlbumFetch = createAsyncThunk(
-  'counterSlice/asyncPostAlbumFetch',
+  'albumSlice/asyncPostAlbumFetch',
   async (param: postAlbumParamType) => {
     await postAlbum(param.userId, param.selectedAlbums);
   }
 );
 
 const asyncDeleteAlbumFetch = createAsyncThunk(
-  'counterSlice/asyncDeleteAlbumFetch',
-  async (param: number) => {
+  'albumSlice/asyncDeleteAlbumFetch',
+  async (param: string) => {
     await deleteAlbum(param);
   }
 );
 
 const asyncPatchAlbumFetch = createAsyncThunk(
-  'counterSlice/asyncPatchAlbumFetch',
+  'albumSlice/asyncPatchAlbumFetch',
   async (param: userAlbumType) => {
     await patchAlbum(param);
   }

@@ -8,25 +8,25 @@ const getSpotifyAlbum = (query: string, type:string) => {
   }});
 };
 
-const postAlbum = (userId: number, selectedAlbum: albumType[]) => {
+const postAlbum = (userId: string, selectedAlbum: albumType[]) => {
   return customAxios.post(`/album/${userId}`, {
     selectedAlbum
   })
-}
+};
 
-const getAlbum = (userId: number) => {
+const getAlbum = (userId: string) => {
   return customAxios.get(`/album/${userId}`);
-}
+};
 
-const deleteAlbum = (albumId: number) => {
+const deleteAlbum = (albumId: string) => {
   return customAxios.delete(`/album/${albumId}`);
-}
+};
 
 const patchAlbum = (album: userAlbumType) => {
-  return customAxios.patch(`/album/${album.id}`, {
+  return customAxios.patch(`/album/${album._id}`, {
     album
   });
-}
+};
 
 type artist = {
   external_urls: Object,
@@ -48,13 +48,13 @@ type albumType = {
 };
 
 type userAlbumType = {
-  id: number,
+  _id: string,
   artist: string,
   name: string,
   image: string,
   score: number,
   description: string,
-  owner: number
+  owner: string
 };
 
 type image = {

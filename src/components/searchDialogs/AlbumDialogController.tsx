@@ -13,9 +13,9 @@ type propsType = {
 const AlbumDialogController: React.FC<propsType> = ({selectedAlbums, setAlbumDialog}) => {
   const dispatch = useDispatch<AppDispatch>();
   const apply = async () => {
-    await dispatch(asyncPostAlbumFetch({selectedAlbums: selectedAlbums, userId: 30}))
+    await dispatch(asyncPostAlbumFetch({selectedAlbums: selectedAlbums, userId: '63a921dfa7cdfa7871cdb166'}))
     .then(() => { 
-      dispatch(asyncGetAlbumFetch(30));
+      dispatch(asyncGetAlbumFetch('63a921dfa7cdfa7871cdb166'));
     });
     setAlbumDialog(false);
   }

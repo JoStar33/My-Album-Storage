@@ -8,7 +8,7 @@ type propsType = {
 
 const TopsterUserAlbumBox: React.FC<propsType> = ({album}) => {
   const handleDragStartEvent = (e: React.DragEvent<HTMLDivElement>) => {
-    e.dataTransfer.setData('album_id', String(album.id));
+    e.dataTransfer.setData('album_id', String(album._id));
     e.dataTransfer.dropEffect = "move";
   }
   const handleDragEndEvent = (e: React.DragEvent<HTMLDivElement>) => {

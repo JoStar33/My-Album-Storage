@@ -16,7 +16,7 @@ const AlbumPage: React.FC = () => {
   const navigate = useNavigate();
   //아래와 같이 []이렇게 기술하지않으면 api를 무한 호출하는 버그가 있었음. 해당문제를 해결한 코드임.
   useEffect(() => {
-    dispatch(asyncGetAlbumFetch(30));
+    dispatch(asyncGetAlbumFetch('63a921dfa7cdfa7871cdb166'));
     setTokenByPost();
   }, []);
   const { userAlbums, getAlbumLoading } = useSelector((state: RootState) => state.albumStore);
@@ -43,7 +43,7 @@ const AlbumPage: React.FC = () => {
           //앨범로딩이 종료시에 앨범들 정상적으로 보여주기.
           !getAlbumLoading && userAlbums.map(album => 
             <UserAlbumBox 
-              key={album.id} 
+              key={album._id} 
               album={album}
               modifyDialog={modifyDialog}
               setModifyDialog={setModifyDialog}

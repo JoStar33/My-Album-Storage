@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from "react-router-dom";
-import TopsterLayoutController from './TopsterLayoutController';
+import TopsterController from './TopsterController';
 
 type propsType = {
   setTopsterLayout: React.Dispatch<React.SetStateAction<string>>
@@ -18,9 +18,7 @@ const TopsterHeader: React.FC<propsType> = ({setTopsterLayout}) => {
   };
   return (
     <TopsterHeaderContainer>
-      <TopsterContents>
-        <TopsterLayoutController setTopsterLayout={setTopsterLayout}></TopsterLayoutController>
-      </TopsterContents>
+      <TopsterController setTopsterLayout={setTopsterLayout}></TopsterController>
       <SteamTopsterButton onClick={moveSteamPage}>탑스터 찌기</SteamTopsterButton>
       <BackMainPageButton onClick={moveMainPage}>돌아가기</BackMainPageButton>
     </TopsterHeaderContainer>
@@ -38,10 +36,6 @@ box-shadow: 0 6px 6px 0 gray;
 display: flex;
 align-items: center;
 flex-direction: row;
-`;
-
-const TopsterContents = styled.div`
-width: 90vw;
 `;
 
 const DefaultButton = styled.div`

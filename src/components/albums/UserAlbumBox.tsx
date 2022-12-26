@@ -27,11 +27,11 @@ const UserAlbumBox: React.FC<propsType> = ({album, modifyDialog, setModifyDialog
     if(height > 23) {
       setIsLineOver(true);
     }
-  }, [album.id]);
+  }, [album._id]);
   const handleDeleteEvent = async () => {
-    await dispatch(asyncDeleteAlbumFetch(album.id))
+    await dispatch(asyncDeleteAlbumFetch(album._id))
     .then(() => { 
-      dispatch(asyncGetAlbumFetch(30));
+      dispatch(asyncGetAlbumFetch('63a921dfa7cdfa7871cdb166'));
     });
   };
   const handleOpenModifyDialog = () => {
