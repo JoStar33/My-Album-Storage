@@ -10,6 +10,13 @@ const patchTopster = (topster: topsterType) => {
   });
 };
 
+const putTopster = (userId: string, topsters: topsterType[]) => {
+  //모든 탑스터의 내용 업데이트
+  return customAxios.put(`/topster/${userId}`, {
+    topsters
+  });
+}
+
 type topsterType = {
   _id: string,
   name: string,
@@ -28,4 +35,4 @@ type userAlbumType = {
   owner: string
 };
 
-export { getTopster, patchTopster };
+export { getTopster, patchTopster, putTopster };

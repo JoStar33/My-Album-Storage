@@ -72,7 +72,6 @@ const TopsterController: React.FC<propsType> = ({setTopsterLayout}) => {
 };
 
 const TopsterControllerContainer = styled.div`
-width: 90vw;
 height: 35px;
 border-radius: 4px;
 display: flex;

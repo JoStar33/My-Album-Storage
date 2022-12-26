@@ -95,7 +95,7 @@ const initialState  = {
 
 const makeSearchAlbum = (payload: item[], searchAlbums: albumType[]) => {
   payload.forEach(element => {
-    searchAlbums.push(
+    searchAlbums.concat(
       {
         key: element.id,
         artist: element.artists[0].name,
