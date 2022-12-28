@@ -40,24 +40,19 @@ const asyncPutTopsterFetch = createAsyncThunk(
   }
 );
 
-
 const resetStoreTopster = (topsters: topsterType[]) => {
   topsters.splice(0, topsters.length);
 };
 
 const makeTopster = (payload: topsterType[], topsters: topsterType[]) => {
   payload.forEach(element => {
-    topsters.push(
-      {
-        _id: element._id,
-        name: element.name,
-        type: element.type,
-        albums: element.albums,
-        owner: element.owner
-      }
-    );
+    topsters.push(element);
   });
 };
+
+const updateTopster = (topsters: topsterType[], selectedTopster: topsterType) => 
+  topsters.map(topster => 
+    topster._id === selectedTopster._id ? selectedTopster : topster);
 
 const initialState  = {
   topsters: [] as topsterType[],
@@ -72,17 +67,15 @@ export const topsterSlice = createSlice({
   reducers: {
     setSelectedTopster: (state, action: PayloadAction<topsterType>) => {
       Object.assign(state.selectedTopster, action.payload);
-      state.topsters = state.topsters.map(topster => 
-        topster._id === state.selectedTopster._id ? state.selectedTopster : topster
-      );
+      state.topsters = updateTopster(state.topsters, state.selectedTopster);
     },
     setSelectedTopsterType: (state, action: PayloadAction<string>) => {
       Object.assign(state.selectedTopster, {...state.selectedTopster, type: action.payload });
-      state.topsters.filter(topster => topster._id === state.selectedTopster._id)[0].type = action.payload;
+      state.topsters = updateTopster(state.topsters, state.selectedTopster);
     },
     setSelectedTopsterName: (state, action: PayloadAction<string>) => {
       Object.assign(state.selectedTopster, {...state.selectedTopster, name: action.payload });
-      state.topsters.filter(topster => topster._id === state.selectedTopster._id)[0].name = action.payload;
+      state.topsters = updateTopster(state.topsters, state.selectedTopster);
     }
   },
   extraReducers: (builder) => {

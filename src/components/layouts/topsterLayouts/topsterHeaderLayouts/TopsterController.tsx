@@ -56,14 +56,14 @@ const TopsterController: React.FC<propsType> = ({setTopsterLayout}) => {
       <TopsterChooseSetting onChange={handleSelectTopster}>
         {
           topsters.map(topster => {
-            return <TopsterOption value={topster._id}>{topster.name}</TopsterOption>
+            return <TopsterOption key={topster._id} value={topster._id}>{topster.name}</TopsterOption>
           })
         }
       </TopsterChooseSetting>
       <TopsterLayoutSetting value={selectedTopster.type} onChange={handleSelect} name="layout">
         {
           layoutType.map(item => {
-            return <TopsterOption value={item.value} >{item.name}</TopsterOption>
+            return <TopsterOption key={item.value} value={item.value} >{item.name}</TopsterOption>
           })
         }
       </TopsterLayoutSetting>

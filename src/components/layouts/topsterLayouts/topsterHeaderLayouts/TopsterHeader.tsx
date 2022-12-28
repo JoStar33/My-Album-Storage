@@ -30,7 +30,7 @@ const TopsterHeader: React.FC<propsType> = ({setTopsterLayout}) => {
   return (
     <TopsterHeaderContainer>
       <TopsterName>
-        <TopsterNamePlace onChange={handleTopsterName} value={selectedTopster.name}></TopsterNamePlace>
+        <TopsterNameEditPlace onChange={handleTopsterName} value={selectedTopster.name || ''}></TopsterNameEditPlace>
       </TopsterName>
       <TopsterController setTopsterLayout={setTopsterLayout}></TopsterController>
       <SaveTopsterButton onClick={saveTopster}>탑스터 저장</SaveTopsterButton>
@@ -60,7 +60,7 @@ align-items: center;
 justify-content: center;
 `;
 
-const TopsterNamePlace = styled.input`
+const TopsterNameEditPlace = styled.input`
 margin-left: 30%;
 border: none;
 outline: none;
