@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import TopsterAlbumBox from '../../../albums/TopsterAlbumBox';
 
-const Topster10x10 = () => {
+const Topster10x10: React.FC = () => {
   return (
     <TopsterContainer>
       {

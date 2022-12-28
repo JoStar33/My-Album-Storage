@@ -10,6 +10,11 @@ export type topsterType = {
   owner: string
 }
 
+type patchTopsterType = {
+  userId: string
+  topster: topsterType
+}
+
 type putTopsterType = {
   userId: string
   topsters: topsterType[]
@@ -27,9 +32,16 @@ const asyncGetTopsterFetch = createAsyncThunk(
 );
 
 const asyncPatchTopsterFetch = createAsyncThunk(
-  'topsterSlice/asyncGetTopsterFetch', 
-  async (param: topsterType) => {
-    await patchTopster(param);
+  'topsterSlice/asyncPatchTopsterFetch', 
+  async (param: patchTopsterType) => {
+    let data: topsterType[] = [];
+    await patchTopster(param.topster)
+    .then(() =>
+      getTopster(param.userId))
+    .then(res => {
+      data = res.data;
+    });
+    return data;;
   }
 );
 
@@ -96,6 +108,17 @@ export const topsterSlice = createSlice({
     builder.addCase(asyncPutTopsterFetch.fulfilled, (state, { payload })=>{
       state.saveTopsterLoading = false;});
     builder.addCase(asyncPutTopsterFetch.rejected, (state, { payload })=>{
+      state.saveTopsterLoading = false;});
+
+
+
+    builder.addCase(asyncPatchTopsterFetch.pending, (state, { payload }) => {
+      state.saveTopsterLoading = true;});
+    builder.addCase(asyncPatchTopsterFetch.fulfilled, (state, { payload })=>{
+      state.saveTopsterLoading = false;
+      resetStoreTopster(state.topsters);
+      makeTopster(payload, state.topsters);});
+    builder.addCase(asyncPatchTopsterFetch.rejected, (state, { payload })=>{
       state.saveTopsterLoading = false;});
   }
 });

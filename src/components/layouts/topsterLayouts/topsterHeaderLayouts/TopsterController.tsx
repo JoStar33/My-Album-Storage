@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/store';
-import { setSelectedTopster, setSelectedTopsterType, topsterType } from '../../../../store/topster'
+import { asyncPutTopsterFetch, setSelectedTopster, setSelectedTopsterType, topsterType } from '../../../../store/topster'
+import { useNavigate } from 'react-router-dom';
 
 type layout = {
   name: string,
@@ -16,6 +17,7 @@ type propsType = {
 const TopsterController: React.FC<propsType> = ({setTopsterLayout}) => {
   const { topsters, selectedTopster } = useSelector((state: RootState) => state.topsterStore);
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
   const layoutType: layout[] = [
     {
       name: "3x3",
@@ -51,6 +53,15 @@ const TopsterController: React.FC<propsType> = ({setTopsterLayout}) => {
     setTopsterLayout(e.target.value);
     dispatch(setSelectedTopsterType(e.target.value));
   };
+  const moveMainPage = () => {
+    navigate('/');
+  };
+  const moveSteamPage = () => {
+    navigate('/steam-topster');
+  };
+  const saveTopster = (topsters: topsterType[]) => {
+    dispatch(asyncPutTopsterFetch({userId: '63a921dfa7cdfa7871cdb166', topsters}));
+  };
   return (
     <TopsterControllerContainer>
       <TopsterChooseSetting onChange={handleSelectTopster}>
@@ -67,6 +78,9 @@ const TopsterController: React.FC<propsType> = ({setTopsterLayout}) => {
           })
         }
       </TopsterLayoutSetting>
+      <SaveTopsterButton onClick={() => saveTopster(topsters)}>탑스터 저장</SaveTopsterButton>
+      <SteamTopsterButton onClick={ moveSteamPage }>탑스터 찌기</SteamTopsterButton>
+      <BackMainPageButton onClick={ moveMainPage }>돌아가기</BackMainPageButton>
     </TopsterControllerContainer>
   );
 };
@@ -75,7 +89,8 @@ const TopsterControllerContainer = styled.div`
 height: 35px;
 border-radius: 4px;
 display: flex;
-flex-direction: row-reverse;
+flex-direction: row;
+align-items: center;
 `;
 
 const SelectDefault = styled.select`
@@ -102,6 +117,30 @@ color: #fff;
 padding: 3px 0;
 font-size: 16px;
 `;
+
+const DefaultButton = styled.div`
+margin-right: 20px;
+border-radius: 20px;
+box-shadow: 0 6px 6px 0 gray;
+width: 8vw;
+height: 6vh;
+font-weight: 1000;
+display: flex;
+align-items: center;
+justify-content: center;
+user-select: none;
+cursor: pointer;
+`;
+
+const SteamTopsterButton = styled(DefaultButton)`
+`;
+
+const BackMainPageButton = styled(DefaultButton)`
+`;
+
+const SaveTopsterButton = styled(DefaultButton)`
+`;
+
 
 
 export default TopsterController;
