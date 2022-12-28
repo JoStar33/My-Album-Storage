@@ -49,7 +49,7 @@ const LoginForm: React.FC<propsType> = ({dialogController, setDialogText}) => {
     await dispatch(asyncLoginFetch({
       email: account.email, nick: '', password: account.password, id: NaN
     }))
-    .unwrap()
+    .unwrap() //unwrap을 통해 thunk의 비동기 액션결과를 다룰 수 있도록 한다.
     .then(() => { navigate('/'); })
     .catch((err) => {
       setDialogText(err.message);

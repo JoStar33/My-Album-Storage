@@ -14,7 +14,7 @@ const AlbumDialogController: React.FC<propsType> = ({selectedAlbums, setAlbumDia
   const dispatch = useDispatch<AppDispatch>();
   const apply = async () => {
     await dispatch(asyncPostAlbumFetch({selectedAlbums: selectedAlbums, userId: '63a921dfa7cdfa7871cdb166'}))
-    .then(() => { 
+    .then(() => {
       dispatch(asyncGetAlbumFetch('63a921dfa7cdfa7871cdb166'));
     });
     setAlbumDialog(false);

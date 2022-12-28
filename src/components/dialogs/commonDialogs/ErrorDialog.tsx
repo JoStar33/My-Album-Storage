@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ErrorDialog = () => {
+const ErrorDialog: React.FC = () => {
   return (
     <div>
       

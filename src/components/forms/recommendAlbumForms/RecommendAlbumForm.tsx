@@ -4,17 +4,20 @@ import '../../../styles/slider.css';
 
 const RecommendAlbumForm: React.FC = () => {
   const [sliderIndex, setSliderIndex] = useState(0);
+  //setInterval을 사용할때에 useState가 제대로 적용안되는 문제를 위해 useRef사용.
   const indexRef = useRef() as any;
   const checkSliderIndex = (): any => {
     setSliderIndex(sliderIndex + 1);
-    const sliderInputparts = document.getElementsByClassName("slider");
+    const sliderInputparts = document.getElementsByClassName("slider") as HTMLCollectionOf<HTMLInputElement>;
+    //슬라이더가 첫번째 값이라면
     if(sliderIndex === 0) {
-      (sliderInputparts[4] as HTMLInputElement).checked = false;
-      (sliderInputparts[sliderIndex] as HTMLInputElement).checked = true;
+      sliderInputparts[4].checked = false;
+      sliderInputparts[sliderIndex].checked = true;
       return;
     }
-    (sliderInputparts[sliderIndex - 1] as HTMLInputElement).checked = false;
-    (sliderInputparts[sliderIndex] as HTMLInputElement).checked = true;
+    sliderInputparts[sliderIndex - 1].checked = false;
+    sliderInputparts[sliderIndex].checked = true;
+    //슬라이더가 마지막 값이라면
     if(sliderIndex === 4) {
       setSliderIndex(0);
     }
@@ -23,8 +26,8 @@ const RecommendAlbumForm: React.FC = () => {
     indexRef.current = checkSliderIndex;
   });
   useEffect(() => {
-    const sliderInputparts = document.getElementsByClassName("slider");
-    (sliderInputparts[sliderIndex] as HTMLInputElement).checked = true;
+    const sliderInputparts = document.getElementsByClassName("slider") as HTMLCollectionOf<HTMLInputElement>;
+    sliderInputparts[sliderIndex].checked = true;
     const timer = setInterval(() => {
       indexRef.current();
     }, 3000);

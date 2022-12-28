@@ -1,11 +1,9 @@
 import { tokenAxios } from "./axios/tokenAxios"
 import { setToken } from './cookies/spotifyCookie';
 
-const setTokenByPost = () => {
-  return tokenAxios.post(`api/token`, 'grant_type=client_credentials')
-  .then((res) => { 
-    setToken(res.data.access_token) 
-  });
+const setTokenByPost = async () => {
+  const res = await tokenAxios.post(`api/token`, 'grant_type=client_credentials');
+  setToken(res.data.access_token);
 }
 
 export { setTokenByPost }

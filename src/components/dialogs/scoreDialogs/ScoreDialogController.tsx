@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 type propsType = {
-apply: () => void,
-close: () => void,
+  apply: () => void,
+  close: () => void,
 }
 
 const ScoreDialogController: React.FC<propsType> = ({apply, close}) => {
