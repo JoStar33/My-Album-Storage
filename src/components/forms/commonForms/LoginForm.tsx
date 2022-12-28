@@ -1,14 +1,14 @@
 import React , { useState, useEffect }from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom'
-import { AppDispatch } from '../../store/index'
+import { AppDispatch } from '../../../store/index'
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { asyncLogoutFetch } from '../../store/user';
-import { RootState } from '../../store';
-import { asyncLoginFetch } from '../../store/user';
-import { validateEmail, validatePassword } from '../../utils/validate';
-import { getCookie } from '../../apis/cookies/cookie';
+import { asyncLogoutFetch } from '../../../store/user';
+import { RootState } from '../../../store';
+import { asyncLoginFetch } from '../../../store/user';
+import { validateEmail, validatePassword } from '../../../utils/validate';
+import { getCookie } from '../../../apis/cookies/cookie';
 import LoadingForm from '../loadingForm/LoadingForm';
 
 type propsType = {

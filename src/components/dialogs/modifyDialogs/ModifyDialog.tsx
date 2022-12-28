@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { userAlbumType, asyncPatchAlbumFetch, asyncGetAlbumFetch } from '../../store/album';
-import { AppDispatch } from '../../store/index';
+import { userAlbumType, asyncPatchAlbumFetch, asyncGetAlbumFetch } from '../../../store/album';
+import { AppDispatch } from '../../../store/index';
 import { useDispatch } from 'react-redux';
 import { MdCancel } from 'react-icons/md';
 import { BiCommentDetail } from 'react-icons/bi';

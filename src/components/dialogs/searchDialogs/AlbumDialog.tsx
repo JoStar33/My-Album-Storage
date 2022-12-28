@@ -5,12 +5,12 @@ import SearchAlbumForm from './SearchAlbumForm';
 import SelectedAlbumBox from './SelectedAlbumBox';
 import AlbumDialogController from './AlbumDialogController';
 import ScoreDialog from '../scoreDialogs/ScoreDialog';
-import AlbumSkeleton from '../loadingForm/AlbumSkeleton';
-import SearchGuideForm from '../initForm/SearchGuideForm';
-import NotFoundAnyAlbum from '../errorForm/NotFoundAnyAlbum';
-import LoadingForm from '../loadingForm/LoadingForm';
-import { albumType } from '../../store/album';
-import { RootState } from '../../store';
+import AlbumSkeleton from '../../forms/loadingForm/AlbumSkeleton';
+import SearchGuideForm from '../../forms/initForm/SearchGuideForm';
+import NotFoundAnyAlbum from '../../forms/errorForm/NotFoundAnyAlbum';
+import LoadingForm from '../../forms/loadingForm/LoadingForm';
+import { albumType } from '../../../store/album';
+import { RootState } from '../../../store';
 import { useSelector } from 'react-redux';
 
 type propsType = {

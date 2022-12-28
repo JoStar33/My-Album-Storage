@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import AlbumDialog from '../components/searchDialogs/AlbumDialog';
+import AlbumDialog from '../components/dialogs/searchDialogs/AlbumDialog';
 import { setTokenByPost } from '../apis/tokenApi';
 import { AppDispatch } from '../store';
 import { asyncGetAlbumFetch } from '../store/album';

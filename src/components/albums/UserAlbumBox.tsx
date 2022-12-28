@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
-import ScoreForm from '../scoreDialogs/ScoreForm';
+import ScoreForm from '../dialogs/scoreDialogs/ScoreForm';
 import { userAlbumType, asyncGetAlbumFetch } from '../../store/album';
 import { MdCancel } from 'react-icons/md';
 import { AppDispatch } from '../../store';

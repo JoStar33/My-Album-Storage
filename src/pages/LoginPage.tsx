@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import TextDialog from '../components/commonDialogs/TextDialog';
-import LoginForm from '../components/commonForms/LoginForm';
+import TextDialog from '../components/dialogs/commonDialogs/TextDialog';
+import LoginForm from '../components/forms/commonForms/LoginForm';
 import { Navigate } from "react-router-dom";
 import { getCookie } from '../apis/cookies/cookie';
 

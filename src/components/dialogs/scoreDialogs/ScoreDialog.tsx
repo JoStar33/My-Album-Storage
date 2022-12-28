@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
-import { AppDispatch } from '../../store/index';
+import { AppDispatch } from '../../../store/index';
 import { useDispatch } from 'react-redux';
-import { albumType, setIsSelected } from '../../store/album';
+import { albumType, setIsSelected } from '../../../store/album';
 import { MdCancel } from 'react-icons/md';
 import { BiCommentDetail } from 'react-icons/bi';
 import ScoreDialogController from './ScoreDialogController';

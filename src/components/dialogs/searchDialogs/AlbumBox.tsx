@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
-import { setIsSelected, albumType } from '../../store/album';
-import { AppDispatch } from '../../store/index';
+import { setIsSelected, albumType } from '../../../store/album';
+import { AppDispatch } from '../../../store/index';
 import { useDispatch } from 'react-redux';
 import CheckComponent from './CheckComponent';
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import '../../styles/slider.css';
+import '../../../styles/slider.css';
 
 const RecommendAlbumForm: React.FC = () => {
   const [sliderIndex, setSliderIndex] = useState(0);

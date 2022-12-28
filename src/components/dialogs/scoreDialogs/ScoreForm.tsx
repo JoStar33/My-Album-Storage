@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../styles/fire_font.css';
+import '../../../styles/fire_font.css';
 import styled from 'styled-components';
 
 type propsType = {

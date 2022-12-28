@@ -6,10 +6,10 @@ import { asyncGetAlbumFetch, userAlbumType } from '../store/album';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import UserAlbumBox from '../components/albums/UserAlbumBox';
-import UserAlbumSkeleton from '../components/loadingForm/UserAlbumSkeleton';
-import AlbumDialog from '../components/searchDialogs/AlbumDialog';
-import ModifyDialog from '../components/modifyDialogs/ModifyDialog';
-import RecommendAlbumForm from '../components/recommendAlbumForms/RecommendAlbumForm';
+import UserAlbumSkeleton from '../components/forms/loadingForm/UserAlbumSkeleton';
+import AlbumDialog from '../components/dialogs/searchDialogs/AlbumDialog';
+import ModifyDialog from '../components/dialogs/modifyDialogs/ModifyDialog';
+import RecommendAlbumForm from '../components/forms/recommendAlbumForms/RecommendAlbumForm';
 
 const AlbumPage: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();

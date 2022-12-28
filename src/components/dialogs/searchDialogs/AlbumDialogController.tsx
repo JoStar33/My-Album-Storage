@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { AppDispatch } from '../../store/index';
+import { AppDispatch } from '../../../store/index';
 import { useDispatch } from 'react-redux';
-import { albumType, resetSearchAlbums } from '../../store/album';
-import { asyncPostAlbumFetch, asyncGetAlbumFetch } from '../../store/album';
+import { albumType, resetSearchAlbums } from '../../../store/album';
+import { asyncPostAlbumFetch, asyncGetAlbumFetch } from '../../../store/album';
 
 type propsType = {
   selectedAlbums: albumType[],

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { AppDispatch } from '../../store/index'
+import { AppDispatch } from '../../../store/index'
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
+import { RootState } from '../../../store';
 import { useNavigate } from 'react-router-dom'
-import { asyncJoinFetch } from '../../store/user';
-import { validateEmail, validatePassword, validateNick } from '../../utils/validate';
+import { asyncJoinFetch } from '../../../store/user';
+import { validateEmail, validatePassword, validateNick } from '../../../utils/validate';
 import LoadingForm from '../loadingForm/LoadingForm';
 
 type propsType = {
