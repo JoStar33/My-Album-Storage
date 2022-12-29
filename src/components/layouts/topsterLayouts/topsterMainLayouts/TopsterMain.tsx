@@ -20,7 +20,7 @@ const TopsterMain: React.FC<propsType> = ({topsterLayout}) => {
       {
         topsterLayout === '5x5' && <Topster5x5></Topster5x5>
       }
-            {
+      {
         topsterLayout === '6x6' && <Topster6x6></Topster6x6>
       }
       {

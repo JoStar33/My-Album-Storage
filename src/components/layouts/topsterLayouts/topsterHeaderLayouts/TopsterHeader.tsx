@@ -11,7 +11,7 @@ type propsType = {
 const TopsterHeader: React.FC<propsType> = ({setTopsterLayout}) => {
   return (
     <TopsterHeaderContainer>
-        <TopsterNameInfo></TopsterNameInfo>
+      <TopsterNameInfo></TopsterNameInfo>
       <TopsterController setTopsterLayout={setTopsterLayout}></TopsterController>
     </TopsterHeaderContainer>
   );

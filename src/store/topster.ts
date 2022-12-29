@@ -1,23 +1,38 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { patchTopster, getTopster, putTopster } from '../apis/topsterApi';
+import { patchTopster, getTopster, putTopster, patchTopsterAlbum, deleteTopsterAlbum } from '../apis/topsterApi';
 import { userAlbumType } from './album';
+
+
+export type topsterAlbumType = userAlbumType & {
+  position: number
+}
 
 export type topsterType = {
   _id: string,
   name: string,
   type: string,
-  albums: userAlbumType[],
+  albums: topsterAlbumType[],
   owner: string
 }
 
 type patchTopsterType = {
-  userId: string
-  topster: topsterType
+  userId: string,
+  topster: topsterType,
 }
 
 type putTopsterType = {
-  userId: string
-  topsters: topsterType[]
+  userId: string,
+  topsters: topsterType[],
+}
+
+type deleteTopsterAlbumType = {
+  topster: topsterType,
+  topsterPosition: number,
+};
+
+type patchTopsterAlbumType = {
+  topster: topsterType,
+  topsterAlbum: topsterAlbumType,
 }
 
 const asyncGetTopsterFetch = createAsyncThunk(
@@ -45,10 +60,38 @@ const asyncPatchTopsterFetch = createAsyncThunk(
   }
 );
 
+const asyncPatchTopsterAlbumFetch = createAsyncThunk(
+  'topsterSlice/asyncPatchTopsterAlbumFetch',
+  async (param: patchTopsterAlbumType) => {
+    let data: topsterType[] = [];
+    await patchTopsterAlbum(param.topster._id, param.topsterAlbum)
+    .then(() =>
+      getTopster(param.topster.owner))
+    .then(res => {
+      data = res.data;
+    });
+    return data;
+  }
+);
+
 const asyncPutTopsterFetch = createAsyncThunk(
   'topsterSlice/asyncPutTopsterFetch', 
   async (param: putTopsterType) => {
     await putTopster(param.userId, param.topsters);
+  }
+);
+
+const asyncDeleteTopsterFetch = createAsyncThunk(
+  'topsterSlice/asyncDeleteTopsterFetch', 
+  async (param: deleteTopsterAlbumType) => {
+    let data: topsterType[] = [];
+    await deleteTopsterAlbum(param.topster._id, param.topsterPosition)    
+    .then(() =>
+      getTopster(param.topster.owner))
+    .then(res => {
+      data = res.data;
+    });
+    return data;
   }
 );
 
@@ -63,14 +106,16 @@ const makeTopster = (payload: topsterType[], topsters: topsterType[]) => {
 };
 
 const updateTopster = (topsters: topsterType[], selectedTopster: topsterType) => 
-  topsters.map(topster => 
-    topster._id === selectedTopster._id ? selectedTopster : topster);
+  topsters.map(topster => topster._id === selectedTopster._id ? selectedTopster : topster);
 
 const initialState  = {
   topsters: [] as topsterType[],
-  selectedTopster: {} as topsterType,
+  selectedTopster: {
+    albums: []
+  } as unknown as topsterType,
   topsterLoading: false,
-  saveTopsterLoading: false
+  saveTopsterLoading: false,
+  getTopsterLoading: false
 };
 
 export const topsterSlice = createSlice({
@@ -83,24 +128,22 @@ export const topsterSlice = createSlice({
     },
     setSelectedTopsterType: (state, action: PayloadAction<string>) => {
       Object.assign(state.selectedTopster, {...state.selectedTopster, type: action.payload });
-      state.topsters = updateTopster(state.topsters, state.selectedTopster);
     },
     setSelectedTopsterName: (state, action: PayloadAction<string>) => {
       Object.assign(state.selectedTopster, {...state.selectedTopster, name: action.payload });
-      state.topsters = updateTopster(state.topsters, state.selectedTopster);
     }
   },
   extraReducers: (builder) => {
     builder.addCase(asyncGetTopsterFetch.pending, (state, { payload }) => {
-      state.topsterLoading = true;});
+      state.getTopsterLoading = true;});
     builder.addCase(asyncGetTopsterFetch.fulfilled, (state, { payload })=>{
       resetStoreTopster(state.topsters);
-      state.topsterLoading = false;
       makeTopster(payload, state.topsters);
       Object.assign(state.selectedTopster, state.topsters[0]);
+      state.getTopsterLoading = false;
     });
     builder.addCase(asyncGetTopsterFetch.rejected, (state, { payload })=>{
-      state.topsterLoading = false;});
+      state.getTopsterLoading = false;});
 
 
     builder.addCase(asyncPutTopsterFetch.pending, (state, { payload }) => {
@@ -111,19 +154,41 @@ export const topsterSlice = createSlice({
       state.saveTopsterLoading = false;});
 
 
+    builder.addCase(asyncDeleteTopsterFetch.pending, (state, { payload }) => {
+      state.getTopsterLoading = true;});
+    builder.addCase(asyncDeleteTopsterFetch.fulfilled, (state, { payload })=>{
+      resetStoreTopster(state.topsters);
+      makeTopster(payload, state.topsters);
+      state.selectedTopster = state.topsters.filter(topster => topster._id === state.selectedTopster._id)[0];
+      state.getTopsterLoading = false;});
+    builder.addCase(asyncDeleteTopsterFetch.rejected, (state, { payload })=>{
+      state.getTopsterLoading = false;});
+
 
     builder.addCase(asyncPatchTopsterFetch.pending, (state, { payload }) => {
-      state.saveTopsterLoading = true;});
+      state.getTopsterLoading = true;});
     builder.addCase(asyncPatchTopsterFetch.fulfilled, (state, { payload })=>{
-      state.saveTopsterLoading = false;
       resetStoreTopster(state.topsters);
-      makeTopster(payload, state.topsters);});
+      makeTopster(payload, state.topsters);
+      state.selectedTopster = state.topsters.filter(topster => topster._id === state.selectedTopster._id)[0];
+      state.getTopsterLoading = false;});
     builder.addCase(asyncPatchTopsterFetch.rejected, (state, { payload })=>{
-      state.saveTopsterLoading = false;});
+      state.getTopsterLoading = false;});
+
+      
+    builder.addCase(asyncPatchTopsterAlbumFetch.pending, (state, { payload }) => {
+      state.getTopsterLoading = true;});
+    builder.addCase(asyncPatchTopsterAlbumFetch.fulfilled, (state, { payload })=>{
+      resetStoreTopster(state.topsters);
+      makeTopster(payload, state.topsters);
+      state.selectedTopster = state.topsters.filter(topster => topster._id === state.selectedTopster._id)[0];
+      state.getTopsterLoading = false;});
+    builder.addCase(asyncPatchTopsterAlbumFetch.rejected, (state, { payload })=>{
+      state.getTopsterLoading = false;});
   }
 });
 
-export { asyncGetTopsterFetch, asyncPatchTopsterFetch, asyncPutTopsterFetch };
+export { asyncGetTopsterFetch, asyncPatchTopsterFetch, asyncPutTopsterFetch, asyncPatchTopsterAlbumFetch, asyncDeleteTopsterFetch };
 
 export const { setSelectedTopster, setSelectedTopsterType, setSelectedTopsterName } = topsterSlice.actions;
 

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/store';
-import { asyncPutTopsterFetch, setSelectedTopster, setSelectedTopsterType, topsterType } from '../../../../store/topster'
+import { asyncPutTopsterFetch, asyncPatchTopsterFetch, setSelectedTopster, setSelectedTopsterType, topsterType } from '../../../../store/topster'
 import { useNavigate } from 'react-router-dom';
 
 type layout = {
@@ -37,21 +37,20 @@ const TopsterController: React.FC<propsType> = ({setTopsterLayout}) => {
     },
   ];
   const handleSelectTopster = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    //불변성 문제로인해 이렇게 작성
-    const findTopster = topsters.find((item) => item._id === e.target.value)
-    const pickTopster = {
-      _id: findTopster?._id,
-      name: findTopster?.name,
-      type: findTopster?.type,
-      albums: findTopster?.albums,
-      owner: findTopster?.owner
-    } as topsterType;
-    dispatch(setSelectedTopster(pickTopster));
-    setTopsterLayout(pickTopster.type);
+    //find의 경우 타입스크립트에서 사용하게 될시, undefined로 나올경우까지 고려하기때문에 참 쓰기 뭐시기하네...
+    const findTopster = topsters.filter((item) => item._id === e.target.value)[0]
+    dispatch(setSelectedTopster(findTopster));
+    setTopsterLayout(findTopster.type);
   };
-  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleSelectLayout = async (e: React.ChangeEvent<HTMLSelectElement>, topster: topsterType) => {
     setTopsterLayout(e.target.value);
     dispatch(setSelectedTopsterType(e.target.value));
+    await dispatch(asyncPatchTopsterFetch({
+      userId: '63a921dfa7cdfa7871cdb166',
+      topster: {
+        ...topster,
+        type: e.target.value}
+    }));
   };
   const moveMainPage = () => {
     navigate('/');
@@ -59,8 +58,8 @@ const TopsterController: React.FC<propsType> = ({setTopsterLayout}) => {
   const moveSteamPage = () => {
     navigate('/steam-topster');
   };
-  const saveTopster = (topsters: topsterType[]) => {
-    dispatch(asyncPutTopsterFetch({userId: '63a921dfa7cdfa7871cdb166', topsters}));
+  const saveTopster = async (topsters: topsterType[]) => {
+    await dispatch(asyncPutTopsterFetch({userId: '63a921dfa7cdfa7871cdb166', topsters}));
   };
   return (
     <TopsterControllerContainer>
@@ -71,7 +70,7 @@ const TopsterController: React.FC<propsType> = ({setTopsterLayout}) => {
           })
         }
       </TopsterChooseSetting>
-      <TopsterLayoutSetting value={selectedTopster.type} onChange={handleSelect} name="layout">
+      <TopsterLayoutSetting value={selectedTopster.type} onChange={(e) => { handleSelectLayout(e, selectedTopster) }} name="layout">
         {
           layoutType.map(item => {
             return <TopsterOption key={item.value} value={item.value} >{item.name}</TopsterOption>
