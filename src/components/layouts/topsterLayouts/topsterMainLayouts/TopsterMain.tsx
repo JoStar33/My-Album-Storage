@@ -42,7 +42,7 @@ box-shadow: 0 6px 6px 0 gray;
 background-color: black;
 overflow-y: scroll;
 ::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 `;
 

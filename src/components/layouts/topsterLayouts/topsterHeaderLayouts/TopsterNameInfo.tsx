@@ -46,13 +46,26 @@ width: 60%;
 display: flex;
 align-items: center;
 justify-content: center;
+position: relative;
 `;
 
 const TopsterNamePlace = styled.div`
-position: relative;
+display: flex;
+justify-content: flex-start;
 font-size: large;
+width: 20vw;
 font-weight: 800;
 margin-left: 30%;
+`;
+
+const TopsterNameEditPlace = styled.input`
+margin-left: 30%;
+font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+width: 20vw;
+border: none;
+outline: none;
+font-size: large;
+font-weight: 800;
 `;
 
 const TopsterNameEditButton = styled.div`
@@ -60,7 +73,7 @@ position: absolute;
 border-radius: 50px;
 border: 4px solid black;
 top: 0%;
-left: 45%;
+left: 80%;
 display: flex;
 align-items: center;
 justify-content: center;
@@ -68,12 +81,5 @@ user-select: none;
 cursor: pointer;
 `;
 
-const TopsterNameEditPlace = styled.input`
-margin-left: 30%;
-border: none;
-outline: none;
-font-size: large;
-font-weight: 800;
-`;
 
 export default TopsterNameInfo;

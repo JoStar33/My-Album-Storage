@@ -15,51 +15,66 @@ type propsType = {
 const TopsterAlbumBox: React.FC<propsType> = ({width, albumPosition, topsterAlbum}) => {
   const dispatch = useDispatch<AppDispatch>();
   const topsterAlbumRef = useRef<any>(null);
+  const { userAlbums } = useSelector((state: RootState) => state.albumStore);
+  const { selectedTopster } = useSelector((state: RootState) => state.topsterStore);
   useEffect(() => {
     topsterAlbumRef.current.classList.add(albumPosition);
   }, [albumPosition]);
-  const { userAlbums } = useSelector((state: RootState) => state.albumStore);
-  const { selectedTopster } = useSelector((state: RootState) => state.topsterStore);
 
-  const handleDragStartEvent = (e: React.DragEvent<HTMLDivElement>) => {
+  const handleDragStartEvent = (e: React.DragEvent<HTMLDivElement>, topsterAlbum: topsterAlbumType | undefined) => {
     if(!topsterAlbum?._id) {
       e.preventDefault();
       return;
     }
-    e.dataTransfer.setData('album_id', String(topsterAlbum?._id));
+    e.dataTransfer.setData('album_id', topsterAlbum?._id);
+    e.dataTransfer.setData('album_position', String(topsterAlbum?.position));
   };
+
+
   const handleDragOverEvent = (e: React.DragEvent<HTMLDivElement>) =>  {
     e.preventDefault();
   };
-  const handleDragEndEvent = (e: React.DragEvent<HTMLDivElement>, topster: topsterType, position: number) => {
+
+
+  const handleDragEndEvent = (topster: topsterType, albumPosition: number) => {
     const droppedAlbum = document.getElementsByClassName('dropped')[0];
-    const draggedAlbumClassName = e.currentTarget.className;
-    if(!draggedAlbumClassName || !droppedAlbum) {
-      dispatch(asyncDeleteTopsterFetch({topster, topsterPosition: position}));
+    //영역밖으로 드랍을 했을시 삭제.
+    if(!droppedAlbum) {
+      dispatch(asyncDeleteTopsterFetch({topster, topsterPosition: albumPosition}));
       return;
-    }
-    if(droppedAlbum.className !== draggedAlbumClassName) {
-      dispatch(asyncDeleteTopsterFetch({topster, topsterPosition: position}));
     }
     droppedAlbum.classList.remove('dropped');
   };
+
+
   const handleDropEvent = (e: React.DragEvent<HTMLDivElement>) => {
     e.currentTarget.classList.add('dropped');
-    const draggedData = e.dataTransfer.getData('album_id');
-    console.log(selectedTopster);
-    setAlbum(draggedData, selectedTopster);
+    const draggedAlbumId = e.dataTransfer.getData('album_id');
+    //앨범을 정확하게 기억시키기 위해 position값까지 추가.
+    const draggedAlbumPosition = parseInt(e.dataTransfer.getData('album_position'));
+    setAlbum(draggedAlbumId, draggedAlbumPosition, selectedTopster);
     e.preventDefault();
     e.stopPropagation();
   };
-  const setAlbum = (albumId: string, topster: topsterType) => {
-    dispatch(asyncPatchTopsterAlbumFetch({topster, topsterAlbum: {...userAlbums.filter(album => album._id === albumId)[0], position: albumPosition}}));
+
+
+  const setAlbum = (draggedAlbumId: string, draggedAlbumPosition: number, topster: topsterType) => {
+    const currentAlbum = topster.albums.filter(album => 
+      (album._id === draggedAlbumId) && (album.position === draggedAlbumPosition))[0];
+    if(currentAlbum) {
+      dispatch(asyncDeleteTopsterFetch({topster, topsterPosition: currentAlbum.position}));
+    };
+    dispatch(asyncPatchTopsterAlbumFetch({topster, topsterAlbum: 
+      {...userAlbums.filter(album => album._id === draggedAlbumId)[0], position: albumPosition}}));
   };
+
+
   return (
     <TopsterAlbumContainer 
       ref={topsterAlbumRef}
-      onDragStart={handleDragStartEvent} 
+      onDragStart={(e) => handleDragStartEvent(e, topsterAlbum)} 
       onDragOver={handleDragOverEvent} 
-      onDragEnd={(e) => handleDragEndEvent(e, selectedTopster, albumPosition)}
+      onDragEnd={() => handleDragEndEvent(selectedTopster, albumPosition)}
       onDrop={handleDropEvent} 
       width={width}
       draggable={

@@ -12,7 +12,6 @@ const Topster3x3: React.FC = () => {
       {
         !getTopsterLoading &&
         new Array(9).fill(1).map((_, index) => {
-          console.log(index);
           return <TopsterAlbumBox 
           topsterAlbum={selectedTopster.albums.find(album => album.position === index + 1)}
           key={index + 1} 

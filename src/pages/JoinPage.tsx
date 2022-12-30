@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import TextDialog from '../components/dialogs/commonDialogs/TextDialog';
 import JoinForm from '../components/forms/commonForms/JoinForm';
+import { useNavigate } from 'react-router-dom';
 import { Navigate } from "react-router-dom";
 import { getCookie } from '../apis/cookies/cookie';
 

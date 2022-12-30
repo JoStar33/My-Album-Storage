@@ -1,15 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
-import { setTokenByPost } from '../apis/tokenApi';
-import { RootState, AppDispatch } from '../store';
-import { asyncGetAlbumFetch, userAlbumType } from '../store/album';
-import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from "react-router-dom";
 import UserAlbumBox from '../components/albums/UserAlbumBox';
 import UserAlbumSkeleton from '../components/forms/loadingForm/UserAlbumSkeleton';
 import AlbumDialog from '../components/dialogs/searchDialogs/AlbumDialog';
 import ModifyDialog from '../components/dialogs/modifyDialogs/ModifyDialog';
 import RecommendAlbumForm from '../components/forms/recommendAlbumForms/RecommendAlbumForm';
+import { setTokenByPost } from '../apis/tokenApi';
+import { asyncGetAlbumFetch, userAlbumType } from '../store/album';
+import { RootState, AppDispatch } from '../store';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from "react-router-dom";
 
 const AlbumPage: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();

@@ -11,12 +11,8 @@ const TopsterUserAlbumBox: React.FC<propsType> = ({album}) => {
     e.dataTransfer.setData('album_id', String(album._id));
     e.dataTransfer.dropEffect = "move";
   }
-  const handleDragEndEvent = (e: React.DragEvent<HTMLDivElement>) => {
-    const droppedAlbum = document.getElementsByClassName('dropped')[0];
-    droppedAlbum.classList.remove('dropped');
-  };
   return (
-    <TopsterUserAlbumContainer onDragStart={handleDragStartEvent} onDragEnd={handleDragEndEvent} draggable>
+    <TopsterUserAlbumContainer onDragStart={handleDragStartEvent} draggable>
       <TopsterAlbumImage src={album.image}></TopsterAlbumImage>
     </TopsterUserAlbumContainer>
   );

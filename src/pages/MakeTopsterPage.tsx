@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import AlbumDialog from '../components/dialogs/searchDialogs/AlbumDialog';
-import { setTokenByPost } from '../apis/tokenApi';
-import { AppDispatch } from '../store';
-import { asyncGetAlbumFetch } from '../store/album';
-import { asyncGetTopsterFetch } from '../store/topster';
-import { useDispatch } from 'react-redux';
 import TopsterBody from '../components/layouts/topsterLayouts/TopsterBody';
 import TopsterHeader from '../components/layouts/topsterLayouts/topsterHeaderLayouts/TopsterHeader';
+import { setTokenByPost } from '../apis/tokenApi';
+import { AppDispatch, RootState } from '../store';
+import { asyncGetAlbumFetch } from '../store/album';
+import { asyncGetTopsterFetch } from '../store/topster';
+import { useSelector, useDispatch } from 'react-redux';
 
 const MakeTopsterPage: React.FC = () => {
-  const [topsterLayout, setTopsterLayout] = useState('3x3');
+  const { selectedTopster } = useSelector((state: RootState) => state.topsterStore);
+  const [topsterLayout, setTopsterLayout] = useState(selectedTopster.type);
   const [albumDialog, setAlbumDialog] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {

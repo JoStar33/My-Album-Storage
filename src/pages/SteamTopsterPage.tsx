@@ -1,11 +1,21 @@
 import React from 'react';
+import styled from 'styled-components';
+import NavBar from '../components/layouts/steamTopsterLayouts/NavBar';
+import MainView from '../components/layouts/steamTopsterLayouts/MainView';
 
 const SteamTopsterPage: React.FC = () => {
   return (
-    <div>
-      
-    </div>
+    <SteamTopsterPageContainer>
+      <NavBar></NavBar>
+      <MainView></MainView>
+    </SteamTopsterPageContainer>
   );
 };
+
+const SteamTopsterPageContainer = styled.div`
+background-color: black;
+width: 100vw;
+height: 100vh;
+`;
 
 export default SteamTopsterPage;
