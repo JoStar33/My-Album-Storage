@@ -1,6 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
-import { RiErrorWarningFill } from 'react-icons/ri';
+import React from "react";
+import styled from "styled-components";
+import { RiErrorWarningFill } from "react-icons/ri";
 
 const NotFoundAnyAlbum: React.FC = () => {
   return (
@@ -15,24 +15,24 @@ const NotFoundAnyAlbum: React.FC = () => {
 };
 
 const NotFoundContainer = styled.div`
-display: flex;
-align-items: center;
-flex-direction: row;
-user-select: none;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  user-select: none;
 `;
 
 const NotFoundBackground = styled.div`
-position: absolute;
-display: flex;
-justify-content: center;
-align-items: center;
-flex-direction: column;
-width: 90%;
-height: 60%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 90%;
+  height: 60%;
 `;
 
 const NotFoundText = styled.h1`
-font-weight: 800;
+  font-weight: 800;
 `;
 
 export default NotFoundAnyAlbum;

@@ -1,12 +1,12 @@
-import React from 'react';
-import styled from 'styled-components';
-import { removeCookie } from '../../../apis/cookies/cookie';
-import { AppDispatch } from '../../../store/index'
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
-import { asyncLogoutFetch } from '../../../store/user';
-import { useNavigate } from 'react-router-dom'
-import { RootState } from '../../../store';
+import React from "react";
+import styled from "styled-components";
+import { removeCookie } from "../../../apis/cookies/cookie";
+import { AppDispatch } from "../../../store/index";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { asyncLogoutFetch } from "../../../store/user";
+import { useNavigate } from "react-router-dom";
+import { RootState } from "../../../store";
 
 const NavBar: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -14,21 +14,19 @@ const NavBar: React.FC = () => {
   const { user } = useSelector((state: RootState) => state.userStore);
   const logout = async () => {
     await dispatch(asyncLogoutFetch())
-    .unwrap()
-    .then(() => { 
-      removeCookie();
-      navigate('/login');
-    })
-    .catch((err) => console.log(err))
+      .unwrap()
+      .then(() => {
+        removeCookie();
+        navigate("/login");
+      })
+      .catch((err) => console.log(err));
   };
   return (
     <NavBarContainer>
       <NavBarMenuHandler></NavBarMenuHandler>
-      <NavBarTitleContainer>
-        ALBUM
-      </NavBarTitleContainer>
+      <NavBarTitleContainer>ALBUM</NavBarTitleContainer>
       <NavBarUserInfo>
-        <div>welcome { user.nick }</div>
+        <div>welcome {user.nick}</div>
         <LogoutBtn onClick={logout}>로그아웃</LogoutBtn>
       </NavBarUserInfo>
     </NavBarContainer>
@@ -38,39 +36,39 @@ const NavBar: React.FC = () => {
 export default NavBar;
 
 const NavBarContainer = styled.div`
-width: 100vw;
-height: 10vh;
-background-color: skyblue;
-display: flex;
-justify-content: center;
-align-items: center;
-flex-direction: row;
+  width: 100vw;
+  height: 10vh;
+  background-color: skyblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
 `;
 
 const NavBarTitleContainer = styled.div`
-font-weight: 800;
-font-size: larger;
-width: 80vw;
+  font-weight: 800;
+  font-size: larger;
+  width: 80vw;
 `;
 
 const NavBarMenuHandler = styled.div`
-width: 5vw;
+  width: 5vw;
 `;
 
 const NavBarUserInfo = styled.div`
-display: flex;
-justify-content: center;
-align-items: center;
-flex-direction: row;
-font-weight: 800;
-width: 15vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  font-weight: 800;
+  width: 15vw;
 `;
 
 const LogoutBtn = styled.div`
-cursor: pointer;
-user-select: none;
-background-color: white;
-font-weight: 800;
-border-radius: 20px;
-width: 50%;
+  cursor: pointer;
+  user-select: none;
+  background-color: white;
+  font-weight: 800;
+  border-radius: 20px;
+  width: 50%;
 `;

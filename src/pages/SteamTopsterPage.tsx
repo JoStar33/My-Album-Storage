@@ -1,7 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
-import NavBar from '../components/layouts/steamTopsterLayouts/NavBar';
-import MainView from '../components/layouts/steamTopsterLayouts/MainView';
+import React from "react";
+import styled from "styled-components";
+import NavBar from "../components/layouts/steamTopsterLayouts/NavBar";
+import MainView from "../components/layouts/steamTopsterLayouts/MainView";
 
 const SteamTopsterPage: React.FC = () => {
   return (
@@ -13,9 +13,9 @@ const SteamTopsterPage: React.FC = () => {
 };
 
 const SteamTopsterPageContainer = styled.div`
-background-color: black;
-width: 100vw;
-height: 100vh;
+  background-color: black;
+  width: 100vw;
+  height: 100vh;
 `;
 
 export default SteamTopsterPage;
