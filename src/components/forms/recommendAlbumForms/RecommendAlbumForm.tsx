@@ -40,7 +40,7 @@ const RecommendAlbumForm: React.FC = () => {
   return (
     <RecommendAlbumFormContainer>
       <section id="slider">
-        {new Array(5).fill(1).map((_, index) => 
+        {new Array(5).fill(1).map((_, index) => (
           <input
             key={index}
             type="radio"
@@ -49,15 +49,15 @@ const RecommendAlbumForm: React.FC = () => {
             id={`s${index + 1}`}
             onChange={() => setSliderIndex(index)}
           />
-        )}
-        {new Array(5).fill(1).map((_, index) => 
+        ))}
+        {new Array(5).fill(1).map((_, index) => (
           <label
             key={index}
             htmlFor={`s${index + 1}`}
             id={`slide${index + 1}`}
             onClick={() => setSliderIndex(index)}
           ></label>
-        )}
+        ))}
       </section>
     </RecommendAlbumFormContainer>
   );

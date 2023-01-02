@@ -52,17 +52,12 @@ const ScoreDialog: React.FC<propsType> = ({
   };
   const applyScore = () => {
     //스코어의 값이 1~100사이의 값이 아니라면
-    if (
-      scoreDialog.scoreAlbum.score <= 0 ||
-      scoreDialog.scoreAlbum.score > 100
-    ) {
-      setScoreVaildateText(`점수는 1부터 100까지만 입력이 가능합니다.`);
-      return;
-    }
-    //선택이 되었음을 알리는 함수 호출
-    dispatch(
-      setIsSelected({ key: scoreDialog.scoreAlbum.key, isSelected: true })
-    );
+    scoreDialog.scoreAlbum.score <= 0 ||
+    scoreDialog.scoreAlbum.score > 100 
+      ? setScoreVaildateText(`점수는 1부터 100까지만 입력이 가능합니다.`)
+      : dispatch(
+        setIsSelected({ key: scoreDialog.scoreAlbum.key, isSelected: true })
+      )
     //선택이 됐었던 앨범이 아니라면? push진행
     !selectedAlbums.find(
       (selectedAlbum) => selectedAlbum.key === scoreDialog.scoreAlbum.key
