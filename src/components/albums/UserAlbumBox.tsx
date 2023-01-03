@@ -3,9 +3,9 @@ import styled from "styled-components";
 import ScoreForm from "../dialogs/scoreDialogs/ScoreForm";
 import { userAlbumType, asyncGetAlbumFetch } from "../../store/album";
 import { MdCancel } from "react-icons/md";
-import { AppDispatch } from "../../store";
+import { AppDispatch, RootState } from "../../store";
 import { asyncDeleteAlbumFetch } from "../../store/album";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 type dialogType = {
   modifyAlbum: userAlbumType;
@@ -23,6 +23,9 @@ const UserAlbumBox: React.FC<propsType> = ({
   modifyDialog,
   setModifyDialog,
 }) => {
+  const { user } = useSelector(
+    (state: RootState) => state.userStore
+  );
   const [isLineOver, setIsLineOver] = useState(false);
   const albumText = useRef<any>(null);
   const dispatch = useDispatch<AppDispatch>();
@@ -35,7 +38,7 @@ const UserAlbumBox: React.FC<propsType> = ({
   const handleDeleteEvent = async () => {
     await dispatch(asyncDeleteAlbumFetch(album._id))
     .then(() => {
-      dispatch(asyncGetAlbumFetch("63a921dfa7cdfa7871cdb166"));
+      dispatch(asyncGetAlbumFetch(user.id));
     });
   };
   const handleOpenModifyDialog = () => {

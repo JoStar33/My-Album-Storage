@@ -8,7 +8,7 @@ import { asyncLogoutFetch } from "../../../store/user";
 import { RootState } from "../../../store";
 import { asyncLoginFetch } from "../../../store/user";
 import { validateEmail, validatePassword } from "../../../utils/validate";
-import { getCookie } from "../../../apis/cookies/cookie";
+import { getToken } from "../../../apis/tokens/token";
 import LoadingForm from "../loadingForm/LoadingForm";
 
 type propsType = {
@@ -31,7 +31,7 @@ const LoginForm: React.FC<propsType> = ({
   useEffect(() => {
     //비동기로직 실행을 위한 선언.
     async function logoutCheck() {
-      if (user.id && !getCookie()) {
+      if (user.id && !getToken()) {
         await dispatch(asyncLogoutFetch());
       }
     }
@@ -54,7 +54,7 @@ const LoginForm: React.FC<propsType> = ({
         email: account.email,
         nick: "",
         password: account.password,
-        id: NaN,
+        id: '',
       })
     )
       .unwrap() //unwrap을 통해 thunk의 비동기 액션결과를 다룰 수 있도록 한다.

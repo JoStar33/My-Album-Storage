@@ -5,13 +5,14 @@ import {
   asyncPatchAlbumFetch,
   asyncGetAlbumFetch,
 } from "../../../store/album";
-import { AppDispatch } from "../../../store/index";
-import { useDispatch } from "react-redux";
+import { AppDispatch, RootState } from "../../../store/index";
+import { useDispatch, useSelector } from "react-redux";
 import { MdCancel } from "react-icons/md";
 import { BiCommentDetail } from "react-icons/bi";
 import ScoreForm from "../scoreDialogs/ScoreForm";
 import ScoreDialogController from "../scoreDialogs/ScoreDialogController";
 import ScoreInputForm from "../scoreDialogs/ScoreInputForm";
+
 
 type dialogType = {
   modifyAlbum: userAlbumType;
@@ -27,6 +28,9 @@ const ModifyDialog: React.FC<propsType> = ({
   setModifyDialog,
   modifyDialog,
 }) => {
+  const { user } = useSelector(
+    (state: RootState) => state.userStore
+  );
   const dispatch = useDispatch<AppDispatch>();
   const [scoreVaildateText, setScoreVaildateText] = useState(``);
   const handleChangeScore = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,7 +56,7 @@ const ModifyDialog: React.FC<propsType> = ({
   };
   const applyScore = async () => {
     await dispatch(asyncPatchAlbumFetch(modifyDialog.modifyAlbum));
-    dispatch(asyncGetAlbumFetch("63a921dfa7cdfa7871cdb166"));
+    dispatch(asyncGetAlbumFetch(user.id));
     setModifyDialog({ ...modifyDialog, isOpened: false });
   };
   const closeDialog = () => {

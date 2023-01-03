@@ -24,6 +24,9 @@ const TopsterController: React.FC<propsType> = ({ setTopsterLayout }) => {
   const { topsters, selectedTopster } = useSelector(
     (state: RootState) => state.topsterStore
   );
+  const { user } = useSelector(
+    (state: RootState) => state.userStore
+  );
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const layoutType: layout[] = [
@@ -64,7 +67,7 @@ const TopsterController: React.FC<propsType> = ({ setTopsterLayout }) => {
     dispatch(setSelectedTopsterType(e.target.value));
     await dispatch(
       asyncPatchTopsterFetch({
-        userId: "63a921dfa7cdfa7871cdb166",
+        userId: user.id,
         topster: {
           ...topster,
           type: e.target.value,
@@ -80,7 +83,7 @@ const TopsterController: React.FC<propsType> = ({ setTopsterLayout }) => {
   };
   const saveTopster = async (topsters: topsterType[]) => {
     await dispatch(
-      asyncPutTopsterFetch({ userId: "63a921dfa7cdfa7871cdb166", topsters })
+      asyncPutTopsterFetch({ userId: user.id, topsters })
     );
   };
   return (

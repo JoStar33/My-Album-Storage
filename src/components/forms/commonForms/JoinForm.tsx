@@ -49,7 +49,7 @@ const JoinForm: React.FC<propsType> = ({
     }
     await dispatch(
       asyncJoinFetch({
-        id: NaN,
+        id: '',
         email: account.email,
         nick: account.nick,
         password: account.password,

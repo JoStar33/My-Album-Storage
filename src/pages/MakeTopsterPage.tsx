@@ -13,14 +13,18 @@ const MakeTopsterPage: React.FC = () => {
   const { selectedTopster } = useSelector(
     (state: RootState) => state.topsterStore
   );
+  const { user } = useSelector(
+    (state: RootState) => state.userStore
+  );
   const [topsterLayout, setTopsterLayout] = useState(selectedTopster.type);
   const [albumDialog, setAlbumDialog] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
+  
   useEffect(() => {
-    dispatch(asyncGetAlbumFetch("63a921dfa7cdfa7871cdb166"));
-    dispatch(asyncGetTopsterFetch("63a921dfa7cdfa7871cdb166"));
+    dispatch(asyncGetAlbumFetch(user.id));
+    dispatch(asyncGetTopsterFetch(user.id));
     setTokenByPost();
-  }, []);
+  }, [dispatch, user.id]);
   return (
     <MainDiv>
       <TopsterHeader setTopsterLayout={setTopsterLayout}></TopsterHeader>

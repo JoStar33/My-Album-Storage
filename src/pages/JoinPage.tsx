@@ -4,26 +4,26 @@ import TextDialog from "../components/dialogs/commonDialogs/TextDialog";
 import JoinForm from "../components/forms/commonForms/JoinForm";
 import { useNavigate } from "react-router-dom";
 import { Navigate } from "react-router-dom";
-import { getCookie } from "../apis/cookies/cookie";
+import { getToken } from "../apis/tokens/token";
 
 const JoinPage: React.FC = () => {
   const [dialog, setDialog] = useState(false);
   //로그인 성공시에만 MainPage로 넘어갈 수 있게하기 위해서.
   const [dialogSuccess, setDialogSuccess] = useState(false);
   const [dialogText, setDialogText] = useState(``);
-  const isAuthorized = getCookie();
+  const isAuthorized = getToken();
   const navigate = useNavigate();
   const dialogController = (dialogStatus: boolean) => {
     if (dialogStatus) {
       return setDialog(dialogStatus);
     }
     if (dialogSuccess) {
-      navigate("/");
+      navigate("/login");
       return setDialog(dialogStatus);
     }
     return setDialog(dialogStatus);
   };
-  return !isAuthorized || isAuthorized === "undefined" ? (
+  return !isAuthorized || isAuthorized === null ? (
     <JoinPageDiv>
       <JoinForm
         dialogController={dialogController}

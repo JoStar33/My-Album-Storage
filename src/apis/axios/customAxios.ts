@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getCookie, updateCookie } from '../cookies/cookie';
+import { getToken, setToken, removeToken } from '../tokens/token';
 
 
 const customAxios = axios.create({
@@ -8,14 +8,21 @@ const customAxios = axios.create({
   withCredentials: true,
   headers: {
     "Content-type": "application/json",
-    access_token: getCookie(),
   },
 });
-customAxios.interceptors.request.use((config) => {
+customAxios.interceptors.request.use((config: any) => {
+  config.headers.Authorization = getToken();
   return config
 }); 
+
 customAxios.interceptors.response.use((config) => {
-  updateCookie();
-  return config
+    if(config.headers.authorization) {
+      setToken(config.headers.authorization);
+    }
+    return config
+  }, (error) => {
+  if(error.message === "Request failed with status code 419") {
+    removeToken();
+  }
 }); 
 export { customAxios };

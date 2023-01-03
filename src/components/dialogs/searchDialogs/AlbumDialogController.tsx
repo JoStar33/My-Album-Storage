@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { AppDispatch } from "../../../store/index";
-import { useDispatch } from "react-redux";
+import { AppDispatch, RootState } from "../../../store/index";
+import { useDispatch, useSelector } from "react-redux";
 import { albumType, resetSearchAlbums } from "../../../store/album";
 import { asyncPostAlbumFetch, asyncGetAlbumFetch } from "../../../store/album";
 
@@ -14,15 +14,18 @@ const AlbumDialogController: React.FC<propsType> = ({
   selectedAlbums,
   setAlbumDialog,
 }) => {
+  const { user } = useSelector(
+    (state: RootState) => state.userStore
+  );
   const dispatch = useDispatch<AppDispatch>();
   const apply = async () => {
     await dispatch(
       asyncPostAlbumFetch({
         selectedAlbums: selectedAlbums,
-        userId: "63a921dfa7cdfa7871cdb166",
+        userId: user.id,
       })
     ).then(() => {
-      dispatch(asyncGetAlbumFetch("63a921dfa7cdfa7871cdb166"));
+      dispatch(asyncGetAlbumFetch(user.id));
     });
     setAlbumDialog(false);
   };

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { removeCookie } from "../../../apis/cookies/cookie";
+import { removeToken } from "../../../apis/tokens/token";
 import { AppDispatch } from "../../../store/index";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -16,7 +16,7 @@ const NavBar: React.FC = () => {
     await dispatch(asyncLogoutFetch())
       .unwrap()
       .then(() => {
-        removeCookie();
+        removeToken();
         navigate("/login");
       })
       .catch((err) => console.log(err));

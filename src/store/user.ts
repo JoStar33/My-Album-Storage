@@ -1,8 +1,9 @@
+
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { login, join, logout } from "../apis/userApi";
 
 type userInfo = {
-  id: number;
+  id: string;
   email: string;
   nick: string;
   password: string;
@@ -39,7 +40,7 @@ export const userSlice = createSlice({
   name: "user",
   initialState: {
     user: {
-      id: NaN,
+      id: '',
       email: ``,
       nick: ``,
       password: ``,
@@ -73,7 +74,7 @@ export const userSlice = createSlice({
     builder.addCase(asyncLogoutFetch.fulfilled, (state, { payload }) => {
       state.loading = false;
       state.user.email = "";
-      state.user.id = NaN;
+      state.user.id = '';
       state.user.nick = "";
       state.user.password = "";
     });

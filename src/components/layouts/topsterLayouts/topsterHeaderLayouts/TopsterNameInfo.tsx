@@ -11,6 +11,9 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 
 const TopsterNameInfo: React.FC = () => {
+  const { user } = useSelector(
+    (state: RootState) => state.userStore
+  );
   const [isTopsterNameEdit, setIsTopsterNameEdit] = useState(false);
   const { selectedTopster } = useSelector(
     (state: RootState) => state.topsterStore
@@ -22,7 +25,7 @@ const TopsterNameInfo: React.FC = () => {
   const saveEdittedTopsterName = (topster: topsterType) => {
     setIsTopsterNameEdit(false);
     dispatch(
-      asyncPatchTopsterFetch({ userId: "63a921dfa7cdfa7871cdb166", topster })
+      asyncPatchTopsterFetch({ userId: user.id, topster })
     );
   };
   return (
