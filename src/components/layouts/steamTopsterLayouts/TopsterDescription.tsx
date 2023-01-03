@@ -8,7 +8,7 @@ const TopsterDescription: React.FC = () => {
     (state: RootState) => state.topsterStore
   );
   return (
-    <TopsterDescriptionContainer>
+    <TopsterDescriptionContainer className="test">
       {selectedTopster.albums.map((album) => (
         <DescriptionText key={album._id}>
           {`${album.artist} - ${album.name}`}
@@ -18,6 +18,7 @@ const TopsterDescription: React.FC = () => {
   );
 };
 const TopsterDescriptionContainer = styled.div`
+  background-color: black;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

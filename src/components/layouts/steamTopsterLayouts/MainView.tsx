@@ -10,7 +10,7 @@ const MainView: React.FC = () => {
     (state: RootState) => state.topsterStore
   );
   return (
-    <MainViewContainer>
+    <MainViewContainer className="topster_container">
       <TopsterMainContainer>
         <TopsterMain topsterLayout={selectedTopster.type}></TopsterMain>
       </TopsterMainContainer>
@@ -24,8 +24,9 @@ width: 78vw;
 `;
 
 const MainViewContainer = styled.div`
+  background-color: black;
   width: 100vw;
-  height: 95vh;
+  height: 200vh;
   display: flex;
 `;
 

@@ -15,7 +15,6 @@ const SteamTopsterPage: React.FC = () => {
 const SteamTopsterPageContainer = styled.div`
   background-color: black;
   width: 100vw;
-  height: 200vh;
 `;
 
 export default SteamTopsterPage;
