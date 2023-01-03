@@ -7,8 +7,8 @@ import { albumType } from "../../../types/album";
 import { MdCancel } from "react-icons/md";
 import { BiCommentDetail } from "react-icons/bi";
 import ScoreDialogController from "./ScoreDialogController";
-import ScoreForm from "./ScoreForm";
-import ScoreInputForm from "./ScoreInputForm";
+import ScoreForm from "../../forms/commonForms/ScoreForm";
+import ScoreInputForm from "../../forms/commonForms/ScoreInputForm";
 
 type scoreDialogType = {
   scoreAlbum: albumType;

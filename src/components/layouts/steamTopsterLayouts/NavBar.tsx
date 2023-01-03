@@ -6,6 +6,9 @@ const NavBar: React.FC = () => {
   const navigate = useNavigate();
   return (
     <NavBarContainer>
+      <SteamTopsterButton>
+        탑스터 쪄내기
+      </SteamTopsterButton>
       <BackToMakeTopsterPage onClick={() => navigate("/topster")}>
         돌아가기
       </BackToMakeTopsterPage>
@@ -20,15 +23,22 @@ const NavBarContainer = styled.div`
   justify-content: flex-end;
 `;
 
-const BackToMakeTopsterPage = styled.div`
+const DefaultButton = styled.div`
   width: 10vw;
   height: 100%;
   border-radius: 20px;
-  background-color: white;
   font-weight: 800;
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const SteamTopsterButton = styled(DefaultButton)`
+  background-color: #d6e7ef;
+`;
+
+const BackToMakeTopsterPage = styled(DefaultButton)`
+  background-color: white;
 `;
 
 export default NavBar;

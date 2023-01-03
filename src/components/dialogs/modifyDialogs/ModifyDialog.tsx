@@ -9,9 +9,9 @@ import { AppDispatch, RootState } from "../../../store/index";
 import { useDispatch, useSelector } from "react-redux";
 import { MdCancel } from "react-icons/md";
 import { BiCommentDetail } from "react-icons/bi";
-import ScoreForm from "../scoreDialogs/ScoreForm";
+import ScoreForm from "../../forms/commonForms/ScoreForm";
 import ScoreDialogController from "../scoreDialogs/ScoreDialogController";
-import ScoreInputForm from "../scoreDialogs/ScoreInputForm";
+import ScoreInputForm from "../../forms/commonForms/ScoreInputForm";
 
 
 type dialogType = {
