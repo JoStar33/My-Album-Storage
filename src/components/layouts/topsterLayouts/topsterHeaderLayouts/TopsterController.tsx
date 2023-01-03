@@ -7,8 +7,8 @@ import {
   asyncPatchTopsterFetch,
   setSelectedTopster,
   setSelectedTopsterType,
-  topsterType,
 } from "../../../../store/topster";
+import { topsterType } from "../../../../types/topster";
 import { useNavigate } from "react-router-dom";
 
 type layout = {

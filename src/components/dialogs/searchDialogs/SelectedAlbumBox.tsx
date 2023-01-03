@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import "../../../styles/fire_font.css";
-import { albumType, setIsSelected } from "../../../store/album";
+import { setIsSelected } from "../../../store/album";
+import { albumType } from "../../../types/album";
 import { AppDispatch } from "../../../store/index";
 import { useDispatch } from "react-redux";
 import { MdCancel } from "react-icons/md";

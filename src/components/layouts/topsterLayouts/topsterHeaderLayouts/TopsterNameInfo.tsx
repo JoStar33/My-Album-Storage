@@ -5,9 +5,9 @@ import { AiFillSave } from "react-icons/ai";
 import { AppDispatch, RootState } from "@/store";
 import {
   setSelectedTopsterName,
-  topsterType,
   asyncPatchTopsterFetch,
 } from "../../../../store/topster";
+import { topsterType } from "../../../../types/topster";
 import { useDispatch, useSelector } from "react-redux";
 
 const TopsterNameInfo: React.FC = () => {

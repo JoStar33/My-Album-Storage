@@ -7,36 +7,7 @@ import {
   deleteAlbum,
   patchAlbum,
 } from "../apis/albumApi";
-
-type getSpotifyAlbumParamType = {
-  query: string;
-  type: string;
-};
-
-type postAlbumParamType = {
-  userId: string;
-  selectedAlbums: albumType[];
-};
-
-export type albumType = {
-  key: string;
-  artist: string;
-  name: string;
-  image: string;
-  isSelected: boolean;
-  score: number;
-  description: string;
-};
-
-export type userAlbumType = {
-  _id: string;
-  artist: string;
-  name: string;
-  image: string;
-  score: number;
-  description: string;
-  owner: string;
-};
+import { albumType, userAlbumType, getSpotifyAlbumParamType, postAlbumParamType } from "../types/album";
 
 type selectedSetType = {
   key: string;

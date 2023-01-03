@@ -5,10 +5,9 @@ import { RootState, AppDispatch } from "../../store";
 import { useSelector } from "react-redux";
 import {
   asyncPatchTopsterAlbumFetch,
-  asyncDeleteTopsterFetch,
-  topsterType,
-  topsterAlbumType,
+  asyncDeleteTopsterFetch
 } from "../../store/topster";
+import { topsterAlbumType, topsterType } from "@/types/topster";
 
 type propsType = {
   width: string;

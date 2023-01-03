@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { userAlbumType } from '../../store/album';
+import { userAlbumType } from '../../types/album';
 
 type propsType = {
   album: userAlbumType;

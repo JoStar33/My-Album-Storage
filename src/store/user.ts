@@ -1,13 +1,7 @@
 
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { login, join, logout } from "../apis/userApi";
-
-type userInfo = {
-  id: string;
-  email: string;
-  nick: string;
-  password: string;
-};
+import { userInfo } from "../types/user";
 
 const asyncLoginFetch = createAsyncThunk(
   "counterSlice/asyncLoginFetch",

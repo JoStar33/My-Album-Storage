@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import {
-  userAlbumType,
   asyncPatchAlbumFetch,
   asyncGetAlbumFetch,
 } from "../../../store/album";
+import { userAlbumType } from "../../../types/album";
 import { AppDispatch, RootState } from "../../../store/index";
 import { useDispatch, useSelector } from "react-redux";
 import { MdCancel } from "react-icons/md";

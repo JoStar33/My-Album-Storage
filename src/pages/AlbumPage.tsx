@@ -6,9 +6,10 @@ import AlbumDialog from "../components/dialogs/searchDialogs/AlbumDialog";
 import ModifyDialog from "../components/dialogs/modifyDialogs/ModifyDialog";
 import RecommendAlbumForm from "../components/forms/recommendAlbumForms/RecommendAlbumForm";
 import { setTokenByPost } from "../apis/tokenApi";
-import { asyncGetAlbumFetch, userAlbumType } from "../store/album";
-import { RootState, AppDispatch } from "../store";
+import { asyncGetAlbumFetch } from "../store/album";
+import { userAlbumType } from "../types/album";
 import { asyncGetTopsterFetch } from "../store/topster";
+import { RootState, AppDispatch } from "../store";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -20,8 +21,10 @@ const AlbumPage: React.FC = () => {
   );
   //아래와 같이 []이렇게 기술하지않으면 api를 무한 호출하는 버그가 있었음. 해당문제를 해결한 코드임.
   useEffect(() => {
-    dispatch(asyncGetAlbumFetch(user.id));
-    dispatch(asyncGetTopsterFetch(user.id));
+    if(user.id) {
+      dispatch(asyncGetAlbumFetch(user.id));
+      dispatch(asyncGetTopsterFetch(user.id));
+    }
     setTokenByPost();
   }, [dispatch, user.id]);
   const { userAlbums, getAlbumLoading } = useSelector(

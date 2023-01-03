@@ -9,7 +9,7 @@ import AlbumSkeleton from "../../forms/loadingForm/AlbumSkeleton";
 import SearchGuideForm from "../../forms/initForm/SearchGuideForm";
 import NotFoundAnyAlbum from "../../forms/errorForm/NotFoundAnyAlbum";
 import LoadingForm from "../../forms/loadingForm/LoadingForm";
-import { albumType } from "../../../store/album";
+import { albumType } from "../../../types/album";
 import { RootState } from "../../../store";
 import { useSelector } from "react-redux";
 
