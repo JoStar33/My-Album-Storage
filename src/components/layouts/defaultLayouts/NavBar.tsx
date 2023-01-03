@@ -2,9 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import { removeToken } from "../../../apis/tokens/token";
 import { AppDispatch } from "../../../store/index";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { asyncLogoutFetch } from "../../../store/user";
+import { useDispatch, useSelector } from "react-redux";
+import { asyncLogoutFetch, resetUserState } from "../../../store/user";
+import { resetTopsterState } from "../../../store/topster";
+import { resetAlbumState } from "../../../store/album";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../../store";
 
@@ -18,6 +19,10 @@ const NavBar: React.FC = () => {
       .then(() => {
         removeToken();
         navigate("/login");
+        dispatch(resetUserState());
+        dispatch(resetTopsterState());
+        dispatch(resetAlbumState());
+        console.log(user);
       })
       .catch((err) => console.log(err));
   };

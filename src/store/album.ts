@@ -105,6 +105,9 @@ export const albumSlice = createSlice({
     resetSearchAlbums: (state) => {
       resetAlbum(state.searchAlbums);
     },
+    resetAlbumState: (state) => {
+      Object.assign(state, initialState);
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(asyncGetSpotifyAlbumFetch.pending, (state, { payload }) => {
@@ -171,6 +174,6 @@ export {
   asyncDeleteAlbumFetch,
 };
 
-export const { setIsSelected, resetSearchAlbums } = albumSlice.actions;
+export const { resetAlbumState, setIsSelected, resetSearchAlbums } = albumSlice.actions;
 
 export default albumSlice.reducer;

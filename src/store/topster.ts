@@ -110,6 +110,9 @@ export const topsterSlice = createSlice({
         name: action.payload,
       });
     },
+    resetTopsterState: (state) => {
+      Object.assign(state, initialState);
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(asyncGetTopsterFetch.pending, (state, { payload }) => {
@@ -200,6 +203,7 @@ export {
 };
 
 export const {
+  resetTopsterState,
   setSelectedTopster,
   setSelectedTopsterType,
   setSelectedTopsterName,

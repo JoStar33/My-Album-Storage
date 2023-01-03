@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import TopsterAlbumBox from "../../../albums/TopsterAlbumBox";
-import TopsterAlbumBoxSkeletion from "../../../../components/forms/loadingForm/TopsterAlbumBoxSkeletion";
+import TopsterAlbumBoxSkeletion from "../../../forms/loadingForm/TopsterAlbumBoxSkeletion";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../store";
 

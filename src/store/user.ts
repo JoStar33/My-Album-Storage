@@ -30,18 +30,24 @@ const asyncLogoutFetch = createAsyncThunk(
   }
 );
 
+const initialState = {
+  user: {
+    id: '',
+    email: ``,
+    nick: ``,
+    password: ``,
+  } as userInfo,
+  loading: false,
+}
+
 export const userSlice = createSlice({
   name: "user",
-  initialState: {
-    user: {
-      id: '',
-      email: ``,
-      nick: ``,
-      password: ``,
-    } as userInfo,
-    loading: false,
+  initialState,
+  reducers: {
+    resetUserState: (state) => {
+      Object.assign(state, initialState);
+    }
   },
-  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(asyncLoginFetch.pending, (state, { payload }) => {
       state.loading = true;
@@ -79,6 +85,6 @@ export const userSlice = createSlice({
 });
 
 export { asyncLoginFetch, asyncJoinFetch, asyncLogoutFetch };
-//export const { } = userSlice.actions;
+export const { resetUserState } = userSlice.actions;
 
 export default userSlice.reducer;

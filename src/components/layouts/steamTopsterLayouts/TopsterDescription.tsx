@@ -19,18 +19,20 @@ const TopsterDescription: React.FC = () => {
 };
 const TopsterDescriptionContainer = styled.div`
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: flex-start;
+  align-items: flex-start;
   width: 20vw;
-  height: 100vh;
 `;
 
 const DescriptionText = styled.div`
+  margin-top: 40px;
   width: 100%;
   height: 20px;
   color: white;
   display: flex;
+  text-align: left;
+  align-items: flex-start;
   justify-content: flex-start;
 `;
 

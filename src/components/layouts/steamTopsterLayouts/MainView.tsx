@@ -11,11 +11,17 @@ const MainView: React.FC = () => {
   );
   return (
     <MainViewContainer>
-      <TopsterMain topsterLayout={selectedTopster.type}></TopsterMain>
+      <TopsterMainContainer>
+        <TopsterMain topsterLayout={selectedTopster.type}></TopsterMain>
+      </TopsterMainContainer>
       <TopsterDescription></TopsterDescription>
     </MainViewContainer>
   );
 };
+
+const TopsterMainContainer = styled.div`
+width: 78vw;
+`;
 
 const MainViewContainer = styled.div`
   width: 100vw;

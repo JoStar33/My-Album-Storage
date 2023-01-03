@@ -20,6 +20,7 @@ const updateUserInfo = (user: {}) => {
 }
 
 const logout = () => {
+
   return customAxios.get('/auth/logout')
 }
 

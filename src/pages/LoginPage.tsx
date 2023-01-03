@@ -1,14 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import TextDialog from "../components/dialogs/commonDialogs/TextDialog";
 import LoginForm from "../components/forms/commonForms/LoginForm";
+import { AppDispatch } from "../store/index";
+import { useDispatch } from "react-redux";
+import { resetUserState } from "../store/user";
+import { resetTopsterState } from "../store/topster";
+import { resetAlbumState } from "../store/album";
 import { Navigate } from "react-router-dom";
 import { getToken } from "../apis/tokens/token";
 
 const LoginPage: React.FC = () => {
   const isAuthorized = getToken();
+  const dispatch = useDispatch<AppDispatch>();
   const [dialog, setDialog] = useState(false);
   const [dialogText, setDialogText] = useState(``);
+  useEffect(() => {
+    dispatch(resetUserState());
+    dispatch(resetTopsterState());
+    dispatch(resetAlbumState());
+  })
   const dialogController = (dialogStatus: boolean) => {
     return setDialog(dialogStatus);
   };
