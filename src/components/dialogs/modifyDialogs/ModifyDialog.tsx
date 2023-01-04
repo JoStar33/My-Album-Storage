@@ -1,18 +1,9 @@
 import React, { useState } from "react";
-import styled from "styled-components";
-import {
-  asyncPatchAlbumFetch,
-  asyncGetAlbumFetch,
-} from "../../../store/album";
+import { asyncPatchAlbumFetch, asyncGetAlbumFetch } from "../../../store/album";
 import { userAlbumType } from "../../../types/album";
 import { AppDispatch, RootState } from "../../../store/index";
 import { useDispatch, useSelector } from "react-redux";
-import { MdCancel } from "react-icons/md";
-import { BiCommentDetail } from "react-icons/bi";
-import ScoreForm from "../../forms/commonForms/ScoreForm";
-import ScoreDialogController from "../scoreDialogs/ScoreDialogController";
-import ScoreInputForm from "../../forms/commonForms/ScoreInputForm";
-
+import ScoreDialogForm from "@/components/forms/commonForms/ScoreDialogForm";
 
 type dialogType = {
   modifyAlbum: userAlbumType;
@@ -28,9 +19,7 @@ const ModifyDialog: React.FC<propsType> = ({
   setModifyDialog,
   modifyDialog,
 }) => {
-  const { user } = useSelector(
-    (state: RootState) => state.userStore
-  );
+  const { user } = useSelector((state: RootState) => state.userStore);
   const dispatch = useDispatch<AppDispatch>();
   const [scoreVaildateText, setScoreVaildateText] = useState(``);
   const handleChangeScore = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,96 +52,15 @@ const ModifyDialog: React.FC<propsType> = ({
     setModifyDialog({ ...modifyDialog, isOpened: false });
   };
   return (
-    <DialogBackground>
-      <ModifyDialogContainer>
-        <AlbumTitle>{modifyDialog.modifyAlbum.name}</AlbumTitle>
-        <AlbumImg src={modifyDialog.modifyAlbum.image}></AlbumImg>
-        <ArtistName>{modifyDialog.modifyAlbum.artist}</ArtistName>
-        <ScoreForm score={modifyDialog.modifyAlbum.score}></ScoreForm>
-        <ScoreInputForm
-          scoreVaildateText={scoreVaildateText}
-          handleChangeScore={handleChangeScore}
-        ></ScoreInputForm>
-        <DescriptionText>
-          <BiCommentDetail></BiCommentDetail>
-          코멘트
-        </DescriptionText>
-        <Description
-          placeholder="내용을 입력해 주세요."
-          onChange={handleChangeDescription}
-        ></Description>
-        <ScoreDialogController
-          apply={applyScore}
-          close={closeDialog}
-        ></ScoreDialogController>
-        <CloseButton onClick={closeDialog}>
-          <MdCancel size={24}></MdCancel>
-        </CloseButton>
-      </ModifyDialogContainer>
-    </DialogBackground>
+    <ScoreDialogForm
+      album={modifyDialog.modifyAlbum}
+      handleChangeDescription={handleChangeDescription}
+      handleChangeScore={handleChangeScore}
+      scoreVaildateText={scoreVaildateText}
+      applyScore={applyScore}
+      closeDialog={closeDialog}
+    ></ScoreDialogForm>
   );
 };
-
-const Centering = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const DialogBackground = styled(Centering)`
-  position: absolute !important;
-  background-color: rgba(0, 0, 0, 0.4);
-  width: 100vw;
-  height: 100vh;
-  top: 0;
-  left: 0;
-`;
-
-const ModifyDialogContainer = styled(Centering)`
-  flex-direction: column;
-  position: relative;
-  width: 50vw;
-  min-width: 450px;
-  height: 80vh;
-  border-radius: 25px;
-  background-color: white;
-  box-shadow: 0 8px 8px 0 gray;
-`;
-
-const AlbumTitle = styled.h1`
-  font-weight: 800;
-`;
-
-const AlbumImg = styled.img`
-  width: 13vw;
-  height: 13vw;
-`;
-
-const ArtistName = styled.div`
-  font-weight: 800;
-`;
-
-const DescriptionText = styled.div`
-  margin-top: 20px;
-  width: 90%;
-  font-weight: 800;
-  text-align: left;
-  display: flex;
-  align-items: center;
-`;
-
-const Description = styled.textarea`
-  width: 90%;
-  height: 30%;
-  border: none;
-  resize: none;
-`;
-
-const CloseButton = styled.div`
-  position: absolute;
-  top: 1%;
-  left: 94%;
-  cursor: pointer;
-`;
 
 export default ModifyDialog;
