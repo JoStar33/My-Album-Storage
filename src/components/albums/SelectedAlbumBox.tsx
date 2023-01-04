@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import "../../../styles/fire_font.css";
-import { setIsSelected } from "../../../store/album";
-import { albumType } from "../../../types/album";
-import { AppDispatch } from "../../../store/index";
+import { setIsSelected } from "../../store/album";
+import { albumType } from "../../types/album";
+import { AppDispatch } from "../../store/index";
 import { useDispatch } from "react-redux";
 import { MdCancel } from "react-icons/md";
-import ScoreForm from "../../forms/commonForms/ScoreForm";
+import ScoreForm from "../forms/commonForms/ScoreForm";
 
 type scoreDialogType = {
   scoreAlbum: albumType;

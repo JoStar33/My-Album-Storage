@@ -4,7 +4,7 @@ import { albumType, userAlbumType } from "../../../types/album";
 import { MdCancel } from "react-icons/md";
 import { BiCommentDetail } from "react-icons/bi";
 import ScoreForm from "../../forms/commonForms/ScoreForm";
-import ScoreDialogController from "../../dialogs/scoreDialogs/ScoreDialogController";
+import ScoreDialogControllerForm from "./ScoreDialogControllerForm";
 import ScoreInputForm from "../../forms/commonForms/ScoreInputForm";
 
 type propsType = {
@@ -43,10 +43,10 @@ const ScoreDialogForm: React.FC<propsType> = ({
           placeholder="내용을 입력해 주세요."
           onChange={handleChangeDescription}
         ></Description>
-        <ScoreDialogController
+        <ScoreDialogControllerForm
           apply={applyScore}
           close={closeDialog}
-        ></ScoreDialogController>
+        ></ScoreDialogControllerForm>
         <CloseButton onClick={closeDialog}>
           <MdCancel size={24}></MdCancel>
         </CloseButton>

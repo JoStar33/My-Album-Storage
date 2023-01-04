@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import AlbumBox from "./AlbumBox";
-import SearchAlbumForm from "./SearchAlbumForm";
-import SelectedAlbumBox from "./SelectedAlbumBox";
+import AlbumBox from "../../albums/AlbumBox";
+import SelectedAlbumBox from "../../albums/SelectedAlbumBox";
 import AlbumDialogController from "./AlbumDialogController";
 import ScoreDialog from "../scoreDialogs/ScoreDialog";
 import AlbumSkeleton from "../../forms/loadingForm/AlbumSkeleton";
+import LoadingForm from "../../forms/loadingForm/LoadingForm";
+import SearchAlbumForm from "../../forms/commonForms/SearchAlbumForm";
 import SearchGuideForm from "../../forms/initForm/SearchGuideForm";
 import NotFoundAnyAlbum from "../../forms/errorForm/NotFoundAnyAlbum";
-import LoadingForm from "../../forms/loadingForm/LoadingForm";
 import { albumType } from "../../../types/album";
 import { RootState } from "../../../store";
 import { useSelector } from "react-redux";

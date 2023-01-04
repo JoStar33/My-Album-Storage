@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
-import { setIsSelected } from "../../../store/album";
-import { AppDispatch } from "../../../store/index";
-import { albumType } from "../../../types/album";
+import { setIsSelected } from "../../store/album";
+import { AppDispatch } from "../../store/index";
+import { albumType } from "../../types/album";
 import { useDispatch } from "react-redux";
-import CheckComponent from "./CheckComponent";
+import CheckComponent from "../dialogs/searchDialogs/CheckComponent";
 
 type scoreDialogType = {
   scoreAlbum: albumType;
