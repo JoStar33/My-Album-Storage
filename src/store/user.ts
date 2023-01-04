@@ -1,10 +1,10 @@
 
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { login, join, logout } from "../apis/userApi";
+import { login, join, logout, checkDuplicatedEmail, checkDuplicatedNick } from "../apis/userApi";
 import { userInfo } from "../types/user";
 
 const asyncLoginFetch = createAsyncThunk(
-  "counterSlice/asyncLoginFetch",
+  "userSlice/asyncLoginFetch",
   async (userInfo: userInfo) => {
     await login(userInfo.email, userInfo.password).then((res) => {
       userInfo = res.data;
@@ -13,8 +13,24 @@ const asyncLoginFetch = createAsyncThunk(
   }
 );
 
+const asyncCheckDuplicatedEmail = createAsyncThunk(
+  "userSlice/asyncCheckDuplicatedEmail",
+  async (email: string) => {
+    const response = await checkDuplicatedEmail(email)
+    return response.data;
+  }
+);
+
+const asyncCheckDuplicatedNick = createAsyncThunk(
+  "userSlice/asyncCheckDuplicatedNick",
+  async (nick: string) => {
+    const response = await checkDuplicatedNick(nick)
+    return response.data;
+  }
+);
+
 const asyncJoinFetch = createAsyncThunk(
-  "counterSlice/asyncJoinFetch",
+  "userSlice/asyncJoinFetch",
   async (userInfo: userInfo) => {
     await join(userInfo.email, userInfo.nick, userInfo.password).then((res) => {
       userInfo = res.data;
@@ -24,7 +40,7 @@ const asyncJoinFetch = createAsyncThunk(
 );
 
 const asyncLogoutFetch = createAsyncThunk(
-  "counterSlice/asyncLogoutFetch",
+  "userSlice/asyncLogoutFetch",
   async () => {
     await logout();
   }
@@ -38,6 +54,8 @@ const initialState = {
     password: ``,
   } as userInfo,
   loading: false,
+  duplicateEmailLoading: false,
+  duplicateNickLoading: false,
 }
 
 export const userSlice = createSlice({
@@ -46,6 +64,9 @@ export const userSlice = createSlice({
   reducers: {
     resetUserState: (state) => {
       Object.assign(state, initialState);
+    },
+    resetDuplicateEmailLoading: (state) => {
+      state.duplicateEmailLoading = false;
     }
   },
   extraReducers: (builder) => {
@@ -81,10 +102,30 @@ export const userSlice = createSlice({
     builder.addCase(asyncLogoutFetch.rejected, (state, { payload }) => {
       state.loading = false;
     });
+    builder.addCase(asyncCheckDuplicatedEmail.pending, (state, { payload }) => {
+      state.duplicateEmailLoading = true;
+    });
+    builder.addCase(asyncCheckDuplicatedEmail.fulfilled, (state, { payload }) => {
+      console.log("run-fulfilled");
+      state.duplicateEmailLoading = false;
+    });
+    builder.addCase(asyncCheckDuplicatedEmail.rejected, (state, { payload }) => {
+      console.log("run-rejected");
+      state.duplicateEmailLoading = false;
+    });
+    builder.addCase(asyncCheckDuplicatedNick.pending, (state, { payload }) => {
+      state.duplicateNickLoading = true;
+    });
+    builder.addCase(asyncCheckDuplicatedNick.fulfilled, (state, { payload }) => {
+      state.duplicateNickLoading = false;
+    });
+    builder.addCase(asyncCheckDuplicatedNick.rejected, (state, { payload }) => {
+      state.duplicateNickLoading = false;
+    });
   },
 });
 
-export { asyncLoginFetch, asyncJoinFetch, asyncLogoutFetch };
-export const { resetUserState } = userSlice.actions;
+export { asyncLoginFetch, asyncJoinFetch, asyncLogoutFetch, asyncCheckDuplicatedEmail, asyncCheckDuplicatedNick };
+export const { resetUserState, resetDuplicateEmailLoading } = userSlice.actions;
 
 export default userSlice.reducer;

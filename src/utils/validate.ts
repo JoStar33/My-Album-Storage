@@ -37,4 +37,9 @@ const validateNick = (nick: string) => {
   return null;
 };
 
-export { validatePassword, validateEmail, validateNick };
+const validatePasswordCheck = (password?: string, passwordCheck?: string) => 
+  (password !== passwordCheck)
+    ? "비밀번호가 확인값과 다릅니다. 다시입력 해주세요."
+    : null;
+
+export { validatePassword, validateEmail, validateNick, validatePasswordCheck };

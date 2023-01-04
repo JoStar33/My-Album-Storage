@@ -3,7 +3,7 @@ import { AppDispatch } from "../../../store/index";
 import { useDispatch } from "react-redux";
 import { setIsSelected } from "../../../store/album";
 import { albumType } from "../../../types/album";
-import ScoreDialogForm from "@/components/forms/commonForms/ScoreDialogForm";
+import ScoreDialogForm from "../../../components/forms/commonForms/ScoreDialogForm";
 
 type scoreDialogType = {
   scoreAlbum: albumType;
@@ -27,6 +27,16 @@ const ScoreDialog: React.FC<propsType> = ({
   const [scoreVaildateText, setScoreVaildateText] = useState(``);
   const handleChangeScore = (e: React.ChangeEvent<HTMLInputElement>) => {
     setScoreVaildateText(``);
+    if (parseInt(e.target.value) > 100 ) {
+      e.target.value = '99';
+      setScoreVaildateText(`점수는 0부터 100까지만 입력이 가능합니다.`);
+      return;
+    }
+    if (parseInt(e.target.value) < 0){
+      e.target.value = '1';
+      setScoreVaildateText(`점수는 0부터 100까지만 입력이 가능합니다.`);
+      return;
+    }
     setScoreDialog({
       ...scoreDialog,
       scoreAlbum: {
@@ -47,17 +57,19 @@ const ScoreDialog: React.FC<propsType> = ({
     });
   };
   const applyScore = () => {
-    if(typeof scoreDialog.scoreAlbum.score === "string") {
+    console.log(scoreDialog.scoreAlbum.score);
+    if(isNaN(scoreDialog.scoreAlbum.score)) {
       setScoreVaildateText(`점수를 입력하세요!`);
       return;
     }
     //스코어의 값이 1~100사이의 값이 아니라면
-    (scoreDialog.scoreAlbum.score <= 0 ||
-    scoreDialog.scoreAlbum.score > 100 )
-      ? setScoreVaildateText(`점수는 1부터 100까지만 입력이 가능합니다.`)
-      : dispatch(
-        setIsSelected({ key: scoreDialog.scoreAlbum.key, isSelected: true })
-      )
+    if (scoreDialog.scoreAlbum.score < 0 || scoreDialog.scoreAlbum.score > 100 ) {
+      setScoreVaildateText(`점수는 0부터 100까지만 입력이 가능합니다.`);
+      return;
+    }
+    dispatch(
+      setIsSelected({ key: scoreDialog.scoreAlbum.key, isSelected: true })
+    );
     !selectedAlbums.find(
       (selectedAlbum) => selectedAlbum.key === scoreDialog.scoreAlbum.key
     )

@@ -20,7 +20,6 @@ const ScoreInputForm: React.FC<propsType> = ({
           placeholder="점수를 입력해 주세요."
           min={1}
           max={100}
-          type="number"
           name="score"
           onChange={handleChangeScore}
         ></Score>

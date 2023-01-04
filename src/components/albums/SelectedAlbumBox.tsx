@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import "../../../styles/fire_font.css";
+import "../../styles/fire_font.css";
 import { setIsSelected } from "../../store/album";
 import { albumType } from "../../types/album";
 import { AppDispatch } from "../../store/index";
