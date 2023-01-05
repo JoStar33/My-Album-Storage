@@ -36,7 +36,7 @@ const RecommendAlbumForm: React.FC = () => {
       indexRef.current();
     }, 3000);
     return () => clearInterval(timer);
-  }, []);
+  }, [sliderIndex]);
   return (
     <RecommendAlbumFormContainer>
       <section id="slider">

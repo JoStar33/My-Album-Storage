@@ -5,9 +5,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store";
 import { useNavigate } from "react-router-dom";
-import { LoadingBar } from "../../forms/loadingForm/ButtonLoadingForm";
-import { AiOutlineCheck } from "react-icons/ai";
-import { asyncJoinFetch, asyncCheckDuplicatedEmail, asyncCheckDuplicatedNick, resetDuplicateEmailLoading } from "../../../store/user";
+import { asyncJoinFetch, asyncCheckDuplicatedEmail, asyncCheckDuplicatedNick } from "../../../store/user";
 import {
   validateEmail,
   validateNick,
@@ -15,6 +13,7 @@ import {
   validatePasswordCheck,
 } from "../../../utils/validate";
 import LoadingForm from "../loadingForm/LoadingForm";
+import DuplicateCheckButton from "../../../components/buttons/DuplicateCheckButton";
 
 type propsType = {
   dialogController: (dialogStatus: boolean) => void;
@@ -100,16 +99,9 @@ const JoinForm: React.FC<propsType> = ({
     dispatch(asyncCheckDuplicatedEmail(account.email))
     .unwrap()
     .then(() => {
-      console.log(duplicateEmailLoading);
-      if(!duplicateEmailLoading) {
-        setDialogText(`이메일이 이미 존재합니다. 다시 확인바랍니다.`);
-        dialogController(true);
-        dispatch(resetDuplicateEmailLoading());
-        return;
-      }
       setDuplicateState({...duplicateState, email: true});
-    }).
-    catch(() => {
+    })
+    .catch(() => {
       setDialogText(`이메일이 이미 존재합니다. 다시 확인바랍니다.`);
       dialogController(true);
     })
@@ -121,14 +113,13 @@ const JoinForm: React.FC<propsType> = ({
       return;
     }
     dispatch(asyncCheckDuplicatedNick(account.nick))
+    .unwrap()
     .then(() => {
-      console.log(duplicateNickLoading);
-      if(!duplicateNickLoading) {
-        setDialogText(`닉네임이 이미 존재합니다. 다시 확인바랍니다.`);
-        dialogController(true);
-        return;
-      }
       setDuplicateState({...duplicateState, nick: true});
+    })
+    .catch(() => {
+      setDialogText(`닉네임이 이미 존재합니다. 다시 확인바랍니다.`);
+      dialogController(true);
     })
   }
   const handleOnKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -154,17 +145,10 @@ const JoinForm: React.FC<propsType> = ({
           onChange={onChangeAccount}
           type="text"
         />
-        <DuplicatedCheckButton onClick={handleDuplicateEmail}>
-          {
-            !duplicateEmailLoading && <>중복확인</>
-          }
-          {
-            (duplicateEmailLoading && !duplicateState.email) && <LoadingBar></LoadingBar>
-          }
-          {
-            (duplicateEmailLoading && duplicateState.email) && <AiOutlineCheck size={20}></AiOutlineCheck>
-          }
-        </DuplicatedCheckButton>
+        <DuplicateCheckButton
+          duplicateLoading={duplicateEmailLoading}
+          duplicateStateElement={duplicateState.email}
+          handleDuplicate={handleDuplicateEmail}></DuplicateCheckButton>
       </InputContainer>
       <ValidateText>{validateEmail(account.email)}</ValidateText>
       <InputContainer>
@@ -175,17 +159,10 @@ const JoinForm: React.FC<propsType> = ({
           onChange={onChangeAccount}
           type="text"
         />
-        <DuplicatedCheckButton onClick={handleDuplicateNick}>
-          {
-            (!duplicateNickLoading) && <>중복확인</>
-          }
-          {
-            (duplicateNickLoading && !duplicateState.nick) && <LoadingBar></LoadingBar>
-          }
-          {
-            (duplicateNickLoading && duplicateState.nick) && <AiOutlineCheck size={20}></AiOutlineCheck>
-          }
-        </DuplicatedCheckButton>
+        <DuplicateCheckButton
+          duplicateLoading={duplicateNickLoading}
+          duplicateStateElement={duplicateState.nick}
+          handleDuplicate={handleDuplicateNick}></DuplicateCheckButton>
       </InputContainer>
       <ValidateText>{validateNick(account.nick)}</ValidateText>
       <InputContainer>
@@ -275,18 +252,6 @@ const ButtonContainer = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: row;
-`;
-
-const DuplicatedCheckButton = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 80px;
-  border-radius: 20px;
-  margin-left: 3px;
-  background-color: #baecc8;
-  user-select: none;
-  cursor: pointer;
 `;
 
 const JoinBtn = styled.div`

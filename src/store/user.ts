@@ -64,9 +64,6 @@ export const userSlice = createSlice({
   reducers: {
     resetUserState: (state) => {
       Object.assign(state, initialState);
-    },
-    resetDuplicateEmailLoading: (state) => {
-      state.duplicateEmailLoading = false;
     }
   },
   extraReducers: (builder) => {
@@ -126,6 +123,6 @@ export const userSlice = createSlice({
 });
 
 export { asyncLoginFetch, asyncJoinFetch, asyncLogoutFetch, asyncCheckDuplicatedEmail, asyncCheckDuplicatedNick };
-export const { resetUserState, resetDuplicateEmailLoading } = userSlice.actions;
+export const { resetUserState } = userSlice.actions;
 
 export default userSlice.reducer;
