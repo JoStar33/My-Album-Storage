@@ -2,8 +2,9 @@
 
 내가 좋아하는 앨범을 선정하고 이를 탑스터화해서 보여주는 프로젝트!
 
-![ezgif com-gif-maker](https://user-images.githubusercontent.com/52379503/211947496-36aec96c-b0d1-41ea-a601-b74deadb76e3.gif)
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/52379503/211949937-1c60947e-1b22-4751-853d-a0a1a6f1b3d4.gif)
 
+![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/52379503/211949944-aef24577-e003-41fd-a17e-89a802508d62.gif)
 
 아래사진은 탑스터를 쪄낸 결과물!
 
