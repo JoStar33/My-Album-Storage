@@ -8,6 +8,6 @@
 
 ![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/52379503/211949944-aef24577-e003-41fd-a17e-89a802508d62.gif)
 
-아래사진은 탑스터를 쪄낸 결과물!
+아래사진은 탑스터를 쪄낸 결과물! html2canvas를 통해 탑스터를 이미지화하여 사용자에게 전달해줍니다.
 
 ![topster1](https://user-images.githubusercontent.com/52379503/211947528-173e90bc-36c1-49d8-b7bf-0e90b9f2bdae.jpg)
