@@ -65,7 +65,7 @@ const DialogBackground = styled(Centering)`
   position: absolute !important;
   background-color: rgba(0, 0, 0, 0.4);
   width: 100vw;
-  height: 100vh;
+  height: 200vh;
   top: 0;
   left: 0;
 `;
