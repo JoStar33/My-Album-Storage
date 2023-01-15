@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, memo } from "react";
 import styled from "styled-components";
 import { setIsSelected } from "../../store/album";
 import { AppDispatch } from "../../store/index";
@@ -99,4 +99,4 @@ const AlbumName = styled.span<AlbumImgType>`
   font-size: ${(props) => (props.isLineOver ? "6px" : "14px")};
 `;
 
-export default AlbumBox;
+export default memo(AlbumBox);

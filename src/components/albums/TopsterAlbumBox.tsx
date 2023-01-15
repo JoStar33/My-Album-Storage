@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, memo } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../../store";
@@ -126,4 +126,4 @@ const TopsterImage = styled.img`
   height: 100%;
 `;
 
-export default TopsterAlbumBox;
+export default memo(TopsterAlbumBox);

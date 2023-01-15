@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 import { userAlbumType } from '../../types/album';
 
@@ -35,4 +35,4 @@ height: 80%;
 -webkit-user-drag: none;
 `;
 
-export default TopsterUserAlbumBox;
+export default memo(TopsterUserAlbumBox);

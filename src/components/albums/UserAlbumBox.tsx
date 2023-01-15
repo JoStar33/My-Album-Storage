@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, memo } from "react";
 import styled from "styled-components";
 import ScoreForm from "../forms/commonForms/ScoreForm";
 import { asyncGetAlbumFetch } from "../../store/album";
@@ -116,4 +116,4 @@ const DeleteButton = styled.div`
   cursor: pointer;
 `;
 
-export default UserAlbumBox;
+export default memo(UserAlbumBox);

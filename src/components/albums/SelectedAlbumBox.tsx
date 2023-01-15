@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import styled from "styled-components";
 import "../../styles/fire_font.css";
 import { setIsSelected } from "../../store/album";
@@ -56,8 +56,6 @@ const SelectedAlbumBox: React.FC<propsType> = ({
   );
 };
 
-export default SelectedAlbumBox;
-
 const SelectedAlbumContainer = styled.div`
   display: flex;
   align-items: center;
@@ -104,3 +102,5 @@ const DeleteButton = styled.div`
   left: 91%;
   cursor: pointer;
 `;
+
+export default memo(SelectedAlbumBox);
