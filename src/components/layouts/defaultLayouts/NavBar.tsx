@@ -22,7 +22,6 @@ const NavBar: React.FC = () => {
         dispatch(resetUserState());
         dispatch(resetTopsterState());
         dispatch(resetAlbumState());
-        console.log(user);
       })
       .catch((err) => console.log(err));
   };
@@ -57,7 +56,7 @@ const NavBarTitleContainer = styled.div`
 `;
 
 const NavBarMenuHandler = styled.div`
-  width: 5vw;
+  width: 4vw;
 `;
 
 const NavBarUserInfo = styled.div`
@@ -66,7 +65,7 @@ const NavBarUserInfo = styled.div`
   align-items: center;
   flex-direction: row;
   font-weight: 800;
-  width: 15vw;
+  width: 14vw;
 `;
 
 const LogoutBtn = styled.div`
