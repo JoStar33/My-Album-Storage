@@ -18,10 +18,12 @@ const LoginPage: React.FC = () => {
   const [dialog, setDialog] = useState(false);
   const [dialogText, setDialogText] = useState(``);
   useEffect(() => {
-    cookies.remove('connect.sid');
-    dispatch(resetUserState());
-    dispatch(resetTopsterState());
-    dispatch(resetAlbumState());
+    if(!isAuthorized) {
+      cookies.remove('connect.sid');
+      dispatch(resetUserState());
+      dispatch(resetTopsterState());
+      dispatch(resetAlbumState());
+    }
   })
   const dialogController = (dialogStatus: boolean) => {
     return setDialog(dialogStatus);
