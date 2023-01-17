@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import UserAlbumBox from "../components/albums/UserAlbumBox";
-import UserAlbumSkeleton from "../components/forms/loadingForm/UserAlbumSkeleton";
 import AlbumDialog from "../components/dialogs/searchDialogs/AlbumDialog";
 import ModifyDialog from "../components/dialogs/modifyDialogs/ModifyDialog";
 import RecommendAlbumForm from "../components/forms/recommendAlbumForms/RecommendAlbumForm";
@@ -12,6 +10,7 @@ import { asyncGetTopsterFetch } from "../store/topster";
 import { RootState, AppDispatch } from "../store";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import UsersAlbumViewerForm from "../components/forms/commonForms/UsersAlbumViewerForm";
 
 const AlbumPage: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -52,29 +51,12 @@ const AlbumPage: React.FC = () => {
           탑스터 만들러가기
         </MakeTopsterButton>
       </ButtonContainer>
-      <UserAlbumViewer>
-        {
-          //앨범로딩이 종료시에 앨범들 정상적으로 보여주기.
-          !getAlbumLoading &&
-            userAlbums.map((album) => (
-              <UserAlbumBox
-                key={album._id}
-                album={album}
-                modifyDialog={modifyDialog}
-                setModifyDialog={setModifyDialog}
-              ></UserAlbumBox>
-            ))
-        }
-        {
-          //앨범로딩시에는 스켈레톤 앨범들이 보이도록.
-          getAlbumLoading &&
-            new Array(9)
-              .fill(1)
-              .map((_, index) => (
-                <UserAlbumSkeleton key={index}></UserAlbumSkeleton>
-              ))
-        }
-      </UserAlbumViewer>
+      <UsersAlbumViewerForm
+        getAlbumLoading={getAlbumLoading}
+        userAlbums={userAlbums}
+        modifyDialog={modifyDialog}
+        setModifyDialog={setModifyDialog}
+      ></UsersAlbumViewerForm>
       {albumDialog && (
         <AlbumDialog setAlbumDialog={setAlbumDialog}></AlbumDialog>
       )}
@@ -92,20 +74,6 @@ const Centering = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`;
-
-const UserAlbumViewer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  overflow-y: scroll;
-  width: 90vw;
-  height: 70vh;
-  border-radius: 20px;
-  margin-bottom: 30vh;
-  box-shadow: 0 6px 6px 0 gray;
-  ::-webkit-scrollbar {
-    display: none;
-  }
 `;
 
 const ButtonContainer = styled.div`
